@@ -9,19 +9,19 @@ Duration: Two week build
 This application is designed for users to be able to log and track their mushroom finds. The log will contain user-inputted pictures, mushroom names, location, date and time, and any other details about their find. They will be able to view the locations on a map and click to get more information about each instance. This solves the problem of people forgetting where they found mushrooms by providing them a way to easily track their discoveries. 
 
 ## Prerequisites
-Node.js
-React.js
-Express.js
-postgresql
-Material UI
+- Node.js
+- React.js
+- Express.js
+- postgresql
+- Material UI
 
 ## Built With
-Express https://expressjs.com/en/starter/installing.html
-React https://reactjs.org/
-PG https://www.postgresql.org/download/
-Node https://nodejs.org/en/download/
-Axios https://axios-http.com/docs/intro
-Material UI https://mui.com/getting-started/usage/
+- Express https://expressjs.com/en/starter/installing.html
+- React https://reactjs.org/
+- PG https://www.postgresql.org/download/
+- Node https://nodejs.org/en/download/
+- Axios https://axios-http.com/docs/intro
+- Material UI https://mui.com/getting-started/usage/
 
 ## Installation
 
