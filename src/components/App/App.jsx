@@ -25,6 +25,7 @@ import LogDetails from '../LogDetails/LogDetails';
 import EditLog from '../EditLog/EditLog';
 import MapView from '../MapView/MapView';
 import AddPhotos from '../AddPhotos/AddPhotos';
+import AddType from '../AddType/AddType';
 
 import './App.css';
 
@@ -118,6 +119,14 @@ function App() {
             // logged in shows AddPhotos else shows LoginPage
             exact
             path="/addPhotos"
+          >
+            <AddPhotos />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in shows AddType else shows LoginPage
+            exact
+            path="/addType"
           >
             <AddPhotos />
           </ProtectedRoute>
