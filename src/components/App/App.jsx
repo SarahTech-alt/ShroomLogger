@@ -19,8 +19,17 @@ import InfoPage from '../InfoPage/InfoPage';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
+import ProfilePage from '../ProfilePage/ProfilePage';
+import LogHistory from '../LogHistory/LogHistory';
+import LogDetails from '../LogDetails/LogDetails';
+import EditLog from '../EditLog/EditLog';
+import MapView from '../MapView/MapView';
+import AddPhotos from '../AddPhotos/AddPhotos';
+import AddType from '../AddType/AddType';
+import AddLocationTime from '../AddLocationTime/AddLocationTime';
 
 import './App.css';
+import AddDescription from '../AddDescription/AddDescription';
 
 function App() {
   const dispatch = useDispatch();
@@ -61,11 +70,83 @@ function App() {
           </ProtectedRoute>
 
           <ProtectedRoute
+            // logged in shows ProfilePage else shows LoginPage
+            exact
+            path='/profile'
+          >
+            <ProfilePage />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in shows LogHistory else shows LoginPage
+            exact
+            path='/history'
+          >
+            <LogHistory />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in shows LogDetails else shows LoginPage
+            exact
+            path='/details'
+          >
+            <LogDetails />
+          </ProtectedRoute>
+
+          <ProtectedRoute
             // logged in shows InfoPage else shows LoginPage
             exact
             path="/info"
           >
             <InfoPage />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in shows EditLog else shows LoginPage
+            exact
+            path="/edit"
+          >
+            <EditLog />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in shows MapView else shows LoginPage
+            exact
+            path="/map"
+          >
+            <MapView />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in shows AddPhotos else shows LoginPage
+            exact
+            path="/addPhotos"
+          >
+            <AddPhotos />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in shows AddType else shows LoginPage
+            exact
+            path="/addType"
+          >
+            <AddType />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in shows AddLocationTime else shows LoginPage
+            exact
+            path="/locationtime"
+          >
+            <AddLocationTime />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in shows AddDescription else shows LoginPage
+            exact
+            path="/description"
+          >
+            <AddDescription />
           </ProtectedRoute>
 
           <Route
