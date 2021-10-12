@@ -7,7 +7,7 @@ CREATE TABLE "user" (
 	"id" serial NOT NULL,
 	"username" varchar(80) NOT NULL UNIQUE,
 	"password" varchar(1000) NOT NULL,
-	"date_created" TIMESTAMP NOT NULL,
+	"date_created" TIMESTAMP,
 	"profile_picture" varchar(100),
 	CONSTRAINT "user_pk" PRIMARY KEY ("id")
 ) WITH (
