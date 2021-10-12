@@ -26,6 +26,7 @@ import EditLog from '../EditLog/EditLog';
 import MapView from '../MapView/MapView';
 import AddPhotos from '../AddPhotos/AddPhotos';
 import AddType from '../AddType/AddType';
+import AddLocationTime from '../AddLocationTime/AddLocationTime';
 
 import './App.css';
 
@@ -129,6 +130,14 @@ function App() {
             path="/addType"
           >
             <AddType />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in shows AddLocationTime else shows LoginPage
+            exact
+            path="/addlocationtime"
+          >
+            <AddLocationTime />
           </ProtectedRoute>
 
           <Route
