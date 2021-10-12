@@ -128,7 +128,7 @@ function App() {
             exact
             path="/addType"
           >
-            <AddPhotos />
+            <AddType />
           </ProtectedRoute>
 
           <Route
