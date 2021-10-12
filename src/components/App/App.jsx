@@ -20,6 +20,7 @@ import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import ProfilePage from '../ProfilePage/ProfilePage';
+import LogHistory from '../LogHistory/LogHistory';
 
 import './App.css';
 
@@ -62,10 +63,19 @@ function App() {
           </ProtectedRoute>
 
           <ProtectedRoute
+           // logged in shows ProfilePage else shows LoginPage
           exact
           path='/profile'
           >
             <ProfilePage />
+            </ProtectedRoute>
+
+            <ProtectedRoute
+            // logged in shows LogHistory else shows LoginPage
+          exact
+          path='/history'
+          >
+            <LogHistory />
             </ProtectedRoute>
 
           <ProtectedRoute
