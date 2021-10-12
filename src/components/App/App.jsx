@@ -29,6 +29,7 @@ import AddType from '../AddType/AddType';
 import AddLocationTime from '../AddLocationTime/AddLocationTime';
 
 import './App.css';
+import AddDescription from '../AddDescription/AddDescription';
 
 function App() {
   const dispatch = useDispatch();
@@ -98,9 +99,9 @@ function App() {
             path="/info"
           >
             <InfoPage />
-            </ProtectedRoute>
+          </ProtectedRoute>
 
-            <ProtectedRoute
+          <ProtectedRoute
             // logged in shows EditLog else shows LoginPage
             exact
             path="/edit"
@@ -135,9 +136,17 @@ function App() {
           <ProtectedRoute
             // logged in shows AddLocationTime else shows LoginPage
             exact
-            path="/addlocationtime"
+            path="/locationtime"
           >
             <AddLocationTime />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in shows AddDescription else shows LoginPage
+            exact
+            path="/description"
+          >
+            <AddDescription />
           </ProtectedRoute>
 
           <Route
