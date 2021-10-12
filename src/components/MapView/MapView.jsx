@@ -1,8 +1,8 @@
-function EditLog() {
+function MapView() {
     return (
         <>
         </>
     );
 }
 
-export default EditLog;
+export default MapView;

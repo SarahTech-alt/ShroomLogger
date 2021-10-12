@@ -23,6 +23,7 @@ import ProfilePage from '../ProfilePage/ProfilePage';
 import LogHistory from '../LogHistory/LogHistory';
 import LogDetails from '../LogDetails/LogDetails';
 import EditLog from '../EditLog/EditLog';
+import MapView from '../MapView/MapView';
 
 import './App.css';
 
@@ -94,6 +95,7 @@ function App() {
             path="/info"
           >
             <InfoPage />
+            </ProtectedRoute>
 
             <ProtectedRoute
             // logged in shows EditLog else shows LoginPage
@@ -101,7 +103,14 @@ function App() {
             path="/edit"
           >
             <EditLog />
+          </ProtectedRoute>
 
+          <ProtectedRoute
+            // logged in shows EditLog else shows LoginPage
+            exact
+            path="/map"
+          >
+            <MapView />
           </ProtectedRoute>
 
           <Route
