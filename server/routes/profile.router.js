@@ -36,9 +36,10 @@ router.post('/s3', rejectUnauthenticated, async (req, res) => {
         return;
     }
     try {
+        const imageUserId = req.user.id
         const imageProps = req.query;
         const imageData = req.files.image.data;
-        const mediumKey = `photos/medium/${imageProps.name}`;
+        const mediumKey = `photos/medium/${imageUserId}/${imageProps.name}`;
         // Optionally, resize the image
         const mediumFileConent = await sharp(imageData).resize(300, 300).toBuffer();
 
@@ -55,7 +56,7 @@ router.post('/s3', rejectUnauthenticated, async (req, res) => {
 
         // Optionally, create a thumbnail
         const thumbFileConent = await sharp(imageData).resize(100, 100).toBuffer();
-        const thumbKey = `photos/thumb/${imageProps.name}`;
+        const thumbKey = `photos/thumb/${imageUserId}/${imageProps.name}`;
         params.Key = thumbKey;
         params.Body = thumbFileConent;
         await s3.upload(params).promise();

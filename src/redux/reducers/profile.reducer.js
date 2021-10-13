@@ -1,4 +1,6 @@
-const profileReducer = (state = [], action) => {
+import { combineReducers } from 'redux';
+
+const profilePictureReducer = (state = [], action) => {
     switch (action.type) {
         case 'SET_PROFILE_PIC':
             return action.payload;
@@ -7,4 +9,15 @@ const profileReducer = (state = [], action) => {
     }
 };
 
-export default profileReducer;
+const profileInfoReducer = (state = [], action) => {
+    switch (action.type) {
+        case 'SET_PROFILE_INFO':
+        default:
+            return state;
+    }
+}
+
+export default combineReducers({
+    profilePictureReducer,
+    profileInfoReducer
+});
