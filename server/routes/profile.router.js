@@ -2,7 +2,6 @@ const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
 require('dotenv').config();
-import { uploadFile } from 'react-s3';
 
 const config = {
     bucketName: `${process.env.AWS_S3_BUCKET}`,

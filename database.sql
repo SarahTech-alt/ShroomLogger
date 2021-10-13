@@ -18,7 +18,7 @@ CREATE TABLE "log_entry" (
 	"id" serial NOT NULL,
 	"user_id" integer NOT NULL,
 	"mushroom_names_id" integer,
-	"date" TIMESTAMP NOT NULL,
+	"date" TIMESTAMP,
 	"latitude" DECIMAL,
 	"longitude" DECIMAL(1000),
 	"mushroom_pictures" integer,
@@ -52,3 +52,8 @@ ALTER TABLE "log_entry" ADD CONSTRAINT "log_entry_fk1" FOREIGN KEY ("mushroom_na
 ALTER TABLE "log_entry" ADD CONSTRAINT "log_entry_fk2" FOREIGN KEY ("mushroom_pictures") REFERENCES "mushroom_pictures"("id");
 ALTER TABLE "mushroom_pictures" ADD CONSTRAINT "mushroom_pictures_fk0" FOREIGN KEY ("log_entry_id") REFERENCES "log_entry"("id");
 ALTER TABLE "mushroom_pictures" ADD CONSTRAINT "mushroom_pictures_fk1" FOREIGN KEY ("user_id") REFERENCES "user"("id");
+
+INSERT INTO "log_entry" ("user_id", "latitude", "longitude", "details")
+VALUES (4, 44.97443544637816, -93.2562070397675, 'a mushroom that has holes in it'),
+(4, 44.959382006981784, -93.27825928801052, 'gilled and smelled like black licorice'),
+(4, 44.977872673280686, -93.26405430900489, 'red top with white spots, white hollow stalk');
