@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { readAndCompressImage } from 'browser-image-resizer';
 
 
@@ -11,6 +11,8 @@ function ProfilePage() {
         quality: 1.0,
         maxHeight: 300,
     };
+    
+    const profilePicUrl = useSelector(store => store.profile)
     
     const [preview, setPreview] = useState('');
     const [selectedFile, setSelectedFile] = useState('');
@@ -64,7 +66,9 @@ function ProfilePage() {
            )}
     <input type="file" accept="image/*" onChange={onFileChange} />
     <button onClick={event => sendFormDataToServer()}>Submit</button>
+    {JSON.stringify(profilePicUrl)}
         </>
+            
     );
 }
 
