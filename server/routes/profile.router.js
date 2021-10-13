@@ -34,12 +34,12 @@ const S3_BUCKET = process.env.AWS_S3_BUCKET;
         res.status(500).send('Missing environment variables for AWS bucket.');
     }
     try {
-        const employee = req.user;
+        const user = req.user;
         const imageProps = req.query;
         const imageData = req.files.image.data;
         const mediumKey = `photos/medium/${imageProps.name}`;
         // Optionally, resize the image
-        const mediumFileContent = await sharp(imageData).resize(300, 300).toBuffer();
+        // const mediumFileContent = await sharp(imageData).resize(300, 300).toBuffer();
 
         // Setting up S3 upload parameters
         const params = {
@@ -64,7 +64,6 @@ const S3_BUCKET = process.env.AWS_S3_BUCKET;
         // Send back medium image data.
         res.send(data);
     } catch (error) {
-        logError(error);
         res.sendStatus(500);
     }
 });
