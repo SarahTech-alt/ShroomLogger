@@ -26,7 +26,7 @@ app.use(passport.session());
 /* Routes */
 app.use('/api/user', userRouter);
 app.use('/api/profile', profileRouter);
-app.use('/api/mushrooms', mushroomRouter);
+app.use('/api/mushroom', mushroomRouter);
 
 // Serve static files
 app.use(express.static('build'));
