@@ -1,45 +1,69 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { readAndCompressImage } from 'browser-image-resizer';
+
+
 
 
 function ProfilePage() {
-    // create a variable to hold the 
-    // selected file information
-    const [selectedFile, setSelectedFile] = useState(null);
 
-    // allows dispatching action by utilizing
-    // useDispatch module from react-redux
+    const imageConfig = {
+        quality: 1.0,
+        maxHeight: 300,
+    };
+    
+    const [preview, setPreview] = useState('');
+    const [selectedFile, setSelectedFile] = useState('');
     const dispatch = useDispatch();
+   
+    const [resizedFile, setResizedFile] = useState('');
 
-    // add inputted file information 
-    // to selectedFile variable 
-    const handleFileInput = (e) => {
-        console.log('in file input', e);
-        setSelectedFile(e.target.files[0]);
-        
+    
+    
+    const onFileChange = async (event) => {
+        console.log(event);
+        const userFile = event.target.files[0];
+        // const acceptedImageTypes = ['image/gif', 'image/jpeg', 'image/png', 'image/jpg'];
+        // if (acceptedImageTypes.includes(acceptedImageTypes.type)) {
+            const copyFile = new Blob([userFile], { type: userFile.type });
+            const resizedFile = await readAndCompressImage(copyFile, imageConfig);
+            setSelectedFile(userFile);
+            setResizedFile(resizedFile);
+            setPreview(URL.createObjectURL(resizedFile));
+        // } 
+        // else {
+        //     alert('Invalid image file type. Must be gif, jpeg or png.');
+        // }
     }
 
-    // dispatches file information
-    // to profile saga 
-    const handleUpload = (selectedFile) => {
-        dispatch({type: 'ADD_PROFILE_PICTURE', payload: selectedFile })
+
+
+    const sendFormDataToServer = () => {
+        let action;
+        // The file name seems to be dropped on resize, send both the
+        // original and resized files.
+        action = {
+            type: 'UPLOAD_PHOTO',
+            payload: {
+                // any other form data...
+                selectedFile,
+                resizedFile,
+            },
+        };
+        dispatch(action);
     }
 
     return (
         <>
-        <div
-                className="upload-section">
-                <div>React S3 File Upload</div>
-                <br />
-                <input type="file"
-                    onChange={handleFileInput} />
-                <br />
-                <br />
-                <button
-                    onClick={() => handleUpload(selectedFile)}>
-                    Upload to S3
-                </button><br />
-            </div>
+           { preview && (
+        <img
+            className="placeholder-photo-preview"
+            src={preview}
+            alt="Photo preview"
+        />
+           )}
+    <input type="file" accept="image/*" onChange={onFileChange} />
+    <button onClick={event => sendFormDataToServer()}>Submit</button>
         </>
     );
 }
