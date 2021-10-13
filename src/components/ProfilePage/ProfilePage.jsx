@@ -1,45 +1,44 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { readAndCompressImage } from 'browser-image-resizer';
+
+const imageConfig = {
+    quality: 1.0,
+    maxHeight: 300,
+};
 
 
 function ProfilePage() {
-    // create a variable to hold the 
-    // selected file information
-    const [selectedFile, setSelectedFile] = useState(null);
 
-    // allows dispatching action by utilizing
-    // useDispatch module from react-redux
-    const dispatch = useDispatch();
-
-    // add inputted file information 
-    // to selectedFile variable 
-    const handleFileInput = (e) => {
-        console.log('in file input', e);
-        setSelectedFile(e.target.files[0]);
-        
-    }
-
-    // dispatches file information
-    // to profile saga 
-    const handleUpload = (selectedFile) => {
-        dispatch({type: 'ADD_PROFILE_PICTURE', payload: selectedFile })
+    onFileChange = async (event) => {
+        const selectedFile = event.target.files[0];
+        const acceptedImageTypes = ['image/gif', 'image/jpeg', 'image/png'];
+        if (acceptedImageTypes.includes(selectedFile.type)) {
+            const copyFile = new Blob([selectedFile], { type: selectedFile.type });
+            const resizedFile = await readAndCompressImage(copyFile, imageConfig);
+            this.setState({
+                selectedFile,
+                resizedFile,
+                preview: URL.createObjectURL(resizedFile),
+                changes: true,
+            });
+        } else {
+            this.setState({
+                errorText: 'Invalid image file type. Must be gif, jpeg or png.',
+            });
+        }
     }
 
     return (
         <>
-        <div
-                className="upload-section">
-                <div>React S3 File Upload</div>
-                <br />
-                <input type="file"
-                    onChange={handleFileInput} />
-                <br />
-                <br />
-                <button
-                    onClick={() => handleUpload(selectedFile)}>
-                    Upload to S3
-                </button><br />
-            </div>
+         { preview && (
+        <img
+            className="placeholder-photo-preview"
+            src={preview}
+            alt="Photo preview"
+        />
+         )}
+    <input type="file" accept="image/*" onChange={this.onFileChange} />
         </>
     );
 }
