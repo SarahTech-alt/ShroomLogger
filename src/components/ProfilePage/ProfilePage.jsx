@@ -15,21 +15,27 @@ function ProfilePage() {
     const [preview, setPreview] = useState('');
     const [selectedFile, setSelectedFile] = useState('');
     const dispatch = useDispatch();
+   
+    const [resizedFile, setResizedFile] = useState('');
+
     
     
     const onFileChange = async (event) => {
-        const selectedFile = event.target.files[0];
-        const acceptedImageTypes = ['image/gif', 'image/jpeg', 'image/png'];
-        if (acceptedImageTypes.includes(selectedFile.type)) {
-            const copyFile = new Blob([selectedFile], { type: selectedFile.type });
-            // const resizedFile = await readAndCompressImage(copyFile, imageConfig);
-            setSelectedFile(selectedFile);
-            // setResizedFile(resizedFile);
-            // setPreview(URL.createObjectURL(resizedFile));
-        } else {
-            alert('Invalid image file type. Must be gif, jpeg or png.');
-        }
+        console.log(event);
+        const userFile = event.target.files[0];
+        // const acceptedImageTypes = ['image/gif', 'image/jpeg', 'image/png', 'image/jpg'];
+        // if (acceptedImageTypes.includes(acceptedImageTypes.type)) {
+            const copyFile = new Blob([userFile], { type: userFile.type });
+            const resizedFile = await readAndCompressImage(copyFile, imageConfig);
+            setSelectedFile(userFile);
+            setResizedFile(resizedFile);
+            setPreview(URL.createObjectURL(resizedFile));
+        // } 
+        // else {
+        //     alert('Invalid image file type. Must be gif, jpeg or png.');
+        // }
     }
+
 
 
     const sendFormDataToServer = () => {
@@ -41,7 +47,7 @@ function ProfilePage() {
             payload: {
                 // any other form data...
                 selectedFile,
-                // resizedFile,
+                resizedFile,
             },
         };
         dispatch(action);
@@ -49,15 +55,15 @@ function ProfilePage() {
 
     return (
         <>
-         { preview && (
+           { preview && (
         <img
             className="placeholder-photo-preview"
             src={preview}
             alt="Photo preview"
         />
-         )}
+           )}
     <input type="file" accept="image/*" onChange={onFileChange} />
-    <button onClick={(event => sendFormDataToServer())}>Submit</button>
+    <button onClick={event => sendFormDataToServer()}>Submit</button>
         </>
     );
 }

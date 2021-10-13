@@ -4,6 +4,9 @@ require('dotenv').config();
 
 const app = express();
 
+const fileUpload = require('express-fileupload');
+app.use(fileUpload());
+
 const sessionMiddleware = require('./modules/session-middleware');
 const passport = require('./strategies/user.strategy');
 
