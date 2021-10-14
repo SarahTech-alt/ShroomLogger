@@ -9,8 +9,15 @@ function* fetchLogHistory() {
     yield put({ type: 'SET_LOG_HISTORY', payload: response.data });
   }
 
+function* fetchLogDetail(logId) {
+    console.log('the selected log is', logId);
+    const response = yield axios.get(`/api/mushroom/${logId}`);
+    yield put({ type: 'SET_LOG_DETAIL', payload: response});
+}
+
   function* logSaga() {
     yield takeLatest('FETCH_LOGS', fetchLogHistory);
+    yield takeLatest('FETCH_LOG_DETAIL', fetchLogDetail)
   }
 
 

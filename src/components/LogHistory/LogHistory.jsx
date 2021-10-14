@@ -20,8 +20,8 @@ function LogHistory() {
     // dispatch selected id to sagas and
     // direct user to edit page
     const editLog = (logId) => {
-        dispatch({type: 'SELECT_LOG_TO_EDIT', payload: logId})
-        history.push('/edit');
+        dispatch({type: 'FETCH_LOG_DETAIL', payload: logId})
+        history.push(`/edit/${logID}`);
     }
 
     // dispatch selected id to sagas and
