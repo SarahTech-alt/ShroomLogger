@@ -13,7 +13,7 @@ import logHistory from './loghistory.reducer';
 const rootReducer = combineReducers({
   errors, // contains registrationMessage and loginMessage
   user, // will have an id and username if someone is logged in
-  profile, // will have profile picture url from AWS storage
+  profile, // contains profilePictureReducer and profileInfoReducer
   logHistory,
 });
 
