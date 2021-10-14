@@ -4,7 +4,7 @@ import registrationSaga from './registration.saga';
 import userSaga from './user.saga';
 import profileSaga from './profile.saga';
 import logHistory from './loghistory.saga';
-import mushroomNames from './mushroomNames.saga';
+
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -20,6 +20,5 @@ export default function* rootSaga() {
     userSaga(),
     profileSaga(),
     logHistory(),
-    mushroomNames(),
   ]);
 }

@@ -12,6 +12,10 @@ function LogHistory() {
     // from react-redux
     const dispatch = useDispatch();
 
+    const editLog = () => {
+
+    }
+
 
     // calling saga function on page load
     // to get the log history from the server
@@ -24,19 +28,24 @@ function LogHistory() {
             {JSON.stringify(logHistory)}
 
             <table>
+                <tbody>
                 <tr>
-                    <th>Name</th>
+                    <th>Common Name</th>
+                    <th>Scientific Name</th>
+                    <th>Date of Entry</th>
                     <th>Description</th>
                 </tr>
-                <tr>
+                
                 {logHistory.map((logs) => (
-                    <>
-                    <td>{log.date}</td>
+                    <tr key={logs.log_id}>
+                    <td>{logs.common_name}</td>
+                    <td>{logs.scientific_name}</td>
+                    <td>{logs.date}</td>
                     <td>{logs.details}</td>
-                    <td><button>edit</button></td>
-                    </>
+                    <td><button onClick={event => editLog()}>edit</button></td>
+                    </tr>
                 ))}
-               </tr>
+               </tbody>
             </table>
         </>
     );

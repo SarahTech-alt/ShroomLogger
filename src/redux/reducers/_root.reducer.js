@@ -3,7 +3,7 @@ import errors from './errors.reducer';
 import user from './user.reducer';
 import profile from './profile.reducer';
 import logHistory from './loghistory.reducer';
-import mushroomNames from './mushroomNames.reducer';
+
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -16,7 +16,6 @@ const rootReducer = combineReducers({
   user, // will have an id and username if someone is logged in
   profile, // contains profilePictureReducer and profileInfoReducer
   logHistory,
-  mushroomNames,
 });
 
 export default rootReducer;
