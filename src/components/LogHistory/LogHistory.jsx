@@ -30,10 +30,11 @@ function LogHistory() {
                 </tr>
                 <tr>
                 {logHistory.map((logs) => (
-                    <tr>
-                    <td>This is a name</td>
+                    <>
+                    <td>{log.date}</td>
                     <td>{logs.details}</td>
-                    </tr>
+                    <td><button>edit</button></td>
+                    </>
                 ))}
                </tr>
             </table>
