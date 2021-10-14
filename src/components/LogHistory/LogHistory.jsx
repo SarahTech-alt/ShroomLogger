@@ -22,20 +22,20 @@ function LogHistory() {
     // dispatch selected id to sagas and
     // direct user to edit page
     const editLog = (logId) => {
-        setSelectedLogId(logId);
-        console.log(logId);
-        dispatch({type: 'FETCH_LOG_DETAIL', payload: logId});
-        history.push(`/edit/${selectedLogId}`);
+        // setSelectedLogId(logId);
+        // console.log(logId);
+        dispatch({type: 'SET_SELECTED_LOG', payload: logId});
+        history.push(`/edit/${logId}`);
     }
 
     // dispatch selected id to sagas and
     // direct user to view details page
-    const viewLog = (logId) => {
-        setSelectedLogId(logId);
-        console.log(logId);
-        dispatch({type: 'FETCH_LOG_DETAIL', payload: logId});
-        history.push(`/detail/${selectedLogId}`);
-    }
+    // const viewLog = (logId) => {
+    //     setSelectedLogId(logId);
+    //     console.log(logId);
+    //     dispatch({type: 'SET_SELECTED_LOG', payload: logId});
+    //     history.push(`/detail/${selectedLogId}`);
+    // }
 
     // calling saga function on page load
     // to get the log history from the server

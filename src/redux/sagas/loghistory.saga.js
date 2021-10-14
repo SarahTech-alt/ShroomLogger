@@ -14,13 +14,13 @@ function* fetchLogDetail(action) {
   
     const logId = action.payload;
     console.log('the selected log is', logId);
-    const response = yield axios.get(`/api/mushroom/${logId}`);
+    const response = yield axios.get(`/api/mushroom/edit/${logId}`);
     yield put({ type: 'SET_LOG_DETAIL', payload: response});
 }
 
   function* logSaga() {
     yield takeLatest('FETCH_LOGS', fetchLogHistory);
-    yield takeLatest('FETCH_LOG_DETAIL', fetchLogDetail);
+    yield takeLatest('SET_SELECTED_LOG', fetchLogDetail);
   }
 
 

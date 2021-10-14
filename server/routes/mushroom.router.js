@@ -21,9 +21,9 @@ router.get('/', (req, res) => {
         })
 })
 
-router.get('/:id', (req, res) => {
+router.get('/edit/:id', (req, res) => {
     const selectedId = req.params.id;
-    console.log('selected log id in router', selectedId)
+    console.log('selected log id in router', selectedId);
     const userId = req.user.id;
     console.log('user id in router', req.params.id)
     queryText = `SELECT * FROM log_entry WHERE "id" = $1 AND "log_entry"."user_id" = $2;`
