@@ -15,7 +15,7 @@ const rootReducer = combineReducers({
   errors, // contains registrationMessage and loginMessage
   user, // will have an id and username if someone is logged in
   profile, // contains profilePictureReducer and profileInfoReducer
-  logHistory,
+  logHistory, // contains logHistory and logDetail reducers
 });
 
 export default rootReducer;
