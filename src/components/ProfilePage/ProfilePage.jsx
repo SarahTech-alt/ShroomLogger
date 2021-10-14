@@ -28,6 +28,7 @@ function ProfilePage() {
     const [preview, setPreview] = useState('');
     const [selectedFile, setSelectedFile] = useState('');
     const [resizedFile, setResizedFile] = useState('');
+    const [changePicture, setChangePicture] = useState(false);
 
     // asynchronous function that
     // updates hooks from user inputted information
@@ -63,17 +64,18 @@ function ProfilePage() {
         };
         dispatch(action);
         setPreview('');
+        setChangePicture(!changePicture);
     }
 
     // gets the user information from the reducer
     // on page load
     useEffect(() => {
         dispatch({ type: 'FETCH_PROFILE_INFO' });
-      }, []);
+    }, []);
 
     return (
         <>
-        {/* display preview of image once selected
+            {/* display preview of image once selected
         onFileChange sets the state of preview */}
             {preview && (
                 <img
@@ -82,19 +84,26 @@ function ProfilePage() {
                     alt="Photo preview"
                 />
             )}
-            {/* Allows user to select a file from their local files */}
-            <input type="file" accept="image/*" onChange={onFileChange} />
-            {/* Dispatches file to saga when the button is clicked */}
-            <button onClick={event => sendFormDataToServer()}>Submit</button>
+            {/* Show file upload when the user clicks their profile picture
+            Allows user to select a file from their local files */}
+            {changePicture && (
+                <div>
+                    <input type="file" accept="image/*" onChange={onFileChange} />
+                    {/* Dispatches file to saga when the button is clicked */}
+                    <button onClick={event => sendFormDataToServer()}>Submit</button>
+                </div>
+            )}
             {/* <p>{JSON.stringify(profileUserName)}</p> */}
             {/* Map over the profileInfoReducer 
             to display username and profile image */}
-            {profileInfo.map((user) =>
-                    <div key={user.id}>
-                        <p>username: {user.username}</p>
-                        <img src= {user.profile_picture_medium}></img>
-                    </div>
-                )}
+            {profileInfo.map((profile, index) =>
+                <div key={index}>
+                    {/* When the user clicks their picture set change picture to true
+                    which will conditionally render the file upload option */}
+                    <img src={profile.profile_picture_thumb} onClick={(event => setChangePicture(!changePicture))}></img>
+                    <p>username: {profile.username}</p>
+                </div>
+            )}
         </>
 
     );
