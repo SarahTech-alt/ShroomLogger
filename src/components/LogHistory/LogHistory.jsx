@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 
@@ -7,7 +7,7 @@ function LogHistory() {
 
     // access the log history
     // from the logHistory reducer
-    const logHistory = useSelector(store => store.logHistory)
+    const logHistory = useSelector(store => store.logHistory.logHistory)
 
     // access useDispatch component
     // from react-redux
@@ -17,18 +17,24 @@ function LogHistory() {
     // from react-router-dom
     const history = useHistory();
 
+    const [selectedLogId, setSelectedLogId] = useState('')
+
     // dispatch selected id to sagas and
     // direct user to edit page
     const editLog = (logId) => {
-        dispatch({type: 'FETCH_LOG_DETAIL', payload: logId})
-        history.push(`/edit/${logID}`);
+        setSelectedLogId(logId);
+        console.log(logId);
+        dispatch({type: 'FETCH_LOG_DETAIL', payload: logId});
+        history.push(`/edit/${selectedLogId}`);
     }
 
     // dispatch selected id to sagas and
     // direct user to view details page
     const viewLog = (logId) => {
-        dispatch({ type: 'FETCH_LOG_DETAIL', payload: logId})
-        history.push(`/details/${logId}`)
+        setSelectedLogId(logId);
+        console.log(logId);
+        dispatch({type: 'FETCH_LOG_DETAIL', payload: logId});
+        history.push(`/detail/${selectedLogId}`);
     }
 
     // calling saga function on page load
@@ -39,7 +45,7 @@ function LogHistory() {
 
     return (
         <>
-            {/* {JSON.stringify(logHistory)} */}
+            {JSON.stringify(logHistory)}
 
             <table>
                 <tbody>
