@@ -6,7 +6,7 @@ const aws = require('aws-sdk');
 const sharp = require('sharp');
 const {
     rejectUnauthenticated,
-  } = require('../modules/authentication-middleware');
+} = require('../modules/authentication-middleware');
 
 const { AWS_S3_REGION, AWS_S3_BUCKET, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY } = process.env;
 aws.config.region = AWS_S3_REGION;
@@ -28,6 +28,18 @@ aws.config.region = AWS_S3_REGION;
  * @apiSuccessExample {json} Success-Response:
  *      HTTP/1.1 201 OK
  */
+
+ router.get('/', (req, res) => {
+    // what is the value of req.user????
+    console.log('req.user:', req.user);
+    pool
+      .query(`SELECT * FROM "user" WHERE "id" = $1 ;`, [req.user.id])
+      .then((results) => res.send(results.rows))
+      .catch((error) => {
+        console.log('Error getting profile info:', error);
+        res.sendStatus(500);
+      });
+  });
 
 
 router.post('/s3', rejectUnauthenticated, async (req, res) => {
@@ -68,7 +80,7 @@ router.post('/s3', rejectUnauthenticated, async (req, res) => {
         console.log(data);
     } catch (error) {
         console.log('in s3 catch', error);
-        
+
         res.sendStatus(500);
     }
 });

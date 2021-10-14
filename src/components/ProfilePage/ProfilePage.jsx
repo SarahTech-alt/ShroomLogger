@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { readAndCompressImage } from 'browser-image-resizer';
 
@@ -12,21 +12,14 @@ function ProfilePage() {
         maxHeight: 300,
     };
 
-
     const profileInfo = useSelector(store => store.profile.profileInfoReducer);
     const profilePicUrl = useSelector(store => store.profile.profilePictureReducer);
     const userInfo = useSelector(store => store.user)
-
-
     const userId = userInfo.id;
-
     const [preview, setPreview] = useState('');
     const [selectedFile, setSelectedFile] = useState('');
     const dispatch = useDispatch();
-
     const [resizedFile, setResizedFile] = useState('');
-
-
 
     const onFileChange = async (event) => {
         console.log(event);
@@ -44,8 +37,6 @@ function ProfilePage() {
         // }
     }
 
-
-
     const sendFormDataToServer = () => {
         let action;
         // The file name seems to be dropped on resize, send both the
@@ -62,6 +53,10 @@ function ProfilePage() {
         dispatch(action);
     }
 
+    useEffect(() => {
+        dispatch({ type: 'FETCH_PROFILE_INFO' });
+      }, [dispatch]);
+
     return (
         <>
             {preview && (
@@ -74,6 +69,7 @@ function ProfilePage() {
             <input type="file" accept="image/*" onChange={onFileChange} />
             <button onClick={event => sendFormDataToServer()}>Submit</button>
             {JSON.stringify(profilePicUrl)}
+            {JSON.stringify(profileInfo)}
         </>
 
     );

@@ -1,7 +1,5 @@
 import { put, takeEvery } from 'redux-saga/effects';
 import axios from 'axios';
-// import { get } from '../../../server/routes/profile.router';
-
 
 // send user uploaded image to profile.router
 // 
@@ -38,17 +36,18 @@ function* uploadPhoto(action) {
 
 function* fetchProfile() {
     try {
-
+        const response = yield axios.get('api/profile');
+        yield put({type: 'SET_PROFILE_INFO', payload: response.data})
     } catch (error) {
         alert('Something went wrong getting profile information');
         console.log('Profile information - get request failed', error);
-
     }
 }
 
 
 function* profileSaga() {
     yield takeEvery('UPLOAD_PHOTO', uploadPhoto);
+    yield takeEvery('FETCH_PROFILE_INFO', fetchProfile)
 }
 
 export default profileSaga;

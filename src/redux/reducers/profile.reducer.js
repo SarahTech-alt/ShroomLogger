@@ -12,6 +12,7 @@ const profilePictureReducer = (state = [], action) => {
 const profileInfoReducer = (state = [], action) => {
     switch (action.type) {
         case 'SET_PROFILE_INFO':
+            return action.payload;
         default:
             return state;
     }
