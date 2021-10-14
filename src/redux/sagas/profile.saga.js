@@ -2,9 +2,7 @@ import { put, takeEvery } from 'redux-saga/effects';
 import axios from 'axios';
 
 // send user uploaded image to profile.router
-// 
-
-
+// for storage in AWS S3 bucket
 function* uploadPhoto(action) {
     try {
         const { selectedFile, resizedFile } = action.payload;
@@ -17,16 +15,6 @@ function* uploadPhoto(action) {
         const formData = new FormData();
         formData.append('image', resizedFile);
         yield axios.post(`api/profile/s3?name=${fileName}&type=${fileType}&size=${fileSize}`, formData);
-        // yield axios.post('api/profile', fileName);
-        
-        // put({
-        //     type: 'SET_PROFILE_PIC', payload: [
-        //         {
-        //             medium: `https://solospikebucket.s3.us-east-2.amazonaws.com/photos/medium/${fileName}`,
-        //             thumbnail: `https://solospikebucket.s3.us-east-2.amazonaws.com/photos/thumb/${fileName}`,
-        //         }
-        //     ]
-        // })
         yield put({type: 'POST_PHOTO', payload: fileName})
         // yield put({type:'FETCH_PROFILE_INFO'})
     } catch (error) {
@@ -37,6 +25,9 @@ function* uploadPhoto(action) {
 }
 
 function* postPhoto(action) {
+    // updates the profile picture url in the database
+    // then calls the get saga function to get
+    // the most up to date profile information
     try{
         console.log('filename in put', action.payload);
         let fileName = {selectedFile: action.payload};
@@ -49,6 +40,8 @@ function* postPhoto(action) {
 
 
 function* fetchProfile() {
+    // gets information from the user table in the database
+    // and sends to profile info reducer
     try {
         const response = yield axios.get('api/profile');
         yield put({type: 'SET_PROFILE_INFO', payload: response.data})
