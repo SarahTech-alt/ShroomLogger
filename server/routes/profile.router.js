@@ -41,6 +41,21 @@ aws.config.region = AWS_S3_REGION;
       });
   });
 
+  router.put('/', (req,res) => {
+      console.log('req.body is', req.body.selectedFile);
+      const fileName = req.body.selectedFile;
+      const mediumUrl = `https://solospikebucket.s3.us-east-2.amazonaws.com/photos/medium/${fileName}`;
+      const thumbUrl = `https://solospikebucket.s3.us-east-2.amazonaws.com/photos/thumb/${fileName}`;
+      const userId = req.user.id;
+      queryText = `UPDATE "user" SET ("profile_picture_medium", "profile_picture_thumb") = ($1,$2) WHERE "id" = $3;`;
+      pool.query(queryText, [mediumUrl, thumbUrl, userId])
+      .then(result => {
+          res.sendStatus(200)}).catch(error => {
+      console.log('there was an error posting profile picture', error);
+      res.sendStatus(500);
+  })
+})
+
 
 router.post('/s3', rejectUnauthenticated, async (req, res) => {
     if (!AWS_S3_BUCKET || !AWS_S3_REGION || !AWS_ACCESS_KEY_ID || !AWS_SECRET_ACCESS_KEY) {
@@ -51,7 +66,7 @@ router.post('/s3', rejectUnauthenticated, async (req, res) => {
         const imageUserId = req.user.id
         const imageProps = req.query;
         const imageData = req.files.image.data;
-        const mediumKey = `photos/medium/${imageUserId}/${imageProps.name}`;
+        const mediumKey = `photos/medium/${imageProps.name}`;
         // Optionally, resize the image
         const mediumFileConent = await sharp(imageData).resize(300, 300).toBuffer();
 
@@ -68,7 +83,7 @@ router.post('/s3', rejectUnauthenticated, async (req, res) => {
 
         // Optionally, create a thumbnail
         const thumbFileConent = await sharp(imageData).resize(100, 100).toBuffer();
-        const thumbKey = `photos/thumb/${imageUserId}/${imageProps.name}`;
+        const thumbKey = `photos/thumb/${imageProps.name}`;
         params.Key = thumbKey;
         params.Body = thumbFileConent;
         await s3.upload(params).promise();
