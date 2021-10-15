@@ -13,7 +13,7 @@ CREATE TABLE "user" (
 
 CREATE TABLE "log_entry" (
 	"id" SERIAL PRIMARY KEY,
-	"user_id" integer REFERENCES "user" NOT NULL,
+	"user_id" integer NOT NULL,
 	"date" TIMESTAMP NOT NULL DEFAULT NOW(),
 	"latitude" DECIMAL,
 	"longitude" DECIMAL(1000),
