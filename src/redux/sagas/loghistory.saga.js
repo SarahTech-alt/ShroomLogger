@@ -11,17 +11,16 @@ function* fetchLogHistory() {
 
 function* fetchLogDetail(action) {
   console.log('in fetch log detail', action.payload);
-  
     const logId = action.payload;
     console.log('the selected log is', logId);
     const response = yield axios.get(`/api/mushroom/edit/${logId}`);
-    yield put({ type: 'SET_LOG_DETAIL', payload: response});
+    yield put({ type: 'SET_LOG_DETAIL', payload: response.data[0]});
 }
 
 function* deleteSelectedLog(action) {
   console.log('in delete saga');
   console.log(action.payload);
-  yield axios.delete(`/api/mushroom/delete/${action.payload.id}`)
+  yield axios.delete(`/api/mushroom/delete/${action.payload}`)
 }
 
   function* logSaga() {
