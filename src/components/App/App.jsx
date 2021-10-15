@@ -88,7 +88,7 @@ function App() {
           <ProtectedRoute
             // logged in shows LogDetails else shows LoginPage
             exact
-            path='/details'
+            path="/details/:id"
           >
             <LogDetails />
           </ProtectedRoute>
@@ -104,7 +104,7 @@ function App() {
           <ProtectedRoute
             // logged in shows EditLog else shows LoginPage
             exact
-            path="/edit"
+            path="/edit/:id"
           >
             <EditLog />
           </ProtectedRoute>
