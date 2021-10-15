@@ -14,10 +14,15 @@ function EditLog() {
         dispatch({ type: 'FETCH_LOG_DETAILS', payload: {id: logId }});
     }, [logId]);
 
+    const deleteLog = () => {
+        dispatch({ type: 'DELETE_SELECTED_LOG', payload: { id: logId }})
+    }
+
     return (
         <>
         {/* {JSON.stringify(logDetails.logHistory)} */}
         <h1>Edit Page</h1>
+        <button onClick={event=> deleteLog()}>delete log</button>
                 {logDetails.logHistory.map((logs) => (
                     <div key={logs.log_id}>
                     <p><button>edit</button> Common Name: {logs.common_name}</p>
