@@ -1,12 +1,14 @@
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 function EditLog() {
     const allParams = useParams();
     const logDetails = useSelector(store => store.logHistory);
     const logId = allParams.id;
     const dispatch = useDispatch();
+    const history = useHistory();
 
     useEffect(() => {
         dispatch({ type: 'FETCH_LOG_DETAILS', payload: {id: logId }});
@@ -25,7 +27,7 @@ function EditLog() {
                     <img src={logs.mushroom_picture_url} alt = {logs.mushroom_picture_url}></img>
                     </div>
                 ))}
-            
+            <button onClick={event => history.goBack()}>back</button>
         </>
         
     );
