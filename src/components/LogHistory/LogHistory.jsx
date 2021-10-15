@@ -30,12 +30,10 @@ function LogHistory() {
 
     // dispatch selected id to sagas and
     // direct user to view details page
-    // const viewLog = (logId) => {
-    //     setSelectedLogId(logId);
-    //     console.log(logId);
-    //     dispatch({type: 'SET_SELECTED_LOG', payload: logId});
-    //     history.push(`/detail/${selectedLogId}`);
-    // }
+    const viewLog = (logId) => {
+        dispatch({type: 'SET_SELECTED_LOG', payload: logId});
+        history.push(`/details/${logId}`);
+    }
 
     // calling saga function on page load
     // to get the log history from the server
