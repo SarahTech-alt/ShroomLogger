@@ -29,7 +29,7 @@ function EditLog() {
 
     return (
         <>
-            {/* {JSON.stringify(logInfo.logDetail)} */}
+            {JSON.stringify(logInfo.logDetail)}
             {/* Access information from the logDetail
             reducer and display on DOM with buttons to edit logs
             and a back button to navigate to previous page */}

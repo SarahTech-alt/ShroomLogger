@@ -14,7 +14,7 @@ function* fetchLogDetail(action) {
     const logId = action.payload;
     console.log('the selected log is', logId);
     const response = yield axios.get(`/api/mushroom/detail/${logId}`);
-    yield put({ type: 'SET_LOG_DETAIL', payload: response.data});
+    yield put({ type: 'SET_LOG_DETAIL', payload: response.data[0]});
 }
 
 function* deleteSelectedLog(action) {
@@ -23,10 +23,17 @@ function* deleteSelectedLog(action) {
   yield axios.delete(`/api/mushroom/delete/${action.payload}`)
 }
 
+function* addMushroomLog(action) {
+  console.log('in add mushroom. new mushroom info', action.payload);
+  yield axios.post('/api/mushroom', action.payload);
+  yield put({ type:'FETCH_LOGS'})
+}
+
   function* logSaga() {
     yield takeLatest('FETCH_LOGS', fetchLogHistory);
     yield takeLatest('SET_SELECTED_LOG', fetchLogDetail);
-    yield takeLatest('DELETE_SELECTED_LOG', deleteSelectedLog)
+    yield takeLatest('DELETE_SELECTED_LOG', deleteSelectedLog);
+    yield takeLatest('ADD_NEW_MUSHROOM', addMushroomLog);
   }
 
 
