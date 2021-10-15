@@ -22,6 +22,7 @@ function EditLog() {
                     <p><button>edit</button> Scientific Name: {logs.scientific_name}</p>
                     <p><button>edit</button> Date of Entry: {logs.date} </p>
                     <p><button>edit</button> Description: {logs.details} </p>
+                    <img src={logs.mushroom_picture_url} alt = {logs.mushroom_picture_url}></img>
                     </div>
                 ))}
             
