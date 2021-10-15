@@ -14,7 +14,7 @@ function* fetchLogDetail(action) {
     const logId = action.payload;
     console.log('the selected log is', logId);
     const response = yield axios.get(`/api/mushroom/detail/${logId}`);
-    yield put({ type: 'SET_LOG_DETAIL', payload: response.data[0]});
+    yield put({ type: 'SET_LOG_DETAIL', payload: response.data});
 }
 
 function* deleteSelectedLog(action) {
