@@ -43,7 +43,7 @@ function LogHistory() {
 
     return (
         <>
-            {JSON.stringify(logHistory)}
+            {/* {JSON.stringify(logHistory)} */}
 
             <table>
                 <tbody>
