@@ -21,7 +21,7 @@ router.get('/', (req, res) => {
         })
 })
 
-router.get('/edit/:id', (req, res) => {
+router.get('/detail/:id', (req, res) => {
     const selectedId = req.params.id;
     console.log('selected log id in router', selectedId);
     const userId = req.user.id;
