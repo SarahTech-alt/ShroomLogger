@@ -66,6 +66,7 @@ function LogHistory() {
                 ))}
                </tbody>
             </table>
+            <button onClick={event => history.goBack()}>Go Back</button>
         </>
     );
 }
