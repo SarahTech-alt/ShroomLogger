@@ -41,22 +41,41 @@ router.get('/detail/:id', (req, res) => {
 })
 
 router.delete('/delete/:id', (req, res) => {
-    const selectedId = req.params.id;
-    const userId = req.user.id;
-    console.log('in router delete', selectedId);
-    const queryText = `DELETE * FROM log_entry
-    JOIN mushroom_names ON "mushroom_names"."log_id" = "log_entry"."id" 
-    JOIN mushroom_pictures ON "mushroom_pictures"."log_entry_id" = "log_entry"."id" WHERE "log_entry"."id" = $1 AND "log_entry"."user_id" = $2;`
-    pool.query(queryText, [selectedId, userId])
-        .then(results => {
-            if (results.rows.count > 0) {
-                console.log('successfully deleted');
-                res.send({ message: 'Log Entry Deleted' });
-            } else {
-                res.send({ message: 'Nothing was deleted.' })
-            }
-        })
-})
+        const logId = req.params.id;
+        console.log('id in first query', logId)
+        const queryText = `DELETE FROM log_entry WHERE "user_id" = $1 and "id" = $2
+        RETURNING "log_entry"."id";`;
+        pool.query(queryText, [req.user.id, logId])
+            .then(result => {
+                const deleteFromNames = `DELETE FROM mushroom_names WHERE "log_id" = $1;`
+                pool.query(deleteFromNames, [logId])
+                    .then(result => {
+                        const deleteFromPictures = `DELETE FROM mushroom_pictures WHERE "log_entry_id" = $1 AND "user_id" = $2;`
+                        pool.query(deleteFromPictures, [logId, req.user.id])
+                            .then(result => { res.sendStatus(200) })
+                            .catch(error => {
+                                console.log('there was an error deleting mushroom pictures', error)
+                            })
+                    })
+            })
+            .catch(error => {
+                console.log('there was an error deleting names', error)
+            })
+            .catch(error => {
+                console.log('there was an error deleting log entry', error)
+            })
+    })
+
+
+// .then(results => {
+//     if (results.rows.count > 0) {
+//         console.log('successfully deleted');
+//         res.send({ message: 'Log Entry Deleted' });
+//     } else {
+//         res.send({ message: 'Nothing was deleted.' })
+//     }
+// })
+// })
 
 router.post('/', (req, res) => {
     const mushroomData = req.body;
