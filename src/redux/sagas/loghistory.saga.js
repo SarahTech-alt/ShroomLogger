@@ -19,14 +19,15 @@ function* fetchLogDetail(action) {
 
 function* deleteSelectedLog(action) {
   console.log('in delete saga');
-  console.log(action.payload);
-  yield axios.delete(`/api/mushroom/delete/${action.payload}`)
+  console.log('id in delete saga', action.payload);
+  yield axios.delete(`/api/mushroom/delete/${action.payload}`);
+  yield put({ type: 'FETCH_LOGS' });
 }
 
 function* addMushroomLog(action) {
   console.log('in add mushroom. new mushroom info', action.payload);
   yield axios.post('/api/mushroom', action.payload);
-  yield put({ type:'FETCH_LOGS'})
+  yield put({ type:'FETCH_LOGS'});
 }
 
   function* logSaga() {
