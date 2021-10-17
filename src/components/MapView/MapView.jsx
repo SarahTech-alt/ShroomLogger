@@ -11,8 +11,8 @@ const containerStyle = {
 };
 
 const center = {
-  lat: 44.973792346502,
-  lng: -93.00798830056591
+  lat: 44.959382006981784,
+  lng: -93.27825928801052
 };
 
 const onLoad = marker => {
@@ -37,7 +37,7 @@ function MapView() {
 
   return (
     <div className='map-display'>
-        {JSON.stringify(logDetails)}
+        {/* {JSON.stringify(logDetails)} */}
       <LoadScript
         googleMapsApiKey='AIzaSyB2zvv_VwzdmVB3AUsArHOukWu5uau-ZaY'
       >
@@ -50,7 +50,7 @@ function MapView() {
           <>
             {logDetails.map((coord, index) => (
               <Marker key={index}
-                position={{ lat: coord.latitude, lng: coord.longitude }}
+                position={{ lat: Number(coord.latitude), lng: Number(coord.longitude) }}
                 onLoad={onLoad}
                 onClick={toggleInfo}
               > 
