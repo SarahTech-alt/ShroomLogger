@@ -106,4 +106,65 @@ router.post('/', (req, res) => {
         })
 })
 
+router.put('/editInfo/:id', (req, res) => {
+    console.log('req.params in update log',req.params )
+    console.log('req.body in edit router', req.body)
+    let mushroomInfo = req.body;
+    const userId = req.user.id;
+    const logId = req.params.id;
+    queryText = `UPDATE log_entry SET ("date", "details") = ($1,$2) WHERE "id" = $3;`;
+    pool.query(queryText, [mushroomInfo.date, mushroomInfo.details,logId ])
+        .then(result => {
+            // sends success status on completion
+            res.sendStatus(200)
+        }).catch(error => {
+            // sends error status on error
+            console.log('there was an error posting edited info', error);
+            res.sendStatus(500);
+        })
+})
+
+router.post('/s3', rejectUnauthenticated, async (req, res) => {
+    if (!AWS_S3_BUCKET || !AWS_S3_REGION || !AWS_ACCESS_KEY_ID || !AWS_SECRET_ACCESS_KEY) {
+        res.status(500).send('Missing environment variables for AWS bucket.');
+        return;
+    }
+    try {
+        const imageUserId = req.user.id
+        const imageProps = req.query;
+        const imageData = req.files.image.data;
+        const mediumKey = `photos/medium/${imageProps.name}`;
+        // Optionally, resize the image
+        const mediumFileContent = await sharp(imageData).resize(300, 300).toBuffer();
+
+        // Setting up S3 upload parameters
+        const params = {
+            Bucket: AWS_S3_BUCKET,
+            Key: mediumKey,
+            Body: mediumFileContent,
+            ACL: 'public-read',
+        };
+        const s3 = new aws.S3();
+        // Uploading files to the bucket
+        const data = await s3.upload(params).promise();
+
+        // Optionally, create a thumbnail
+        const thumbFileContent = await sharp(imageData).resize(100, 100).toBuffer();
+        const thumbKey = `photos/thumb/${imageProps.name}`;
+        params.Key = thumbKey;
+        params.Body = thumbFileContent;
+        await s3.upload(params).promise();
+
+        // INSERT photo path into the database
+
+        // Send back medium image data.
+        res.send(data);
+        console.log(data);
+    } catch (error) {
+        console.log('in s3 catch', error);
+
+        res.sendStatus(500);
+    }
+});
+
 module.exports = router;

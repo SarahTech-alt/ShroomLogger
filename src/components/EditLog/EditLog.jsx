@@ -74,16 +74,18 @@ function EditLog() {
     const sendFormDataToServer = () => {
         // The file name seems to be dropped on resize, send both the
         // original and resized files.
-        const action = {
+        let action;
+        console.log('in send form data to server', updatedMushroom);
+         dispatch({
             type: 'EDIT_LOG_DETAILS',
             payload: {
                 // any other form data...
                 logId,
                 updatedMushroom
             }
-        };
-        dispatch(action);
-        sendPictureToServer();
+        })
+        
+        // sendPictureToServer();
     }
 
     const sendPictureToServer = () => {
