@@ -20,9 +20,7 @@ function ProfilePage() {
     const profileInfo = useSelector(store => store.profile.profileInfoReducer);
     const userInfo = useSelector(store => store.user)
 
-    // getting user id from the store to send 
-    // with uploaded photo
-    const userId = userInfo.id;
+      
 
     // hooks for image actions
     const [preview, setPreview] = useState('');

@@ -21,7 +21,6 @@ function* uploadPhoto(action) {
         alert('Something went wrong when uploading a photo');
         console.log('Photo Upload - post request failed', error);
     }
-
 }
 
 function* postPhoto(action) {
