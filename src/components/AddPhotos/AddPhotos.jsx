@@ -40,6 +40,7 @@ function AddPhotos() {
 
         <input type="text" value={moment().format('MMMM Do YYYY, h:mm:ss a')} onChange={(event) => setNewMushroom({ ... newMushroom, date: event.target.value})} placeholder="When"></input> <br />
 
+
         <input type="text" value={newMushroom.mushroom_picture_url} onChange={(event) => setNewMushroom({ ... newMushroom, mushroom_picture_url: event.target.value})} placeholder="URL"></input> <br />
 
         <input type="text" value={newMushroom.details} onChange={(event) => setNewMushroom({ ... newMushroom, details: event.target.value})} placeholder="Details"></input> <br />

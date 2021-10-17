@@ -19,14 +19,43 @@ function* fetchLogDetail(action) {
 
 function* deleteSelectedLog(action) {
   console.log('in delete saga');
-  console.log(action.payload);
-  yield axios.delete(`/api/mushroom/delete/${action.payload}`)
+  console.log('id in delete saga', action.payload);
+  yield axios.delete(`/api/mushroom/delete/${action.payload}`);
+  yield put({ type: 'FETCH_LOGS' });
 }
 
 function* addMushroomLog(action) {
   console.log('in add mushroom. new mushroom info', action.payload);
   yield axios.post('/api/mushroom', action.payload);
-  yield put({ type:'FETCH_LOGS'})
+  yield put({ type:'FETCH_LOGS'});
+}
+
+function* postUpdatedLog(action) {
+  try{
+      const selectedLog = action.payload.logId
+      console.log('log id to send to post in edit', selectedLog);
+      const updatedMushroomDetails = action.payload.updatedMushroom;
+      console.log('edited log info to send to post', updatedMushroomDetails);
+      yield axios.put(`api/mushroom/editInfo/${selectedLog}`, updatedMushroomDetails);
+      yield put({type:'FETCH_LOGS'})
+  } catch (error) {
+      console.log('something went wrong sending edited log to db', error);  
+  }
+}
+
+function* postUpdatedPicture(action) {
+  // updates the profile picture url in the database
+  // then calls the get saga function to get
+  // the most up to date profile information
+  try{
+      console.log('filename in put', action.payload);
+      const fileName = {selectedFile: action.payload.logId};
+      const selectedPhoto = {logId: action.payload}
+      yield axios.put(`api/mushroom/picture/${selectedPhoto}`, fileName);
+      yield put({type:'FETCH_LOGS'})
+  } catch (error) {
+      console.log('something went wrong sending edited photo to db', error);  
+  }
 }
 
   function* logSaga() {
@@ -34,6 +63,8 @@ function* addMushroomLog(action) {
     yield takeLatest('SET_SELECTED_LOG', fetchLogDetail);
     yield takeLatest('DELETE_SELECTED_LOG', deleteSelectedLog);
     yield takeLatest('ADD_NEW_MUSHROOM', addMushroomLog);
+    yield takeLatest('EDIT_LOG_DETAILS', postUpdatedLog),
+    yield takeLatest('EDIT_LOG_PICTURE', postUpdatedPicture);
   }
 
 
