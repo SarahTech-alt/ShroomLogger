@@ -44,10 +44,7 @@ function EditLog() {
         console.log('log id on page load', logId);
     }, [logId]);
 
-    // dispatches to delete saga on delete button click
-    const deleteLog = () => {
-        dispatch({ type: 'DELETE_SELECTED_LOG', payload: logId })
-    }
+
 
     const [updatedMushroom, setUpdatedMushroom] = useState({
         common_name: '',
@@ -76,7 +73,7 @@ function EditLog() {
         // original and resized files.
         let action;
         console.log('in send form data to server', updatedMushroom);
-         dispatch({
+        dispatch({
             type: 'EDIT_LOG_DETAILS',
             payload: {
                 // any other form data...
@@ -84,7 +81,7 @@ function EditLog() {
                 updatedMushroom
             }
         })
-        
+
         // sendPictureToServer();
     }
 
@@ -101,6 +98,11 @@ function EditLog() {
         }
         setPreview('');
         setChangePicture(!changePicture);
+    }
+    // dispatches to delete saga on delete button click
+    const deleteLog = () => {
+        dispatch({ type: 'DELETE_SELECTED_LOG', payload: logId })
+        history.goBack();
     }
 
     return (

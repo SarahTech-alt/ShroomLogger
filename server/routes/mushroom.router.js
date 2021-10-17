@@ -8,9 +8,9 @@ const {
 
 router.get('/', (req, res) => {
     const userId = req.user.id;
-    const queryText = `SELECT "log_id", "date", "latitude", "longitude", "details", "common_name", "scientific_name","mushroom_picture_url" FROM log_entry
-    JOIN mushroom_names ON "mushroom_names"."log_id" = "log_entry"."id" 
-    JOIN mushroom_pictures ON "mushroom_pictures"."log_entry_id" = "log_entry"."id" WHERE "log_entry"."user_id" = $1;`;
+    const queryText = `SELECT * FROM log_entry
+    LEFT OUTER JOIN mushroom_names ON "mushroom_names"."log_id" = "log_entry"."id"
+   LEFT OUTER JOIN mushroom_pictures ON "mushroom_pictures"."log_entry_id" = "log_entry"."id" WHERE "log_entry"."user_id" = $1;`;
     pool.query(queryText, [userId])
         .then(results => {
             res.send(results.rows)
@@ -81,9 +81,9 @@ router.post('/', (req, res) => {
     const mushroomData = req.body;
     console.log('info in router', mushroomData)
     console.log('mushroom details', mushroomData.details);
-    const queryText = `INSERT INTO log_entry ("user_id", "details") VALUES ($1,$2)
+    const queryText = `INSERT INTO log_entry ("date", "latitude", "longitude", "user_id", "details") VALUES ($1,$2, $3, $4, $5)
     RETURNING "id"`;
-    pool.query(queryText, [req.user.id, mushroomData.details])
+    pool.query(queryText, [mushroomData.date, mushroomData.latitude, mushroomData.longitude, req.user.id, mushroomData.details])
         .then(result => {
             console.log('New Log ID:', result.rows[0].id);
             const logId = result.rows[0].id;
