@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { GoogleMap, InfoWindow, LoadScript, Marker } from '@react-google-maps/api';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -26,8 +26,10 @@ function MapView() {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const toggleInfo = () => {
+  const [detailsDisplayed, setDetailsDisplayed] = useState(false)
 
+  const toggleInfo = (id) => {
+    setDetailsDisplayed(!detailsDisplayed)
   }
 
   useEffect(() => {
@@ -53,11 +55,12 @@ function MapView() {
                 position={{ lat: Number(coord.latitude), lng: Number(coord.longitude) }}
                 onLoad={onLoad}
                 onClick={toggleInfo}
-              > 
-                 {/* <InfoWindow
-                  position={{ lat: coord.latitude, lng: coord.longitude }}>
-                  <p>{coord.details}</p>
-                </InfoWindow> :  */}
+                onMouseOver={event => toggleInfo(coord.log_id)}
+              > {detailsDisplayed && (
+                 <InfoWindow
+                  position={{ lat: Number(coord.latitude), lng: Number(coord.longitude) }}>
+                  <p>{coord.common_name}</p>
+                </InfoWindow>  )}
              </Marker>
             ))}
           </>
