@@ -4,6 +4,7 @@
   "private": true,
   "proxy": "http://localhost:5000",
   "dependencies": {
+    "@react-google-maps/api": "^2.5.0",
     "aws-sdk": "^2.1006.0",
     "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",

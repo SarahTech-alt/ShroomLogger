@@ -36,7 +36,7 @@ function AddPhotos() {
 
         <input type="text" value={newMushroom.longitude} onChange={(event) => setNewMushroom({ ... newMushroom, longitude: event.target.value})} placeholder="Longitude"></input> <br />
 
-        <input type="text" value={newMushroom.date} onChange={(event) => setNewMushroom({ ... newMushroom, date: event.target.value})} placeholder="When"></input> <br />
+        <input type="date" value={newMushroom.date} onChange={(event) => setNewMushroom({ ... newMushroom, date: event.target.value})} placeholder="When"></input> <br />
 
         <input type="text" value={newMushroom.mushroom_picture_url} onChange={(event) => setNewMushroom({ ... newMushroom, mushroom_picture_url: event.target.value})} placeholder="URL"></input> <br />
 
