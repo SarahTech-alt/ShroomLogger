@@ -41,31 +41,30 @@ router.get('/detail/:id', (req, res) => {
 })
 
 router.delete('/delete/:id', (req, res) => {
-        const logId = req.params.id;
-        console.log('id in first query', logId)
-        const queryText = `DELETE FROM log_entry WHERE "user_id" = $1 and "id" = $2
+    const logId = req.params.id;
+    console.log('id in first query', logId)
+    const queryText = `DELETE FROM log_entry WHERE "id" = $1
         RETURNING "log_entry"."id";`;
-        pool.query(queryText, [req.user.id, logId])
-            .then(result => {
-                const deleteFromNames = `DELETE FROM mushroom_names WHERE "log_id" = $1;`
-                pool.query(deleteFromNames, [logId])
-                    .then(result => {
-                        const deleteFromPictures = `DELETE FROM mushroom_pictures WHERE "log_entry_id" = $1 AND "user_id" = $2;`
-                        pool.query(deleteFromPictures, [logId, req.user.id])
-                            .then(result => { res.sendStatus(200) })
-                            .catch(error => {
-                                console.log('there was an error deleting mushroom pictures', error)
-                            })
-                    })
-            })
-            .catch(error => {
-                console.log('there was an error deleting names', error)
-            })
-            .catch(error => {
-                console.log('there was an error deleting log entry', error)
-            })
-    })
-
+    pool.query(queryText, [logId])
+        .then(result => {
+            const deleteFromNames = `DELETE FROM mushroom_names WHERE "log_id" = $1;`
+            pool.query(deleteFromNames, [logId])
+                .then(result => {
+                    const deleteFromPictures = `DELETE FROM mushroom_pictures WHERE "log_entry_id" = $1;`
+                    pool.query(deleteFromPictures, [logId])
+                        .then(result => { res.sendStatus(200) })
+                        .catch(error => {
+                            console.log('there was an error deleting mushroom pictures', error)
+                        })
+                })
+        })
+        .catch(error => {
+            console.log('there was an error deleting names', error)
+        })
+        .catch(error => {
+            console.log('there was an error deleting log entry', error)
+        })
+})
 
 // .then(results => {
 //     if (results.rows.count > 0) {
@@ -107,13 +106,13 @@ router.post('/', (req, res) => {
 })
 
 router.put('/editInfo/:id', (req, res) => {
-    console.log('req.params in update log',req.params )
+    console.log('req.params in update log', req.params)
     console.log('req.body in edit router', req.body)
     let mushroomInfo = req.body;
     const userId = req.user.id;
     const logId = req.params.id;
     queryText = `UPDATE log_entry SET ("date", "details") = ($1,$2) WHERE "id" = $3;`;
-    pool.query(queryText, [mushroomInfo.date, mushroomInfo.details,logId ])
+    pool.query(queryText, [mushroomInfo.date, mushroomInfo.details, logId])
         .then(result => {
             // sends success status on completion
             res.sendStatus(200)
