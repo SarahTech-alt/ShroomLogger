@@ -57,7 +57,6 @@ function EditLog() {
         longitude: '',
         date: '',
         details: '',
-        mushroom_picture_url: '',
     });
 
     const onFileChange = async (event) => {

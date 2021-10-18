@@ -73,7 +73,7 @@ function AddPhotos() {
         longitude: '',
         date: moment().format(),
         details: '',
-        mushroom_picture_url: '',
+        
 
     });
         // dispatch newMushroom info from inputs to loghistory.saga
@@ -109,7 +109,7 @@ function AddPhotos() {
         <input type="date" onChange={(event) => setNewMushroom({ ... newMushroom, date: moment(event.target.value).format()})} placeholder="When"></input> <br />
 
 
-        <input type="text" value={newMushroom.mushroom_picture_url} onChange={(event) => setNewMushroom({ ... newMushroom, mushroom_picture_url: event.target.value})} placeholder="URL"></input> <br />
+        {/* <input type="text" value={newMushroom.mushroom_picture_url} onChange={(event) => setNewMushroom({ ... newMushroom, mushroom_picture_url: event.target.value})} placeholder="URL"></input> <br /> */}
 
         <input type="text" value={newMushroom.details} onChange={(event) => setNewMushroom({ ... newMushroom, details: event.target.value})} placeholder="Details"></input> <br />
 

@@ -39,7 +39,7 @@ function HomePage() {
         </button> <br />
         {logHistory.map((logs) => (
                     <div key={logs.log_id}>
-                    <p><img width="250" height="200" src={logs.mushroom_picture_url} /></p>
+                    <p><img width="250" height="200" src={logs.mushroom_picture_thumb} /></p>
                     </div>
                 ))}
         <hr />
