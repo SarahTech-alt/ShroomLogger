@@ -31,7 +31,7 @@ app.use(passport.session());
 app.use('/api/user', userRouter);
 app.use('/api/profile', profileRouter);
 app.use('/api/mushroom', mushroomRouter);
-app.use('/api/mushroom/picture', mushroomPictureRouter);
+app.use('/api/mushroom/photo', mushroomPictureRouter);
 
 // Serve static files
 app.use(express.static('build'));
