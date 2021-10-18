@@ -46,7 +46,7 @@ function AddPhotos() {
             // The file name seems to be dropped on resize, send both the
             // original and resized files.
             action = {
-                type: 'ADD_NEW_PHOTO',
+                type: 'ADD_MUSHROOM_PHOTO',
                 payload: {
                     // any other form data...
                     selectedFile,
@@ -78,7 +78,9 @@ function AddPhotos() {
     });
         // dispatch newMushroom info from inputs to loghistory.saga
         const addNewMushroom = () => {
-            dispatch({ type: 'ADD_NEW_MUSHROOM', payload: newMushroom})
+            dispatch({ type: 'ADD_NEW_MUSHROOM', 
+            payload: 
+            {newMushroom, selectedFile}})
             history.push('/home');
         }
 

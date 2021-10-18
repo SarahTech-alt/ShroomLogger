@@ -25,8 +25,12 @@ function* deleteSelectedLog(action) {
 }
 
 function* addMushroomLog(action) {
-  console.log('in add mushroom. new mushroom info', action.payload);
-const addMushroom = yield axios.post('/api/mushroom', action.payload);
+  // console.log('in add mushroom. new mushroom info', action.payload.newMushroom);
+  console.log('in add mushroom fileName is', action.payload.selectedFile);
+  const infoToAdd = action.payload;
+  const newMushroomInfo = {details: infoToAdd.newMushroom,
+  fileName: infoToAdd.selectedFile.name }
+const addMushroom = yield axios.post('/api/mushroom', newMushroomInfo);
   yield console.log('response of adding mushroom', addMushroom.data.log_id)
   yield put({ type:'FETCH_LOGS'});
 }
