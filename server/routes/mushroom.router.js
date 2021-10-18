@@ -29,7 +29,7 @@ router.get('/detail/:id', (req, res) => {
     console.log('selected log id in router', selectedId);
     const userId = req.user.id;
     console.log('user id in router', req.user.id)
-    queryText = `SELECT "log_id", "date", "latitude", "longitude", "details", "common_name", "scientific_name", FROM log_entry
+    queryText = `SELECT "log_id", "date", "latitude", "longitude", "details", "common_name", "scientific_name" FROM log_entry
     JOIN mushroom_names ON "mushroom_names"."log_id" = "log_entry"."id" 
     WHERE "log_entry"."id" = $1 AND "log_entry"."user_id" = $2;`
     pool.query(queryText, [selectedId, userId])

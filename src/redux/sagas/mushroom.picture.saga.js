@@ -69,9 +69,9 @@ function* postUpdatedPhoto(action) {
   function* mushroomPictureSaga() {
     yield takeLatest('ADD_NEW_MUSHROOM_PHOTO', uploadMushroomPhoto),
     yield takeLatest('EDIT_LOG_PICTURE', postUpdatedPhoto),
-    yield takeLatest('POST_MUSHROOM_PHOTO', postMushroomPhoto)
-    yield takeLatest('FETCH_MUSHROOM_PHOTOS', fetchMushroomPhotos)
-    yield takeLatest('FETCH_SELECTED_PHOTO', fetchLogPhotos),
+    yield takeLatest('POST_MUSHROOM_PHOTO', postMushroomPhoto),
+    yield takeLatest('FETCH_MUSHROOM_PHOTOS', fetchMushroomPhotos),
+    yield takeLatest('FETCH_SELECTED_PHOTO', fetchLogPhotos)
   }
 
   export default mushroomPictureSaga;

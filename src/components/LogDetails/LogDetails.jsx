@@ -15,7 +15,7 @@ function LogDetails() {
     // access mushroom photos
     const mushroomPhotos = useSelector(store => store.mushroomPhotos)
     // access selected mushroom photo from store
-    const selectedPhoto = mushroomPhotos.selectedMushroomPicture;
+    // const selectedPhoto = mushroomPhotos.selectedMushroomPicture;
     // variable for dispatching actions to sagas
     const dispatch = useDispatch();
     // variable for navigation purposes
@@ -30,7 +30,8 @@ function LogDetails() {
 
     return (
         <>
-            {/* {JSON.stringify(logInfo.logDetail)} */}
+            {JSON.stringify(mushroomPhotos)}
+            {JSON.stringify(selectedLog)}
             {/* Access information from the logDetail
             reducer and display on DOM 
             with a back button to navigate to previous page */}
@@ -40,7 +41,7 @@ function LogDetails() {
             <p> Scientific Name: {selectedLog.scientific_name}</p>
             <p> Date of Entry: {selectedLog.date} </p>
             <p> Description: {selectedLog.details} </p>
-            <img src={selectedLog.mushroom_picture_url} alt={selectedLog.mushroom_picture_url}></img><br />
+            {/* <img src={selectedPhoto.mushroom_picture_url} alt={selectedPhoto.mushroom_picture_url}></img><br /> */}
             <button onClick={event => history.goBack()}>back</button>
         </>
     );
