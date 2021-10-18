@@ -25,9 +25,9 @@ router.get('/', (req,res) => {
 
 router.get('/:id', (req, res) => {
     const selectedId = req.params.id;
-    console.log('selected log id in router', selectedId);
-    const userId = req.user.id;
-    console.log('user id in router', req.user.id)
+    console.log('selected log id in picture router', selectedId);
+    const userId = req.user;
+    console.log('user id in picture router', req.user.id)
     queryText = `SELECT "id","mushroom_picture_url", "log_entry_id" FROM mushroom_pictures WHERE "log_entry_id"=$1 AND "user_id" = $2`
     pool.query(queryText, [selectedId, userId])
         .then(results => {

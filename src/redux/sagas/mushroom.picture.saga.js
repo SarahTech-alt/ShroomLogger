@@ -71,7 +71,7 @@ function* postUpdatedPhoto(action) {
     yield takeLatest('EDIT_LOG_PICTURE', postUpdatedPhoto),
     yield takeLatest('POST_MUSHROOM_PHOTO', postMushroomPhoto),
     yield takeLatest('FETCH_MUSHROOM_PHOTOS', fetchMushroomPhotos),
-    yield takeLatest('FETCH_SELECTED_PHOTO', fetchLogPhotos)
+    yield takeLatest('SET_SELECTED_MUSHROOM_PHOTO', fetchLogPhotos)
   }
 
   export default mushroomPictureSaga;
