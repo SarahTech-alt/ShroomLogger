@@ -11,8 +11,8 @@ const containerStyle = {
 };
 
 const center = {
-  lat: 44.959382006981784,
-  lng: -93.27825928801052
+  lat: 44.84657181221935,
+  lng: -92.79125855396293
 };
 
 const onLoad = marker => {
@@ -30,6 +30,11 @@ function MapView() {
 
   const toggleInfo = (id) => {
     setDetailsDisplayed(!detailsDisplayed)
+  }
+
+  const viewDetails = (logId) => {
+    dispatch({type: 'SET_SELECTED_LOG', payload: logId});
+    history.push(`/details/${logId}`);
   }
 
   useEffect(() => {
@@ -54,7 +59,7 @@ function MapView() {
               <Marker key={index}
                 position={{ lat: Number(coord.latitude), lng: Number(coord.longitude) }}
                 onLoad={onLoad}
-                onClick={toggleInfo}
+                onClick={event => viewDetails(coord.log_id)}
                 onMouseOver={event => toggleInfo(coord.log_id)}
               > {detailsDisplayed && (
                  <InfoWindow
