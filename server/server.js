@@ -14,6 +14,7 @@ const passport = require('./strategies/user.strategy');
 const userRouter = require('./routes/user.router');
 const profileRouter = require('./routes/profile.router');
 const mushroomRouter = require('./routes/mushroom.router');
+const mushroomPictureRouter = require('./routes/mushroom.picture.router');
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -30,6 +31,7 @@ app.use(passport.session());
 app.use('/api/user', userRouter);
 app.use('/api/profile', profileRouter);
 app.use('/api/mushroom', mushroomRouter);
+app.use('/api/mushroom/picture', mushroomPictureRouter);
 
 // Serve static files
 app.use(express.static('build'));
