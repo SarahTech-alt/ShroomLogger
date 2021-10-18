@@ -45,15 +45,20 @@ router.delete('/delete/:id', (req, res) => {
     console.log('req.params in delete', req.params);
     const logId = req.params.id;
     console.log('id in first query', logId)
-    const deleteFromNames = `DELETE FROM mushroom_names WHERE "log_id" = $1;`
-    pool.query(deleteFromNames, [logId])
+    
+    const deleteFromPictures = `DELETE FROM mushroom_pictures WHERE "log_entry_id" = $1;`
+    pool.query(deleteFromPictures, [logId])
         .then(result => {
-            const deleteFromPictures = `DELETE FROM mushroom_pictures WHERE "log_entry_id" = $1;`
-            pool.query(deleteFromPictures, [logId])
+            const queryText = `DELETE FROM log_entry WHERE "id" = $1;`;
+            pool.query(queryText, [logId])
+
+
                 .then(result => {
-                    const queryText = `DELETE FROM log_entry WHERE "id" = $1
-        RETURNING "log_entry"."id";`;
-                    pool.query(queryText, [logId])
+
+                    const deleteFromNames = `DELETE FROM mushroom_names WHERE "log_id" = $1;`
+                    pool.query(deleteFromNames, [logId])
+
+
                         .then(result => { res.sendStatus(200) })
                         .catch(error => {
                             console.log('there was an error deleting mushroom pictures', error)
