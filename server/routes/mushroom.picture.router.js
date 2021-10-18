@@ -10,7 +10,18 @@ const {
 const { AWS_S3_REGION, AWS_S3_BUCKET, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY } = process.env;
 aws.config.region = AWS_S3_REGION;
 
-
+router.get('/', (req,res) => {
+    userId = req.user.id;
+    queryText = `SELECT * FROM mushroom_photos WHERE "user_id" = $1`
+    pool.query(queryText, [userId])
+    .then(results => {
+        console.log('results of get photos in router', results.rows);
+        res.send(results.rows);
+    })
+    .catch(error => {
+        res.send('there was an error fetching mushroom photos', error)
+    })
+})
 
 /**
  * @api {post} /s3 Upload Photo

@@ -44,11 +44,11 @@ function* postUpdatedLog(action) {
 }
 
   function* logSaga() {
-    yield takeLatest('FETCH_LOGS', fetchLogHistory);
-    yield takeLatest('SET_SELECTED_LOG', fetchLogDetail);
-    yield takeLatest('DELETE_SELECTED_LOG', deleteSelectedLog);
-    yield takeLatest('ADD_NEW_MUSHROOM', addMushroomLog);
-    yield takeLatest('EDIT_LOG_DETAILS', postUpdatedLog),
+    yield takeLatest('FETCH_LOGS', fetchLogHistory),
+    yield takeLatest('SET_SELECTED_LOG', fetchLogDetail),
+    yield takeLatest('DELETE_SELECTED_LOG', deleteSelectedLog),
+    yield takeLatest('ADD_NEW_MUSHROOM', addMushroomLog),
+    yield takeLatest('EDIT_LOG_DETAILS', postUpdatedLog)
   }
 
 
