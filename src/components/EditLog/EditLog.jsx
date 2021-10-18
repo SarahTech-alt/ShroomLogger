@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import './EditLog.css';
 import { readAndCompressImage } from 'browser-image-resizer';
+import moment from 'moment';
 
 function EditLog() {
 
@@ -20,20 +21,24 @@ function EditLog() {
 
     // matches parameters of current route
     const allParams = useParams();
+
     // selects the id from the parameters
     const logId = allParams.id;
-    // select the logDetail from the combined logHistory reducer
 
+    // select the logDetail from the combined logHistory reducer
     const logInfo = useSelector(store => store.logHistory);
     const selectedLog = logInfo.logDetail;
+
     // access the logHistory reducer from the store
-    const userInfo = useSelector(store => store.user)
+    const userInfo = useSelector(store => store.user);
+
     // getting user id from the store to send 
     // with uploaded photo
     const userId = userInfo.id;
 
     // variable for dispatching actions to sagas
     const dispatch = useDispatch();
+
     // variable for navigation purposes
     const history = useHistory();
 
@@ -43,7 +48,6 @@ function EditLog() {
         dispatch({ type: 'SET_SELECTED_LOG', payload: logId });
         console.log('log id on page load', logId);
     }, [logId]);
-
 
 
     const [updatedMushroom, setUpdatedMushroom] = useState({
@@ -81,7 +85,6 @@ function EditLog() {
                 updatedMushroom
             }
         })
-
         // sendPictureToServer();
     }
 
@@ -131,6 +134,7 @@ function EditLog() {
                 onChange={event => setUpdatedMushroom({ ...updatedMushroom, details: event.target.value })} placeholder={selectedLog.details} /><br />
             <input
                 type="date"
+                value={moment().format('MMMM Do YYYY, h:mm:ss a')}
                 onChange={event => setUpdatedMushroom({ ...updatedMushroom, date: event.target.value })}
                 onfocus={selectedLog.date}
             /><br />

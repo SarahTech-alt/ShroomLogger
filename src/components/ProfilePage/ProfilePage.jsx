@@ -19,7 +19,7 @@ function ProfilePage() {
     // from the root reducer store
     const profileInfo = useSelector(store => store.profile.profileInfoReducer);
     const userInfo = useSelector(store => store.user)
-
+    const userId = userInfo.id;
       
 
     // hooks for image actions
