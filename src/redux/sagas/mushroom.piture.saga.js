@@ -1,7 +1,14 @@
 import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 
-function* postUpdatedPicture(action) {
+function* fetchMushroomPhotos() {
+    console.log('in fetch mushroom photos');
+const response = yield axios.get('/api/mushroom/photo');
+yield console.log(response);
+yield put({type: 'SET_MUSHROOM_PHOTOS', payload: response.data});
+}
+
+function* postUpdatedPhoto(action) {
     // updates the profile picture url in the database
     // then calls the get saga function to get
     // the most up to date profile information
@@ -10,7 +17,7 @@ function* postUpdatedPicture(action) {
         const fileName = {selectedFile: action.payload.logId};
         const selectedPhoto = {logId: action.payload}
         yield axios.put(`api/mushroom/photo/${selectedPhoto}`, fileName);
-        yield put({type:'FETCH_LOGS'})
+        yield put({type:'FETCH_MUSHROOM_PHOTOS'})
     } catch (error) {
         console.log('something went wrong sending edited photo to db', error);  
     }
@@ -18,7 +25,7 @@ function* postUpdatedPicture(action) {
   
   // send user uploaded image to profile.router
   // for storage in AWS S3 bucket
-  function* uploadPhoto(action) {
+  function* uploadMushroomPhoto(action) {
     try {
         const { selectedFile, resizedFile } = action.payload;
         // The name seems to be dropped on resize, send the name from the
@@ -46,16 +53,17 @@ function* postUpdatedPicture(action) {
         console.log('filename in put', action.payload);
         let fileName = {selectedFile: action.payload};
         const postedPhoto = yield axios.put('api/mushroom/photo', fileName);
-        yield put({type:'SET_MUSHROOM_PIC'})
+        yield put({type:'SET_MUSHROOM_PHOTOS'})
     } catch (error) {
         console.log('something went wrong sending photo to db', error);  
     }
   }
 
   function* mushroomPictureSaga() {
-    yield takeLatest('ADD_NEW_PHOTO', uploadPhoto),
-    yield takeLatest('EDIT_LOG_PICTURE', postUpdatedPicture),
+    yield takeLatest('ADD_NEW_MUSHROOM_PHOTO', uploadPhoto),
+    yield takeLatest('EDIT_LOG_PICTURE', postUpdatedPhoto),
     yield takeLatest('POST_MUSHROOM_PHOTO', postMushroomPhoto)
+    yield takeLatest('FETCH_MUSHROOM_PHOTOS', fetchMushroomPhotos)
   }
 
   export default mushroomPictureSaga;

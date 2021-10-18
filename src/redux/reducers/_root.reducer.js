@@ -17,7 +17,7 @@ const rootReducer = combineReducers({
   user, // will have an id and username if someone is logged in
   profile, // contains profilePictureReducer and profileInfoReducer
   logHistory, // contains logHistory and logDetail reducers
-  mushroomPictureReducer,
+  mushroomPictureReducer, // contains mushroomPictureReducer and selectedMushroomPicture reducers
 });
 
 export default rootReducer;

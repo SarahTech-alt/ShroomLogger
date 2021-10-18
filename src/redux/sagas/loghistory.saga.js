@@ -43,9 +43,6 @@ function* postUpdatedLog(action) {
   }
 }
 
-
-
-
   function* logSaga() {
     yield takeLatest('FETCH_LOGS', fetchLogHistory);
     yield takeLatest('SET_SELECTED_LOG', fetchLogDetail);
