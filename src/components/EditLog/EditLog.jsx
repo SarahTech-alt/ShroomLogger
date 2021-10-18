@@ -104,7 +104,8 @@ function EditLog() {
     }
     // dispatches to delete saga on delete button click
     const deleteLog = () => {
-        dispatch({ type: 'DELETE_SELECTED_LOG', payload: logId })
+        const selectedLogId = selectedLog.log_id;
+        dispatch({ type: 'DELETE_SELECTED_LOG', payload: selectedLogId })
         history.goBack();
     }
 
