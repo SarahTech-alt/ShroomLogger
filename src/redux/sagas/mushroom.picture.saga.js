@@ -8,6 +8,13 @@ yield console.log(response);
 yield put({type: 'SET_MUSHROOM_PHOTOS', payload: response.data});
 }
 
+function* fetchLogPhotos(action) {
+    console.log('in fetch selected photo', action.payload);
+    const logId = action.payload;
+    const response = yield axios.get(`/api/mushroom/photo/${logId}`);
+    yield put({ type: 'SET_SELECTED_MUSHROOM_PHOTO', payload: response.data[0]});
+}
+
 function* postUpdatedPhoto(action) {
     // updates the profile picture url in the database
     // then calls the get saga function to get
@@ -60,10 +67,11 @@ function* postUpdatedPhoto(action) {
   }
 
   function* mushroomPictureSaga() {
-    yield takeLatest('ADD_NEW_MUSHROOM_PHOTO', uploadPhoto),
+    yield takeLatest('ADD_NEW_MUSHROOM_PHOTO', uploadMushroomPhoto),
     yield takeLatest('EDIT_LOG_PICTURE', postUpdatedPhoto),
     yield takeLatest('POST_MUSHROOM_PHOTO', postMushroomPhoto)
     yield takeLatest('FETCH_MUSHROOM_PHOTOS', fetchMushroomPhotos)
+    yield takeLatest('FETCH_SELECTED_PHOTO', fetchLogPhotos),
   }
 
   export default mushroomPictureSaga;

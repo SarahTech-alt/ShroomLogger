@@ -12,6 +12,10 @@ function LogDetails() {
     const logInfo = useSelector(store => store.logHistory);
     // select the logDetail from the combined logHistory reducer
     const selectedLog = logInfo.logDetail;
+    // access mushroom photos
+    const mushroomPhotos = useSelector(store => store.mushroomPhotos)
+    // access selected mushroom photo from store
+    const selectedPhoto = mushroomPhotos.selectedMushroomPicture;
     // variable for dispatching actions to sagas
     const dispatch = useDispatch();
     // variable for navigation purposes
@@ -20,6 +24,7 @@ function LogDetails() {
     // send logId that was retried with useParams
     useEffect(() => {
         dispatch({ type: 'SET_SELECTED_LOG', payload: logId });
+        dispatch({ type: 'SET_SELECTED_MUSHROOM_PHOTO', payload: logId })
         console.log('log id on page load', logId);
     }, [logId]);
 
