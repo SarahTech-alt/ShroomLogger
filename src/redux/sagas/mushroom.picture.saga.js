@@ -12,7 +12,7 @@ function* fetchLogPhotos(action) {
     console.log('in fetch selected photo', action.payload);
     const logId = action.payload;
     const response = yield axios.get(`/api/mushroom/photo/${logId}`);
-    yield put({ type: 'SET_SELECTED_MUSHROOM_PHOTO', payload: response.data[0]});
+    yield put({ type: 'SET_LOG_PHOTO', payload: response.data[0]});
 }
 
 function* postUpdatedPhoto(action) {

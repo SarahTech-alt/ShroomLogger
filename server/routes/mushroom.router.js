@@ -25,7 +25,7 @@ const {
 // })
 
 router.get('/detail/:id', (req, res) => {
-    const selectedId = req.params.id;
+    const selectedId = Number(req.params.id);
     console.log('selected log id in router', selectedId);
     const userId = req.user.id;
     console.log('user id in router', req.user.id)
@@ -163,12 +163,13 @@ router.post('/', (req, res) => {
 
   router.get('/', (req, res) => {
     const userId = req.user.id;
-    const queryText = `SELECT "log_entry"."id","user_id","date","latitude","longitude","details","common_name","scientific_name", "mushroom_picture_thumb", "mushroom_picture_medium" FROM "log_entry" LEFT JOIN
+    const queryText = `SELECT "mushroom_junction"."log_id", "user_id","date","latitude","longitude","details","common_name","scientific_name", "mushroom_picture_thumb", "mushroom_picture_medium" FROM "log_entry" LEFT JOIN
     "mushroom_junction" ON "mushroom_junction"."log_id" = "log_entry"."id"
     LEFT JOIN "mushroom_pictures" ON "mushroom_junction"."mushroom_picture_id" = "mushroom_pictures"."id"
     LEFT JOIN "mushroom_names" ON "mushroom_junction"."mushroom_picture_id" = "mushroom_pictures"."id" WHERE "user_id" =$1;`;
     pool.query(queryText, [userId])
         .then(results => {
+            console.log('results.rows in get router',results.rows)
             res.send(results.rows)
         })
         .catch(error => {

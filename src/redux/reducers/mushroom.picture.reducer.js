@@ -11,7 +11,7 @@ const mushroomPictureReducer = (state = [], action) => {
 
 const selectedMushroomPicture = (state = [], action) => {
     switch (action.type) {
-        case 'SET_SELECTED_MUSHROOM_PHOTO':
+        case 'SET_LOG_PHOTO':
         default:
             return state;
     }

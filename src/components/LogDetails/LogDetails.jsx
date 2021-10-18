@@ -24,6 +24,7 @@ function LogDetails() {
     // send logId that was retried with useParams
     useEffect(() => {
         dispatch({ type: 'SET_SELECTED_LOG', payload: logId });
+        console.log('id to send to photo router in component', logId)
         dispatch({ type: 'SET_SELECTED_MUSHROOM_PHOTO', payload: logId })
         console.log('log id on page load', logId);
     }, [logId]);

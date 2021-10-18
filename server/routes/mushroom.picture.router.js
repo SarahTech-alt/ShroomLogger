@@ -24,17 +24,17 @@ router.get('/', (req,res) => {
 })
 
 router.get('/:id', (req, res) => {
-    const selectedId = req.params.id;
+    const selectedId = Number(req.params.id);
+    const newId = Number(selectedId.id);
     console.log('selected log id in picture router', selectedId);
-    const userId = req.user;
-    console.log('user id in picture router', req.user.id)
+    const userId = req.user.id;
+    console.log('user id in picture router', userId)
     queryText = `SELECT "user_id", "mushroom_picture_thumb", "mushroom_picture_medium", "log_id" FROM "mushroom_pictures"
     JOIN "mushroom_junction" ON "mushroom_junction"."mushroom_picture_id" = "mushroom_pictures"."id"
     JOIN "user" ON "mushroom_junction"."user_id"="user"."id" WHERE "log_id"=$1 and "user_id"=$2;`
     pool.query(queryText, [selectedId, userId])
         .then(results => {
-            console.log('sending back id details', results.rows);
-            res.send(results.rows)
+            res.sendStatus(200)
         })
         .catch(error => {
             console.log('there was an error getting details', error);
