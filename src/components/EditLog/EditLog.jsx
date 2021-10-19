@@ -103,14 +103,9 @@ function EditLog() {
         setChangePicture(!changePicture);
     }
     // dispatches to delete saga on delete button click
-
-    
-  
-
     const deleteLog = () => {
-        const selectedLogId = selectedLog.log_id;
-        dispatch({ type: 'DELETE_SELECTED_LOG', payload: selectedLogId })
-
+        console.log('in delete log on component',logId);
+        dispatch({ type: 'DELETE_SELECTED_LOG', payload: logId })
         history.goBack();
     }
 
@@ -121,7 +116,7 @@ function EditLog() {
             reducer and display on DOM with buttons to edit logs
             and a back button to navigate to previous page */}
             <h1>Edit Page</h1>
-            <button onClick={event => deleteLog(logId)}>delete log </button>
+            <button onClick={event => deleteLog()}>delete log </button>
             <br /><br />
             <input
                 type="text"
@@ -145,8 +140,8 @@ function EditLog() {
                 onfocus={selectedLog.date}
             /><br />
             <img
-                src={selectedLog.mushroom_picture_url}
-                alt={selectedLog.mushroom_picture_url}
+                src={selectedLog.mushroom_picture_medium}
+                alt={selectedLog.common_name}
                 onClick={(event => setChangePicture(!changePicture))}
             />
             {/* display preview of image once selected
