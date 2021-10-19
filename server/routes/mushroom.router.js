@@ -79,8 +79,6 @@ router.post('/', (req, res) => {
     console.log(req.body);
     console.log('info in router post', mushroomData);
     console.log('url in router post', fileName);
-
-
     // RETURNING "id" will give us back the id of the created log
     const insertLogInfo = `
     INSERT INTO "log_entry" ("date", "latitude", "longitude", "details")
@@ -112,8 +110,8 @@ router.post('/', (req, res) => {
                         .then((result => {
                             const createPhotoId = result.rows[0].id;
                             console.log('the photo id in router is', createPhotoId)
-                            const insertIntoJunction = `INSERT INTO "mushroom_junction" ("log_id","mushroom_names_id", "user_id", "mushroom_picture_id") VALUES ($1,$2,$3);`;
-                            pool.query(insertIntoJunction, [createdLogId, createMushroomNameId, createPhotoId, req.user.id, createPhotoId])
+                            const insertIntoJunction = `INSERT INTO "mushroom_junction" ("log_id","mushroom_names_id", "user_id", "mushroom_picture_id") VALUES ($1,$2,$3,$4);`;
+                            pool.query(insertIntoJunction, [createdLogId, createMushroomNameId, req.user.id, createPhotoId])
                                 .then(result => {
                                     res.sendStatus(200);
                                 })
@@ -138,10 +136,11 @@ router.post('/', (req, res) => {
 
 router.get('/', (req, res) => {
     const userId = req.user.id;
-    const queryText = `SELECT "mushroom_junction"."log_id", "user_id","date","latitude","longitude","details","common_name","scientific_name", "mushroom_picture_thumb", "mushroom_picture_medium" FROM "log_entry" LEFT JOIN
-    "mushroom_junction" ON "mushroom_junction"."log_id" = "log_entry"."id"
-    LEFT JOIN "mushroom_pictures" ON "mushroom_junction"."mushroom_picture_id" = "mushroom_pictures"."id"
-    LEFT JOIN "mushroom_names" ON "mushroom_junction"."mushroom_picture_id" = "mushroom_pictures"."id" WHERE "user_id" =$1;`;
+    const queryText = `SELECT "log_id", "user_id","date","details" "latitude","longitude", "common_name", "scientific_name","details", "mushroom_picture_thumb", "mushroom_picture_medium" FROM "log_entry" 
+    JOIN "mushroom_junction" ON  "mushroom_junction"."log_id"="log_entry"."id"
+    JOIN "mushroom_names" ON "mushroom_junction"."mushroom_names_id"="mushroom_names"."id" 
+    JOIN "mushroom_pictures" ON "mushroom_junction"."mushroom_picture_id"="mushroom_pictures"."id"
+    WHERE "user_id"=$1;`;
     pool.query(queryText, [userId])
         .then(results => {
             console.log('results.rows in get router', results.rows)

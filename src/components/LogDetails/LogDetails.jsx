@@ -26,7 +26,6 @@ function LogDetails() {
         dispatch({ type: 'SET_SELECTED_LOG', payload: logId });
         console.log('id to send to photo router in component', logId)
         dispatch({ type: 'SET_SELECTED_MUSHROOM_PHOTO', payload: logId })
-        console.log('log id on page load', logId);
     }, [logId]);
 
     return (
@@ -42,7 +41,7 @@ function LogDetails() {
             <p> Scientific Name: {selectedLog.scientific_name}</p>
             <p> Date of Entry: {selectedLog.date} </p>
             <p> Description: {selectedLog.details} </p>
-            {/* <img src={selectedPhoto.mushroom_picture_url} alt={selectedPhoto.mushroom_picture_url}></img><br /> */}
+            <img src={selectedLog.mushroom_picture_medium} alt={selectedLog.mushroom_picture_medium}></img><br />
             <button onClick={event => history.goBack()}>back</button>
         </>
     );

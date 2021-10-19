@@ -47,6 +47,7 @@ function EditLog() {
     useEffect(() => {
         dispatch({ type: 'SET_SELECTED_LOG', payload: logId });
         console.log('log id on page load', logId);
+        dispatch({ type: 'SET_SELECTED_MUSHROOM_PHOTO', payload: logId })
     }, [logId]);
 
 
@@ -102,7 +103,8 @@ function EditLog() {
         setChangePicture(!changePicture);
     }
     // dispatches to delete saga on delete button click
-    const deleteLog = () => {
+    
+    const deleteLog = (logId) => {
         dispatch({ type: 'DELETE_SELECTED_LOG', payload: logId })
         history.goBack();
     }
@@ -114,7 +116,7 @@ function EditLog() {
             reducer and display on DOM with buttons to edit logs
             and a back button to navigate to previous page */}
             <h1>Edit Page</h1>
-            <button onClick={event => deleteLog()}>delete log </button>
+            <button onClick={event => deleteLog(logId)}>delete log </button>
             <br /><br />
             <input
                 type="text"
