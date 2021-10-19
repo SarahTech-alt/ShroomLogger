@@ -24,14 +24,12 @@ function LogHistory() {
     const editLog = (logId) => {
         // setSelectedLogId(logId);
         // console.log(logId);
-        dispatch({type: 'SET_SELECTED_LOG', payload: logId});
         history.push(`/edit/${logId}`);
     }
 
     // dispatch selected id to sagas and
     // direct user to view details page
     const viewLog = (logId) => {
-        dispatch({type: 'SET_SELECTED_LOG', payload: logId});
         history.push(`/details/${logId}`);
     }
 
@@ -43,7 +41,7 @@ function LogHistory() {
 
     return (
         <>
-            {/* {JSON.stringify(logHistory)} */}
+            {JSON.stringify(logHistory)}
 
             <table>
                 <tbody>

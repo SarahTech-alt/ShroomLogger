@@ -26,8 +26,13 @@ function* deleteSelectedLog(action) {
 }
 
 function* addMushroomLog(action) {
-  console.log('in add mushroom. new mushroom info', action.payload);
-  yield axios.post('/api/mushroom', action.payload);
+  // console.log('in add mushroom. new mushroom info', action.payload.newMushroom);
+  console.log('in add mushroom fileName is', action.payload.selectedFile);
+  const infoToAdd = action.payload;
+  const newMushroomInfo = {details: infoToAdd.newMushroom,
+  fileName: infoToAdd.selectedFile.name }
+const addMushroom = yield axios.post('/api/mushroom', newMushroomInfo);
+  yield console.log('response of adding mushroom', addMushroom.data.log_id)
   yield put({ type:'FETCH_LOGS'});
 }
 
@@ -44,28 +49,12 @@ function* postUpdatedLog(action) {
   }
 }
 
-function* postUpdatedPicture(action) {
-  // updates the profile picture url in the database
-  // then calls the get saga function to get
-  // the most up to date profile information
-  try{
-      console.log('filename in put', action.payload);
-      const fileName = {selectedFile: action.payload.logId};
-      const selectedPhoto = {logId: action.payload}
-      yield axios.put(`api/mushroom/picture/${selectedPhoto}`, fileName);
-      yield put({type:'FETCH_LOGS'})
-  } catch (error) {
-      console.log('something went wrong sending edited photo to db', error);  
-  }
-}
-
   function* logSaga() {
-    yield takeLatest('FETCH_LOGS', fetchLogHistory);
-    yield takeLatest('SET_SELECTED_LOG', fetchLogDetail);
-    yield takeLatest('DELETE_SELECTED_LOG', deleteSelectedLog);
-    yield takeLatest('ADD_NEW_MUSHROOM', addMushroomLog);
-    yield takeLatest('EDIT_LOG_DETAILS', postUpdatedLog),
-    yield takeLatest('EDIT_LOG_PICTURE', postUpdatedPicture);
+    yield takeLatest('FETCH_LOGS', fetchLogHistory),
+    yield takeLatest('SET_SELECTED_LOG', fetchLogDetail),
+    yield takeLatest('DELETE_SELECTED_LOG', deleteSelectedLog),
+    yield takeLatest('ADD_NEW_MUSHROOM', addMushroomLog),
+    yield takeLatest('EDIT_LOG_DETAILS', postUpdatedLog)
   }
 
 

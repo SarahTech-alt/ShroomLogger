@@ -12,6 +12,10 @@ function LogDetails() {
     const logInfo = useSelector(store => store.logHistory);
     // select the logDetail from the combined logHistory reducer
     const selectedLog = logInfo.logDetail;
+    // access mushroom photos
+    const mushroomPhotos = useSelector(store => store.mushroomPhotos)
+    // access selected mushroom photo from store
+    // const selectedPhoto = mushroomPhotos.selectedMushroomPicture;
     // variable for dispatching actions to sagas
     const dispatch = useDispatch();
     // variable for navigation purposes
@@ -20,12 +24,14 @@ function LogDetails() {
     // send logId that was retried with useParams
     useEffect(() => {
         dispatch({ type: 'SET_SELECTED_LOG', payload: logId });
-        console.log('log id on page load', logId);
+        console.log('id to send to photo router in component', logId)
+        dispatch({ type: 'SET_SELECTED_MUSHROOM_PHOTO', payload: logId })
     }, [logId]);
 
     return (
         <>
-            {/* {JSON.stringify(logInfo.logDetail)} */}
+            {JSON.stringify(mushroomPhotos)}
+            {JSON.stringify(selectedLog)}
             {/* Access information from the logDetail
             reducer and display on DOM 
             with a back button to navigate to previous page */}
@@ -35,7 +41,7 @@ function LogDetails() {
             <p> Scientific Name: {selectedLog.scientific_name}</p>
             <p> Date of Entry: {selectedLog.date} </p>
             <p> Description: {selectedLog.details} </p>
-            <img src={selectedLog.mushroom_picture_url} alt={selectedLog.mushroom_picture_url}></img><br />
+            <img src={selectedLog.mushroom_picture_medium} alt={selectedLog.mushroom_picture_medium}></img><br />
             <button onClick={event => history.goBack()}>back</button>
         </>
     );

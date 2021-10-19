@@ -1,26 +1,24 @@
 import { combineReducers } from "redux";
 
-const logHistory = (state = [], action) => {
+const mushroomPictureReducer = (state = [], action) => {
     switch (action.type) {
-        case 'SET_LOG_HISTORY':
+        case 'SET_MUSHROOM_PHOTOS':
             return action.payload;
         default:
             return state;
     }
 };
 
-const logDetail = (state = [], action) => {
+const selectedMushroomPicture = (state = [], action) => {
     switch (action.type) {
-        case 'SET_LOG_DETAIL':
-            return action.payload;
+        case 'SET_LOG_PHOTO':
         default:
             return state;
     }
-};
-
+}
 
 
 export default combineReducers({
-    logHistory,
-    logDetail,
+    mushroomPictureReducer,
+    selectedMushroomPicture
 });
