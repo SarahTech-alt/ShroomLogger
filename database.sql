@@ -1,37 +1,43 @@
+-- CREATE DATABASE "saga_movies_weekend"
 
--- USER is a reserved keyword with Postgres
--- You must use double quotes in every query that user is in:
--- ex. SELECT * FROM "user";
--- Otherwise you will have errors!
+
 CREATE TABLE "user" (
-	"id" SERIAL PRIMARY KEY,
-	"username" varchar(80) NOT NULL UNIQUE,
-	"password" varchar(1000) NOT NULL,
-	"date_created" timestamp NOT NULL DEFAULT NOW(),
-	"profile_picture_medium" varchar(100) DEFAULT 'https://unsplash.com/photos/p7h0wkbtAQ0',
-	"profile_picture_thumb" varchar(100) DEFAULT 'https://unsplash.com/photos/p7h0wkbtAQ0');
+  "id" SERIAL PRIMARY KEY,
+  "username" VARCHAR(120) NOT NULL UNIQUE,
+  "password"  VARCHAR(120) NOT NULL,
+  "date_created" timestamp NOT NULL DEFAULT NOW(),
+  "profile_picture_medium" VARCHAR(120) DEFAULT 'https://solospikebucket.s3.us-east-2.amazonaws.com/photos/medium/gone%20camping.jpeg',
+  "profile_picture_thumb" VARCHAR(120) DEFAULT 'https://solospikebucket.s3.us-east-2.amazonaws.com/photos/thumb/gone%20camping.jpeg'
+);
+
 
 CREATE TABLE "log_entry" (
-	"id" SERIAL PRIMARY KEY,
-	"user_id" integer NOT NULL,
-	"date" TIMESTAMP NOT NULL DEFAULT NOW(),
-	"latitude" DECIMAL,
-	"longitude" DECIMAL(1000),
-	"details" varchar(2000));
-
---INSERT INTO "log_entry" ("user_id", "latitude", "longitude", "details")
---VALUES (1, 44.97443544637816, -93.2562070397675, 'a mushroom that has holes in it'),
---(1, 44.959382006981784, -93.27825928801052, 'gilled and smelled like black licorice'),
---(1, 44.977872673280686, -93.26405430900489, 'red top with white spots, white hollow stalk');
+  "id" SERIAL PRIMARY KEY,
+  "date" TIMESTAMP NOT NULL DEFAULT NOW(),
+  "latitude" DECIMAL,
+  "longitude" DECIMAL,
+  "details" VARCHAR(2000)
+);
 
 CREATE TABLE "mushroom_names" (
-	"id" SERIAL PRIMARY KEY,
-	"log_id" integer REFERENCES "log_entry" NOT NULL,
-	"common_name" varchar(500),
-	"scientific_name" varchar(255));
+"id" SERIAL PRIMARY KEY,
+"common_name" VARCHAR(100),
+"scientific_name" VARCHAR(255)
+);
 
 CREATE TABLE "mushroom_pictures" (
-	"id" SERIAL PRIMARY KEY,
-	"log_entry_id" integer REFERENCES "log_entry" NOT NULL,
-	"user_id" integer REFERENCES "user" NOT NULL,
-	"mushroom_picture_url" varchar(1000));
+"id" SERIAL PRIMARY KEY,
+"mushroom_picture_thumb" VARCHAR(100),
+"mushroom_picture_medium" VARCHAR(100)
+);
+
+-- JUNCTION TABLE
+-- Logs can have multiple photos and multiple names
+-- This is many-to-many
+CREATE TABLE "mushroom_junction" (
+  "id" SERIAL PRIMARY KEY,
+  "log_id" INT REFERENCES "log_entry" NOT NULL,
+  "mushroom_names_id" INT REFERENCES "mushroom_names" NOT NULL,
+  "mushroom_picture_id" INT REFERENCES "mushroom_pictures" NOT NULL,
+  "user_id" INT REFERENCES "user" NOT NULL
+);
