@@ -19,8 +19,9 @@ function* fetchLogDetail(action) {
 
 function* deleteSelectedLog(action) {
   console.log('in delete saga');
-  console.log('id in delete saga', action.payload);
-  yield axios.delete(`/api/mushroom/delete/${action.payload}`);
+  const logId = action.payload;
+  console.log('id in delete saga', logId);
+  yield axios.delete(`/api/mushroom/delete/${logId}`);
   yield put({ type: 'FETCH_LOGS' });
 }
 

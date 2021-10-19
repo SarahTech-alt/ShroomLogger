@@ -103,9 +103,14 @@ function EditLog() {
         setChangePicture(!changePicture);
     }
     // dispatches to delete saga on delete button click
+
     
-    const deleteLog = (logId) => {
-        dispatch({ type: 'DELETE_SELECTED_LOG', payload: logId })
+  
+
+    const deleteLog = () => {
+        const selectedLogId = selectedLog.log_id;
+        dispatch({ type: 'DELETE_SELECTED_LOG', payload: selectedLogId })
+
         history.goBack();
     }
 
