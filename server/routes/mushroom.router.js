@@ -26,24 +26,6 @@ aws.config.region = AWS_S3_REGION;
  *      HTTP/1.1 201 OK
  */
 
-
-
-
-// router.get('/', (req, res) => {
-//     const userId = req.user.id;
-//     const queryText = `SELECT * FROM log_entry
-//     LEFT OUTER JOIN mushroom_names ON "mushroom_names"."log_id" = "log_entry"."id"
-//    LEFT OUTER JOIN mushroom_pictures ON "mushroom_pictures"."log_entry_id" = "log_entry"."id" WHERE "log_entry"."user_id" = $1;`;
-//     pool.query(queryText, [userId])
-//         .then(results => {
-//             res.send(results.rows)
-//         })
-//         .catch(error => {
-//             console.log('there was an error getting the logs', error);
-//             res.sendStatus(500);
-//         })
-// })
-
 router.get('/detail/:id', (req, res) => {
     const selectedId = Number(req.params.id);
     console.log('selected log id in router', selectedId);
@@ -90,48 +72,6 @@ router.delete('/delete/:id', (req, res) => {
             console.log('there was an error deleting log entry', error)
         })
 })
-
-// .then(results => {
-//     if (results.rows.count > 0) {
-//         console.log('successfully deleted');
-//         res.send({ message: 'Log Entry Deleted' });
-//     } else {
-//         res.send({ message: 'Nothing was deleted.' })
-//     }
-// })
-// })
-
-// router.post('/', (req, res) => {
-//     const mushroomData = req.body;
-//     console.log('info in router', mushroomData)
-//     console.log('mushroom details', mushroomData.details);
-//     const queryText = `INSERT INTO log_entry ("date", "latitude", "longitude", "user_id", "details") VALUES ($1,$2, $3, $4, $5)
-//     RETURNING "id";`;
-//     pool.query(queryText, [mushroomData.date, mushroomData.latitude, mushroomData.longitude, req.user.id, mushroomData.details])
-//         .then(result => {
-//             console.log('New Log ID:', result.rows[0].id);
-//             const logId = result.rows[0].id;
-//             const insertIntoNames = `INSERT INTO mushroom_names ("log_id", "common_name", "scientific_name") VALUES ($1,$2,$3) RETURNING "log_id";`
-//             pool.query(insertIntoNames, [logId, mushroomData.common_name, mushroomData.scientific_name])
-//                 .then(result => {
-//                     console.log('info was posted', result);
-//                     res.sendStatus(200)
-// const insertIntoPictures = `INSERT INTO mushroom_pictures ("log_entry_id","user_id","mushroom_picture_url") VALUES ($1,$2,$3);`
-// pool.query(insertIntoPictures, [logId, req.user.id, mushroomData.mushroom_picture_url])
-//     .then(result => { res.sendStatus(200) })
-//     .catch(error => {
-//         console.log('there was an error posting mushroom pictures', error)
-//     })
-// 
-//         })
-// })
-//         .catch(error => {
-//             console.log('there was an error posting the information', error)
-//         })
-//         .catch(error => {
-//             console.log('there was an error posting the information', error)
-//         })
-// })
 
 router.post('/', (req, res) => {
     const mushroomData = req.body.details;
@@ -189,16 +129,12 @@ router.post('/', (req, res) => {
         }).catch(err => {
             res.sendStatus(500)
         })
-    
-
         // Catch for first query
         .catch(err => {
             console.log(err);
             res.sendStatus(500)
         })
 })
-
-
 
 router.get('/', (req, res) => {
     const userId = req.user.id;
