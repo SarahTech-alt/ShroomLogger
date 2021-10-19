@@ -26,6 +26,7 @@ function EditLog() {
     const logId = allParams.id;
 
     // select the logDetail from the combined logHistory reducer
+    const wholeStore = useSelector(store => store)
     const logInfo = useSelector(store => store.logHistory);
     const selectedLog = logInfo.logDetail;
 
@@ -51,14 +52,6 @@ function EditLog() {
     }, [logId]);
 
 
-    const [updatedMushroom, setUpdatedMushroom] = useState({
-        common_name: '',
-        scientific_name: '',
-        latitude: '',
-        longitude: '',
-        date: '',
-        details: '',
-    });
 
     const onFileChange = async (event) => {
         console.log(event);
@@ -76,13 +69,13 @@ function EditLog() {
         // The file name seems to be dropped on resize, send both the
         // original and resized files.
         let action;
-        console.log('in send form data to server', updatedMushroom);
+        console.log('in send form data to server', logInfo);
         dispatch({
             type: 'EDIT_LOG_DETAILS',
             payload: {
                 // any other form data...
                 logId,
-                updatedMushroom
+                logInfo,
             }
         })
         // sendPictureToServer();
@@ -111,7 +104,7 @@ function EditLog() {
 
     return (
         <>
-            {JSON.stringify(logInfo.logDetail)}<hr />
+            {JSON.stringify(selectedLog)}<hr />
             {/* Access information from the logDetail
             reducer and display on DOM with buttons to edit logs
             and a back button to navigate to previous page */}
@@ -120,23 +113,33 @@ function EditLog() {
             <br /><br />
             <input
                 type="text"
-                onChange={event => setUpdatedMushroom({ ...updatedMushroom, common_name: event.target.value })}
+                onChange={event => ({ ...selectedLog.common_name = event.target.value })}
                 placeholder={selectedLog.common_name}
             />
             <br />
             <input
                 type="text"
-                onChange={event => setUpdatedMushroom({ ...updatedMushroom, scientific_name: event.target.value })}
+                onChange={event => ({ ...selectedLog.scientific_name = event.target.value })}
                 placeholder={selectedLog.scientific_name}
             />
             <br />
             <input
                 type="text"
-                onChange={event => setUpdatedMushroom({ ...updatedMushroom, details: event.target.value })} placeholder={selectedLog.details} /><br />
+                onChange={event => ({ ...selectedLog.latitude = event.target.value })}
+                placeholder={selectedLog.latitude}
+            /><br />
+            <input
+                type="text"
+                onChange={event => ({ ...selectedLog.longitude = event.target.value })}
+                placeholder= {selectedLog.longitude}
+            /><br />
+            <input
+                type="text"
+                onChange={event => ({ ...selectedLog.details = event.target.value })} placeholder={selectedLog.details} /><br />
             <input
                 type="date"
                 value={moment().format('MMMM Do YYYY, h:mm:ss a')}
-                onChange={event => setUpdatedMushroom({ ...updatedMushroom, date: event.target.value })}
+                onChange={event => ({ ...selectedLog.date = event.target.value })}
                 onfocus={selectedLog.date}
             /><br />
             <img
