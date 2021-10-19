@@ -1,4 +1,5 @@
 const aws = require('aws-sdk');
+const sharp = require('sharp');
 const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
@@ -93,8 +94,8 @@ router.get('/:id', (req, res) => {
             res.sendStatus(500);
         })
 })
-
-
+ })
+ 
 router.post('/s3', rejectUnauthenticated, async (req, res) => {
     if (!AWS_S3_BUCKET || !AWS_S3_REGION || !AWS_ACCESS_KEY_ID || !AWS_SECRET_ACCESS_KEY) {
         res.status(500).send('Missing environment variables for AWS bucket.');
@@ -125,13 +126,6 @@ router.post('/s3', rejectUnauthenticated, async (req, res) => {
         params.Key = thumbKey;
         params.Body = thumbFileConent;
         await s3.upload(params).promise();
-
-        // INSERT photo path into the database
-        const mediumUrl = `https://${AWS_S3_BUCKET}.s3.${AWS_S3_REGION}.amazonaws.com/photos/medium/${fileName}`;
-        const thumbUrl = `https://${AWS_S3_BUCKET}.s3.${AWS_S3_REGION}.amazonaws.com/photos/thumb/${fileName}`;
-
-        const postPhotoQuery = ``
-
         // Send back medium image data.
         res.send(data);
         console.log(data);
@@ -140,7 +134,7 @@ router.post('/s3', rejectUnauthenticated, async (req, res) => {
 
         res.sendStatus(500);
     }
-})
 });
+
 
 module.exports = router;
