@@ -43,9 +43,8 @@ function* postUpdatedPhoto(action) {
         console.log('fileName', fileName);
         const formData = new FormData();
         formData.append('image', resizedFile);
+        console.log('form data', formData);
         yield axios.post(`api/log/photo/s3?name=${fileName}&type=${fileType}&size=${fileSize}`, formData);
-        // yield put({type: 'POST_MUSHROOM_PHOTO', payload: fileName})
-        // yield put({type:'FETCH_PROFILE_INFO'})
     } catch (error) {
         alert('Something went wrong when uploading a photo');
         console.log('Photo Upload - post request failed', error);
