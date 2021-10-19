@@ -36,7 +36,7 @@ function LogDetails() {
             reducer and display on DOM 
             with a back button to navigate to previous page */}
             <h1>View Details</h1>
-            <button onClick={event => deleteLog()}>delete log</button>
+            {/* <button onClick={event => deleteLog()}>delete log</button> */}
             <p> Common Name: {selectedLog.common_name}</p>
             <p> Scientific Name: {selectedLog.scientific_name}</p>
             <p> Date of Entry: {selectedLog.date} </p>
