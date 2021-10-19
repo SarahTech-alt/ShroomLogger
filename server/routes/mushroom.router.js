@@ -191,19 +191,55 @@ router.get('/', (req, res) => {
 
 router.put('/editInfo/:id', (req, res) => {
     console.log('req.params in update log', req.params)
-    console.log('req.body in edit router', req.body)
-    let mushroomInfo = req.body;
+    console.log('req.body in update router', req.body.logDetail)
+    let mushroomInfo = req.body.logDetail;
     const userId = req.user.id;
+    // GETS THE LOG ID OF SELECTED ENTRY
     const logId = req.params.id;
-    queryText = `UPDATE log_entry SET ("date", "details") = ($1,$2) WHERE "id" = $3;`;
-    pool.query(queryText, [mushroomInfo.date, mushroomInfo.details, logId])
+    // FIRST QUERY GETS ALL THE IDs FROM THE 
+    // JUNCTION TABLE WITH CORRESPONDING LOG ID
+    const getIdsQuery = 'SELECT * FROM "mushroom_junction" where "log_id"=$1'
+    pool.query(getIdsQuery, [logId])
         .then(result => {
-            // sends success status on completion
-            res.sendStatus(200)
-        }).catch(error => {
-            // sends error status on error
-            console.log('there was an error posting edited info', error);
-            res.sendStatus(500);
+            // OBJECT WITH ALL IDs
+            const fetchedIds = result.rows[0];
+            console.log('all the ids from query', fetchedIds);
+            
+            // SET ALL FETCHED IDs TO CONSTs FOR READABILITY
+            const mushroomNamesId = fetchedIds.mushroom_names_id;
+            const mushroomPictureId = fetchedIds.mushroom_picture_id;
+            // SECOND QUERY UPDATES ENTRY 
+            // IN NAMES TABLE
+            const updateNames = `UPDATE "mushroom_names" SET "common_name" = $1, "scientific_name"=$2 WHERE "id"=$3;`
+            pool.query(updateNames, [mushroomInfo.common_name, mushroomInfo.scientific_name, mushroomNamesId])
+                .then(result => {
+                            // FOURTH QUERY UPDATES ENTRY
+                            // IN LOG ENTRY TABLE
+                            const updateDetails = `UPDATE "log_entry" SET "date" = $1, "latitude" = $2, "longitude" = $3, "details" = $4 WHERE "id"= $5;`
+                            pool.query(updateDetails, [mushroomInfo.date, mushroomInfo.latitude, mushroomInfo.longitude, mushroomInfo.details, logId])
+                                .then(result => {
+                                    // FIFTH QUERY UPDATES ENTRY IN
+                                    // MUSHROOM PICTURES TABLE
+                                    const updatePicture = `UPDATE "mushroom_pictures" SET "mushroom_picture_thumb" = $1, "mushroom_picture_medium" = $2 WHERE "id" = $3;`
+                                    pool.query(updatePicture, [mushroomInfo.mushroom_picture_thumb, mushroomInfo.mushroom_picture_medium, mushroomPictureId])
+                                        .then(result => {
+                                            console.log('success in updating')
+                                            res.sendStatus(200)
+                                        })
+                                        .catch(error => {
+                                            console.log('there was an error updating post', error)
+                                        })
+                                        .catch(error => {
+                                            console.log('there was an error updating post', error)
+                                        })
+                                })
+                        .catch(error => {
+                            console.log('there was an error updating post', error)
+                        })
+                        .catch(error => {
+                            console.log('there was an error updating post', error)
+                        })
+                })
         })
 })
 
