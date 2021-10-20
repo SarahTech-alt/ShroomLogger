@@ -191,9 +191,13 @@ router.get('/', (req, res) => {
 
 
 router.put('/editInfo/:id', (req, res) => {
+    console.log('req.body in update router', req.params);
+    
     console.log('req.params in update log', req.params)
-    console.log('req.body in update router', req.body.logDetail)
-    let mushroomInfo = req.body.logDetail;
+    console.log('req.body in update router', req.body)
+    console.log('req body mushroom details', req.body.updatedMushroomDetails)
+
+    let mushroomInfo = req.body;
     const userId = req.user.id;
     // GETS THE LOG ID OF SELECTED ENTRY
     const logId = req.params.id;
@@ -221,6 +225,7 @@ router.put('/editInfo/:id', (req, res) => {
                                 .then(result => {
                                     // FIFTH QUERY UPDATES ENTRY IN
                                     // MUSHROOM PICTURES TABLE
+                                    
                                     const updatePicture = `UPDATE "mushroom_pictures" SET "mushroom_picture_thumb" = $1, "mushroom_picture_medium" = $2 WHERE "id" = $3;`
                                     pool.query(updatePicture, [mushroomInfo.mushroom_picture_thumb, mushroomInfo.mushroom_picture_medium, mushroomPictureId])
                                         .then(result => {
