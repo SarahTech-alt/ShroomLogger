@@ -107,7 +107,8 @@ router.delete('/delete/:id', (req, res) => {
 router.post('/', (req, res) => {
     const mushroomData = req.body.details;
     const fileName = req.body.fileName;
-    // console.log(req.body);
+    console.log('req.body in post', req.body);
+    console.log('req.body.details in post', req.body.details)
     // console.log('info in router post', mushroomData);
     console.log('url in router post', fileName);
     // RETURNING "id" will give us back the id of the created log
@@ -170,7 +171,7 @@ router.get('/', (req, res) => {
     // GET USER ID OF LOGGED IN USER
     const userId = req.user.id;
     // GET INFORMATION FROM JOINING TABLES ON JUNCTION TABLE
-    const queryText = `SELECT "log_id", "user_id","date","details" "latitude","longitude", "common_name", "scientific_name","details", "mushroom_picture_thumb", "mushroom_picture_medium" FROM "log_entry" 
+    const queryText = `SELECT "log_id", "user_id","date","details", "latitude","longitude", "common_name", "scientific_name","details", "mushroom_picture_thumb", "mushroom_picture_medium" FROM "log_entry" 
     JOIN "mushroom_junction" ON  "mushroom_junction"."log_id"="log_entry"."id"
     JOIN "mushroom_names" ON "mushroom_junction"."mushroom_names_id"="mushroom_names"."id" 
     JOIN "mushroom_pictures" ON "mushroom_junction"."mushroom_picture_id"="mushroom_pictures"."id"

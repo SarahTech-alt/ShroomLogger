@@ -79,16 +79,16 @@ function AddPhotos() {
         <>
             {/* Show file upload when the user clicks their profile picture
             Allows user to select a file from their local files */}
-            <input type="file" accept="image/*" onChange={onFileChange} />
+            <input type="file" accept="image/*" onChange={onFileChange} /><br />
 
             {/* <p>picture upload placeholder</p> */}
             <input type="text" value={newMushroom.commonName} onChange={(event) => setNewMushroom({ ...newMushroom, common_name: event.target.value })} placeholder="Common Name"></input> <br />
 
             <input type="text" value={newMushroom.scientificName} onChange={(event) => setNewMushroom({ ...newMushroom, scientific_name: event.target.value })} placeholder="Scientific Name (optional)"></input><br />
 
-            <input type="text" value={newMushroom.latitude} onChange={(event) => setNewMushroom({ ...newMushroom, latitude: event.target.value })} placeholder="Latitude"></input> <br />
+            <input type="number" value={newMushroom.latitude} onChange={(event) => setNewMushroom({ ...newMushroom, latitude: event.target.value })} placeholder="Latitude"></input> <br />
 
-            <input type="text" value={newMushroom.longitude} onChange={(event) => setNewMushroom({ ...newMushroom, longitude: event.target.value })} placeholder="Longitude"></input> <br />
+            <input type="number" value={newMushroom.longitude} onChange={(event) => setNewMushroom({ ...newMushroom, longitude: event.target.value })} placeholder="Longitude"></input> <br />
 
             <input type="date" onChange={(event) => setNewMushroom({ ...newMushroom, date: moment(event.target.value).format() })} placeholder="When"></input> <br />
 
