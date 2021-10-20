@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import './EditLog.css';
@@ -46,6 +46,7 @@ function EditLog() {
     // on page load dispatch to selected log saga
     // send logId that was retried with useParams
     useEffect(() => {
+        console.log('process env', process.env)
         dispatch({ type: 'SET_SELECTED_LOG', payload: logId });
         console.log('log id on page load', logId);
         dispatch({ type: 'SET_SELECTED_MUSHROOM_PHOTO', payload: logId })
@@ -63,6 +64,10 @@ function EditLog() {
         setSelectedFile(userFile);
         setResizedFile(resizedFile);
         setPreview(URL.createObjectURL(resizedFile));
+        console.log(process.env.REACT_APP_AWS_S3_BUCKET);
+        selectedLog.mushroom_picture_thumb = `https://solospikebucket.s3.us-east-2.amazonaws.com/photos/thumb/${userFile.name}`; 
+        selectedLog.mushroom_picture_medium = `https://solospikebucket.s3.us-east-2.amazonaws.com/photos/medium/${userFile.name}`;
+
     }
 
     const sendFormDataToServer = () => {
@@ -76,24 +81,26 @@ function EditLog() {
                 // any other form data...
                 logId,
                 logInfo,
+                resizedFile,
+                selectedFile
             }
         })
-        // sendPictureToServer();
+        sendPictureToServer();
     }
 
     const sendPictureToServer = () => {
-        console.log('in send picture to server on edit page');
-        let action;
-        action = {
-            type: 'EDIT_LOG_PICTURE',
+        console.log('in send picture to server on edit page', selectedFile);
+        dispatch({
+            type: 'ADD_MUSHROOM_PHOTO',
             payload: {
                 selectedFile,
                 resizedFile,
                 logId
             }
-        }
+        })
         setPreview('');
         setChangePicture(!changePicture);
+        history.goBack();
     }
     // dispatches to delete saga on delete button click
     const deleteLog = () => {
@@ -104,7 +111,7 @@ function EditLog() {
 
     return (
         <>
-            {JSON.stringify(selectedLog)}<hr />
+            {/* {JSON.stringify(selectedLog)}<hr /> */}
             {/* Access information from the logDetail
             reducer and display on DOM with buttons to edit logs
             and a back button to navigate to previous page */}

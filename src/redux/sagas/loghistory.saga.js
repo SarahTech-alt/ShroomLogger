@@ -39,9 +39,9 @@ const addMushroom = yield axios.post('/api/mushroom', newMushroomInfo);
 function* postUpdatedLog(action) {
   try{
       const selectedLog = action.payload.logId
-      console.log('log id to send to post in edit', action.payload);
-      const updatedMushroomDetails = action.payload.logInfo;
-      console.log('edited log info to send to post', updatedMushroomDetails);
+      // console.log('log id to send to post in edit', action.payload);
+      const updatedMushroomDetails = action.payload.logInfo.logDetail;
+      // console.log('edited log info to send to post', updatedMushroomDetails);
       yield axios.put(`api/mushroom/editInfo/${selectedLog}`, updatedMushroomDetails);
       yield put({type:'FETCH_LOGS'})
   } catch (error) {

@@ -46,7 +46,7 @@ function* postUpdatedPhoto(action) {
         console.log('form data', formData);
         yield axios.post(`api/log/photo/s3?name=${fileName}&type=${fileType}&size=${fileSize}`, formData);
     } catch (error) {
-        alert('Something went wrong when uploading a photo');
+        
         console.log('Photo Upload - post request failed', error);
     }
   }

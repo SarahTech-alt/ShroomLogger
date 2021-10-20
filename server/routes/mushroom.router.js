@@ -107,7 +107,8 @@ router.delete('/delete/:id', (req, res) => {
 router.post('/', (req, res) => {
     const mushroomData = req.body.details;
     const fileName = req.body.fileName;
-    // console.log(req.body);
+    console.log('req.body in post', req.body);
+    console.log('req.body.details in post', req.body.details)
     // console.log('info in router post', mushroomData);
     console.log('url in router post', fileName);
     // RETURNING "id" will give us back the id of the created log
@@ -170,7 +171,7 @@ router.get('/', (req, res) => {
     // GET USER ID OF LOGGED IN USER
     const userId = req.user.id;
     // GET INFORMATION FROM JOINING TABLES ON JUNCTION TABLE
-    const queryText = `SELECT "log_id", "user_id","date","details" "latitude","longitude", "common_name", "scientific_name","details", "mushroom_picture_thumb", "mushroom_picture_medium" FROM "log_entry" 
+    const queryText = `SELECT "log_id", "user_id","date","details", "latitude","longitude", "common_name", "scientific_name","details", "mushroom_picture_thumb", "mushroom_picture_medium" FROM "log_entry" 
     JOIN "mushroom_junction" ON  "mushroom_junction"."log_id"="log_entry"."id"
     JOIN "mushroom_names" ON "mushroom_junction"."mushroom_names_id"="mushroom_names"."id" 
     JOIN "mushroom_pictures" ON "mushroom_junction"."mushroom_picture_id"="mushroom_pictures"."id"
@@ -190,9 +191,13 @@ router.get('/', (req, res) => {
 
 
 router.put('/editInfo/:id', (req, res) => {
+    console.log('req.body in update router', req.params);
+    
     console.log('req.params in update log', req.params)
-    console.log('req.body in update router', req.body.logDetail)
-    let mushroomInfo = req.body.logDetail;
+    console.log('req.body in update router', req.body)
+    console.log('req body mushroom details', req.body.updatedMushroomDetails)
+
+    let mushroomInfo = req.body;
     const userId = req.user.id;
     // GETS THE LOG ID OF SELECTED ENTRY
     const logId = req.params.id;
@@ -220,6 +225,7 @@ router.put('/editInfo/:id', (req, res) => {
                                 .then(result => {
                                     // FIFTH QUERY UPDATES ENTRY IN
                                     // MUSHROOM PICTURES TABLE
+                                    
                                     const updatePicture = `UPDATE "mushroom_pictures" SET "mushroom_picture_thumb" = $1, "mushroom_picture_medium" = $2 WHERE "id" = $3;`
                                     pool.query(updatePicture, [mushroomInfo.mushroom_picture_thumb, mushroomInfo.mushroom_picture_medium, mushroomPictureId])
                                         .then(result => {
