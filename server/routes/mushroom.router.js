@@ -33,8 +33,8 @@ router.get('/detail/:id', (req, res) => {
     console.log('user id in router', req.user.id)
     queryText = `SELECT "log_entry"."id","user_id","date","latitude","longitude","details","common_name","scientific_name", "mushroom_picture_thumb", "mushroom_picture_medium" FROM "log_entry" LEFT JOIN
     "mushroom_junction" ON "mushroom_junction"."log_id" = "log_entry"."id"
-    LEFT JOIN "mushroom_pictures" ON "mushroom_junction"."mushroom_picture_id" = "mushroom_pictures"."id"
-    LEFT JOIN "mushroom_names" ON "mushroom_junction"."mushroom_picture_id" = "mushroom_pictures"."id" WHERE "log_entry"
+     JOIN "mushroom_pictures" ON "mushroom_junction"."mushroom_picture_id" = "mushroom_pictures"."id"
+     JOIN "mushroom_names" ON "mushroom_junction"."mushroom_names_id" = "mushroom_names"."id" WHERE "log_entry"
     ."id"=$1 AND "user_id" =$2;`
     pool.query(queryText, [selectedId, userId])
         .then(results => {
@@ -190,63 +190,40 @@ router.get('/', (req, res) => {
 })
 
 
-router.put('/editInfo/:id', (req, res) => {
-    console.log('req.body in update router', req.params);
-    
-    console.log('req.params in update log', req.params)
-    console.log('req.body in update router', req.body)
-    console.log('req body mushroom details', req.body.updatedMushroomDetails)
-
+router.put('/editInfo/:id', async (req, res) => {
+    console.log('req.params in update log', req.params);
+    console.log('req.body in update router', req.body);
     let mushroomInfo = req.body;
     const userId = req.user.id;
     // GETS THE LOG ID OF SELECTED ENTRY
     const logId = req.params.id;
-    // FIRST QUERY GETS ALL THE IDs FROM THE 
-    // JUNCTION TABLE WITH CORRESPONDING LOG ID
-    const getIdsQuery = 'SELECT * FROM "mushroom_junction" where "log_id"=$1'
-    pool.query(getIdsQuery, [logId])
-        .then(result => {
-            // OBJECT WITH ALL IDs
-            const fetchedIds = result.rows[0];
-            console.log('all the ids from query', fetchedIds);
-            
-            // SET ALL FETCHED IDs TO CONSTs FOR READABILITY
-            const mushroomNamesId = fetchedIds.mushroom_names_id;
-            const mushroomPictureId = fetchedIds.mushroom_picture_id;
-            // SECOND QUERY UPDATES ENTRY 
-            // IN NAMES TABLE
-            const updateNames = `UPDATE "mushroom_names" SET "common_name" = $1, "scientific_name"=$2 WHERE "id"=$3;`
-            pool.query(updateNames, [mushroomInfo.common_name, mushroomInfo.scientific_name, mushroomNamesId])
-                .then(result => {
-                            // FOURTH QUERY UPDATES ENTRY
-                            // IN LOG ENTRY TABLE
-                            const updateDetails = `UPDATE "log_entry" SET "date" = $1, "latitude" = $2, "longitude" = $3, "details" = $4 WHERE "id"= $5;`
-                            pool.query(updateDetails, [mushroomInfo.date, mushroomInfo.latitude, mushroomInfo.longitude, mushroomInfo.details, logId])
-                                .then(result => {
-                                    // FIFTH QUERY UPDATES ENTRY IN
-                                    // MUSHROOM PICTURES TABLE
-                                    
-                                    const updatePicture = `UPDATE "mushroom_pictures" SET "mushroom_picture_thumb" = $1, "mushroom_picture_medium" = $2 WHERE "id" = $3;`
-                                    pool.query(updatePicture, [mushroomInfo.mushroom_picture_thumb, mushroomInfo.mushroom_picture_medium, mushroomPictureId])
-                                        .then(result => {
-                                            console.log('success in updating')
-                                            res.sendStatus(200)
-                                        })
-                                        .catch(error => {
-                                            console.log('there was an error updating post', error)
-                                        })
-                                        .catch(error => {
-                                            console.log('there was an error updating post', error)
-                                        })
-                                })
-                        .catch(error => {
-                            console.log('there was an error updating post', error)
-                        })
-                        .catch(error => {
-                            console.log('there was an error updating post', error)
-                        })
-                })
-        })
-})
+    try {
+        // FIRST QUERY GETS ALL THE IDs FROM THE 
+        // JUNCTION TABLE WITH CORRESPONDING LOG ID
+        const getIdsQuery = 'SELECT * FROM "mushroom_junction" where "log_id"=$1'
+        const idResults = await pool.query(getIdsQuery, [logId])
+        const fetchedIds = idResults.rows[0];
+        console.log('all the ids from query', fetchedIds);
+        // SET ALL FETCHED IDs TO CONSTs FOR READABILITY
+        const mushroomNamesId = fetchedIds.mushroom_names_id;
+        const mushroomPictureId = fetchedIds.mushroom_picture_id;
+        // SECOND QUERY UPDATES ENTRY IN NAMES TABLE
+        const updateNames = `UPDATE "mushroom_names" SET "common_name" = $1, "scientific_name"=$2 WHERE "id"=$3;`
+        await pool.query(updateNames, [mushroomInfo.common_name, mushroomInfo.scientific_name, mushroomNamesId])
+        // FOURTH QUERY UPDATES ENTRY IN LOG ENTRY TABLE
+        const updateDetails = `UPDATE "log_entry" SET "date" = $1, "latitude" = $2, "longitude" = $3, "details" = $4 WHERE "id"= $5;`
+        await pool.query(updateDetails, [mushroomInfo.date, mushroomInfo.latitude, mushroomInfo.longitude, mushroomInfo.details, logId])
+        // FIFTH QUERY UPDATES ENTRY IN MUSHROOM PICTURES TABLE
+        const updatePicture = `UPDATE "mushroom_pictures" SET "mushroom_picture_thumb" = $1, "mushroom_picture_medium" = $2 WHERE "id" = $3;`
+        await pool.query(updatePicture, [mushroomInfo.mushroom_picture_thumb, mushroomInfo.mushroom_picture_medium, mushroomPictureId])
+    } catch
+    (error) {
+        console.log('ROLLBACK', error);
+        await pool.query('ROLLBACK');
+        throw error;
+    }
+});
+
+
 
 module.exports = router;
