@@ -26,12 +26,19 @@ function HomePage() {
     console.log('log id on page load', profile);
   }, [dispatch]);
 
+const viewLogDetail = (logId) => {
+  dispatch({type: 'SET_SELECTED_LOG', payload: logId});
+  history.push(`/details/${logId}`)
+}
+
   return (
     <>
       {/* {JSON.stringify(profile)} */}
       {/* {JSON.stringify(logHistory)} */}
       <div className="container">
-        <p><img src={profile.profile_picture_thumb}></img></p>
+        <p><img 
+        src={profile.profile_picture_thumb}
+        onClick={event => history.push('/profile')}></img></p>
         <p>Feed</p> <hr />
         <button
           onClick={event => history.push('/addPhotos')}>
@@ -39,7 +46,10 @@ function HomePage() {
         </button> <br />
         {logHistory.map((logs) => (
                     <div key={logs.log_id}>
-                    <p><img width="250" height="200" src={logs.mushroom_picture_thumb} /></p>
+                    <p><img width="250" 
+                    height="200" 
+                    src={logs.mushroom_picture_medium}
+                    onClick={(event => viewLogDetail(logs.log_id))} /></p>
                     </div>
                 ))}
         <hr />
