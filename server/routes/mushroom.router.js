@@ -47,61 +47,37 @@ router.get('/detail/:id', (req, res) => {
         })
 })
 
-router.delete('/delete/:id', (req, res) => {
+router.delete('/delete/:id', async (req, res) => {
     // GETS THE LOG ID OF SELECTED ENTRY
     const logId = req.params.id;
-    // FIRST QUERY GETS ALL THE IDs FROM THE 
-    // JUNCTION TABLE WITH CORRESPONDING LOG ID
-    const getIdsQuery = 'SELECT * FROM "mushroom_junction" where "log_id"=$1'
-    pool.query(getIdsQuery, [logId])
-        .then(result => {
-            // OBJECT WITH ALL IDs
-            const fetchedIds = result.rows[0];
-            // SET ALL FETCHED IDs TO CONSTs FOR READABILITY
-            const mushroomNamesId = fetchedIds.mushroom_names_id;
-            const mushroomPictureId = fetchedIds.mushroom_picture_id;
-            // SECOND QUERY DELETES ENTRY 
-            // FROM THE JUNCTION TABLE
-            // SO NO FOREIGN KEY CONFLICTS OCCUR
-            const deleteFromJunction = `DELETE FROM "mushroom_junction" WHERE "log_id"=$1;`
-            pool.query(deleteFromJunction, [logId])
-                .then(result => {
-                    // THIRD QUERY DELETES FROM LOG ENTRY TABLE
-                    const queryText = `DELETE FROM log_entry WHERE "id" = $1;`;
-                    pool.query(queryText, [logId])
-                        .then(result => {
-                            // FOURTH QUERY DELETES ENTRY
-                            // FROM MUSHROOM NAMES TABLE
-                            const deleteFromNames = `DELETE FROM mushroom_names WHERE "id" = $1;`
-                            pool.query(deleteFromNames, [mushroomNamesId])
-                                .then(result => {
-                                    // FIFTH QUERY DELETES ENTRY FROM
-                                    // MUSHROOM PICTURES TABLE
-                                    const deleteFromPictures = `DELETE FROM mushroom_pictures WHERE "id" = $1;`
-                                    pool.query(deleteFromPictures, [mushroomPictureId])
-                                        .then(result => {
-                                            console.log('success in deleting')
-                                            res.sendStatus(200)
-                                        })
-                                        .catch(error => {
-                                            console.log('there was an error deleting pictures', error)
-                                        })
-                                        .catch(error => {
-                                            console.log('there was an error deleting mushroom pictures', error)
-                                        })
-                                })
-                        })
-                        .catch(error => {
-                            console.log('there was an error deleting names', error)
-                        })
-                        .catch(error => {
-                            console.log('there was an error deleting log entry', error)
-                        })
-                        .catch(error => {
-                            console.log('there was an error deleting log', error)
-                        })
-                })
-        })
+    try {
+        // FIRST QUERY GETS ALL THE IDs FROM THE 
+        // JUNCTION TABLE WITH CORRESPONDING LOG ID
+        const getIdsQuery = 'SELECT * FROM "mushroom_junction" where "log_id"=$1'
+        const getAllIds = await pool.query(getIdsQuery, [logId])
+        // OBJECT WITH ALL IDs
+        const fetchedIds = getAllIds.rows[0];
+        // SET ALL FETCHED IDs TO CONSTs FOR READABILITY
+        const mushroomNamesId = fetchedIds.mushroom_names_id;
+        const mushroomPictureId = fetchedIds.mushroom_picture_id;
+        // SECOND QUERY DELETES ENTRY FROM THE JUNCTION TABLE
+        // SO NO FOREIGN KEY CONFLICTS OCCUR
+        const deleteFromJunction = `DELETE FROM "mushroom_junction" WHERE "log_id"=$1;`
+        await pool.query(deleteFromJunction, [logId])
+        // THIRD QUERY DELETES FROM LOG ENTRY TABLE
+        const queryText = `DELETE FROM log_entry WHERE "id" = $1;`;
+        await pool.query(queryText, [logId])
+        // FOURTH QUERY DELETES ENTRY FROM MUSHROOM NAMES TABLE
+        const deleteFromNames = `DELETE FROM mushroom_names WHERE "id" = $1;`
+        await pool.query(deleteFromNames, [mushroomNamesId])
+        // FIFTH QUERY DELETES ENTRY FROM MUSHROOM PICTURES TABLE
+        const deleteFromPictures = `DELETE FROM mushroom_pictures WHERE "id" = $1;`
+        await pool.query(deleteFromPictures, [mushroomPictureId])
+    } catch (error) {
+        console.log('ROLLBACK', error);
+        await pool.query('ROLLBACK');
+        throw error;
+    }
 })
 
 router.post('/', async (req, res) => {
@@ -111,9 +87,9 @@ router.post('/', async (req, res) => {
         const fileName = req.body.fileName;
         // RETURNING "id" will give us back the id of the created log
         const insertLogInfo = `
-    INSERT INTO "log_entry" ("date", "latitude", "longitude", "details")
-    VALUES ($1, $2, $3, $4)
-    RETURNING "id";`
+        INSERT INTO "log_entry" ("date", "latitude", "longitude", "details")
+         VALUES ($1, $2, $3, $4)
+        RETURNING "id";`
         // FIRST QUERY MAKES LOG ENTRY
         const getLogIds = await pool.query(insertLogInfo, [mushroomData.date, mushroomData.latitude, mushroomData.longitude, mushroomData.details])
         // GETS THE LOG ENTRY ID
@@ -136,7 +112,7 @@ router.post('/', async (req, res) => {
         const createPhotoId = pictureLogId.rows[0].id;
         // FOURTH QUERY ADDS ALL IDs TO JUNCTION TABLE
         const insertIntoJunction = `INSERT INTO "mushroom_junction" 
-      ("log_id","mushroom_names_id", "user_id", "mushroom_picture_id") 
+        ("log_id","mushroom_names_id", "user_id", "mushroom_picture_id") 
          VALUES ($1,$2,$3,$4);`;
         await pool.query(insertIntoJunction, [createdLogId, createMushroomNameId, req.user.id, createPhotoId])
     } catch (error) {
