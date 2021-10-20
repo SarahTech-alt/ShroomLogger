@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { readAndCompressImage } from 'browser-image-resizer';
+import { useHistory } from 'react-router-dom';
+import moment from 'moment';
 
 
 function ProfilePage() {
@@ -10,18 +12,18 @@ function ProfilePage() {
         maxHeight: 300,
     };
 
-    // variable to access useDispatch from
-    // react redux module for use in sending
-    // information to the saga
+    // variables to access react 
+    // modules for dispatching information to the saga
+    // and user navigation
     const dispatch = useDispatch();
+    const history = useHistory();
 
     // variables to access and hold data
     // from the root reducer store
     const profileInfo = useSelector(store => store.profile.profileInfoReducer);
     const userInfo = useSelector(store => store.user)
     const userId = userInfo.id;
-      
-
+    
     // hooks for image actions
     const [preview, setPreview] = useState('');
     const [selectedFile, setSelectedFile] = useState('');
@@ -91,15 +93,17 @@ function ProfilePage() {
                     <button onClick={event => sendFormDataToServer()}>Submit</button>
                 </div>
             )}
-            {/* <p>{JSON.stringify(profileUserName)}</p> */}
+            {/* <p>{JSON.stringify(profileInfo)}</p> */}
             {/* Map over the profileInfoReducer 
             to display username and profile image */}
             {profileInfo.map((profile, index) =>
                 <div key={index}>
                     {/* When the user clicks their picture set change picture to true
                     which will conditionally render the file upload option */}
-                    <img src={profile.profile_picture_thumb} onClick={(event => setChangePicture(!changePicture))}></img>
-                    <p>username: {profile.username}</p>
+                    <img src={profile.profile_picture_medium} onClick={(event => setChangePicture(!changePicture))}></img>
+                    <p>Username: {profile.username}</p>
+                    <p>Member since: {moment(userInfo.date_created).format('LL')}</p>
+                    <button onClick={(event => history.push('/home'))}>Back</button>
                 </div>
             )}
         </>
