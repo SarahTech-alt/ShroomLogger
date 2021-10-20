@@ -89,16 +89,15 @@ function EditLog() {
     }
 
     const sendPictureToServer = () => {
-        console.log('in send picture to server on edit page');
-        let action;
-        action = {
+        console.log('in send picture to server on edit page', selectedFile);
+        dispatch({
             type: 'ADD_MUSHROOM_PHOTO',
             payload: {
                 selectedFile,
                 resizedFile,
                 logId
             }
-        }
+        })
         setPreview('');
         setChangePicture(!changePicture);
         history.goBack();
@@ -112,7 +111,7 @@ function EditLog() {
 
     return (
         <>
-            {JSON.stringify(selectedLog)}<hr />
+            {/* {JSON.stringify(selectedLog)}<hr /> */}
             {/* Access information from the logDetail
             reducer and display on DOM with buttons to edit logs
             and a back button to navigate to previous page */}
