@@ -104,67 +104,46 @@ router.delete('/delete/:id', (req, res) => {
         })
 })
 
-router.post('/', (req, res) => {
-    const mushroomData = req.body.details;
-    const fileName = req.body.fileName;
-    console.log('req.body in post', req.body);
-    console.log('req.body.details in post', req.body.details)
-    // console.log('info in router post', mushroomData);
-    console.log('url in router post', fileName);
-    // RETURNING "id" will give us back the id of the created log
-    const insertLogInfo = `
+router.post('/', async (req, res) => {
+    try {
+        console.log('req.body in post', req.body);
+        const mushroomData = req.body.details;
+        const fileName = req.body.fileName;
+        // RETURNING "id" will give us back the id of the created log
+        const insertLogInfo = `
     INSERT INTO "log_entry" ("date", "latitude", "longitude", "details")
     VALUES ($1, $2, $3, $4)
     RETURNING "id";`
-    // FIRST QUERY MAKES LOG ENTRY
-    pool.query(insertLogInfo, [mushroomData.date, mushroomData.latitude, mushroomData.longitude, mushroomData.details])
-        .then(result => {
-            // GETS THE LOG ENTRY ID
-            // console.log('New Log Id:', result.rows[0].id); //ID IS HERE!
-            const createdLogId = result.rows[0].id
-            // SECOND QUERY MAKES MUSHROOM NAMES ENTRY
-            const insertMushroomNames = `
-        INSERT INTO "mushroom_names" ("common_name", "scientific_name")
+        // FIRST QUERY MAKES LOG ENTRY
+        const getLogIds = await pool.query(insertLogInfo, [mushroomData.date, mushroomData.latitude, mushroomData.longitude, mushroomData.details])
+        // GETS THE LOG ENTRY ID
+        const createdLogId = getLogIds.rows[0].id
+        // SECOND QUERY MAKES MUSHROOM NAMES ENTRY
+        const insertMushroomNames = `INSERT INTO "mushroom_names" ("common_name", "scientific_name")
         VALUES  ($1, $2)
-        RETURNING "id";
-        `
-            pool.query(insertMushroomNames, [mushroomData.common_name, mushroomData.scientific_name])
-                .then(result => {
-                    // GETS THE NAME ENTRY ID
-                    const createMushroomNameId = result.rows[0].id;
-                    // console.log('second url in post', createMushroomNameId);
-                    const mediumUrl = `https://${AWS_S3_BUCKET}.s3.${AWS_S3_REGION}.amazonaws.com/photos/medium/${fileName}`;
-                    const thumbUrl = `https://${AWS_S3_BUCKET}.s3.${AWS_S3_REGION}.amazonaws.com/photos/thumb/${fileName}`;
-                    // THIRD QUERY MAKES MUSHROOM PICTURES ENTRY
-                    const insertPicture = `INSERT INTO "mushroom_pictures" ("mushroom_picture_thumb","mushroom_picture_medium") VALUES ($1,$2) RETURNING "id";`
-                    pool.query(insertPicture, [thumbUrl, mediumUrl])
-                        .then((result => {
-                            // GETS THE PHOTO ENTRY ID
-                            const createPhotoId = result.rows[0].id;
-                            // console.log('the photo id in router is', createPhotoId)
-                            // FOURTH QUERY ADDS ALL IDs TO JUNCTION TABLE
-                            const insertIntoJunction = `INSERT INTO "mushroom_junction" ("log_id","mushroom_names_id", "user_id", "mushroom_picture_id") VALUES ($1,$2,$3,$4);`;
-                            pool.query(insertIntoJunction, [createdLogId, createMushroomNameId, req.user.id, createPhotoId])
-                                .then(result => {
-                                    res.sendStatus(200);
-                                })
-                        }))
-                })
-        }).catch(error => {
-            console.log('there was an error posting log', error);
-        })
-        .catch(err => {
-            // catch for second query
-            console.log(err);
-            res.sendStatus(500)
-        }).catch(err => {
-            res.sendStatus(500)
-        })
-        // Catch for first query
-        .catch(err => {
-            console.log(err);
-            res.sendStatus(500)
-        })
+        RETURNING "id";`
+        const mushroomLogId = await pool.query(insertMushroomNames, [mushroomData.common_name, mushroomData.scientific_name])
+        // GETS THE NAME ENTRY ID
+        const createMushroomNameId = mushroomLogId.rows[0].id;
+        const mediumUrl = `https://${AWS_S3_BUCKET}.s3.${AWS_S3_REGION}.amazonaws.com/photos/medium/${fileName}`;
+        const thumbUrl = `https://${AWS_S3_BUCKET}.s3.${AWS_S3_REGION}.amazonaws.com/photos/thumb/${fileName}`;
+        // THIRD QUERY MAKES MUSHROOM PICTURES ENTRY
+        const insertPicture = `INSERT INTO "mushroom_pictures" 
+         ("mushroom_picture_thumb","mushroom_picture_medium") VALUES ($1,$2) 
+         RETURNING "id";`
+        const pictureLogId = await pool.query(insertPicture, [thumbUrl, mediumUrl])
+        // GETS THE PHOTO ENTRY ID
+        const createPhotoId = pictureLogId.rows[0].id;
+        // FOURTH QUERY ADDS ALL IDs TO JUNCTION TABLE
+        const insertIntoJunction = `INSERT INTO "mushroom_junction" 
+      ("log_id","mushroom_names_id", "user_id", "mushroom_picture_id") 
+         VALUES ($1,$2,$3,$4);`;
+        await pool.query(insertIntoJunction, [createdLogId, createMushroomNameId, req.user.id, createPhotoId])
+    } catch (error) {
+        console.log('ROLLBACK', error);
+        await pool.query('ROLLBACK');
+        throw error;
+    }
 })
 
 router.get('/', (req, res) => {
