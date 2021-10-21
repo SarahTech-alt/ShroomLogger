@@ -3,6 +3,7 @@ import { GoogleMap, InfoWindow, LoadScript, Marker } from '@react-google-maps/ap
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import useReduxStore from '../../hooks/useReduxStore';
+import MapDetails from './MapDetails.jsx';
 
 
 const containerStyle = {
@@ -15,9 +16,7 @@ const center = {
   lng: -92.79125855396293
 };
 
-const onLoad = marker => {
-  console.log('marker: ', marker)
-}
+
 
 
 function MapView() {
@@ -25,6 +24,8 @@ function MapView() {
   const logDetails = logInfo.logHistory.logHistory;
   const dispatch = useDispatch();
   const history = useHistory();
+
+  // let logDetails.push({detailDisplayed:false});
 
   const [detailsDisplayed, setDetailsDisplayed] = useState(false)
 
@@ -56,17 +57,8 @@ function MapView() {
           { /* Child components, such as markers, info windows, etc. */}
           <>
             {logDetails.map((coord, index) => (
-              <Marker key={index}
-                position={{ lat: Number(coord.latitude), lng: Number(coord.longitude) }}
-                onLoad={onLoad}
-                onClick={event => viewDetails(coord.log_id)}
-                onMouseOver={event => toggleInfo(coord.log_id)}
-              > {detailsDisplayed && (
-                 <InfoWindow
-                  position={{ lat: Number(coord.latitude), lng: Number(coord.longitude) }}>
-                  <p>{coord.common_name}</p>
-                </InfoWindow>  )}
-             </Marker>
+             <MapDetails coord={coord}
+             key={index}/>
             ))}
           </>
         </GoogleMap>
