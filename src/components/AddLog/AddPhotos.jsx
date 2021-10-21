@@ -3,6 +3,10 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import { readAndCompressImage } from 'browser-image-resizer';
+import AddType from './AddType.jsx';
+import AddLocationTime from './AddLocationTime.jsx';
+import AddDescription from './AddDescription.jsx';
+
 
 
 function AddPhotos() {
@@ -82,6 +86,8 @@ function AddPhotos() {
             <input type="file" accept="image/*" onChange={onFileChange} /><br />
 
             {/* <p>picture upload placeholder</p> */}
+
+            
             <input type="text" value={newMushroom.commonName} onChange={(event) => setNewMushroom({ ...newMushroom, common_name: event.target.value })} placeholder="Common Name"></input> <br />
 
             <input type="text" value={newMushroom.scientificName} onChange={(event) => setNewMushroom({ ...newMushroom, scientific_name: event.target.value })} placeholder="Scientific Name (optional)"></input><br />

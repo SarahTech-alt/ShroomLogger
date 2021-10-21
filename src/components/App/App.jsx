@@ -24,12 +24,12 @@ import LogHistory from '../LogHistory/LogHistory';
 import LogDetails from '../LogDetails/LogDetails';
 import EditLog from '../EditLog/EditLog';
 import MapView from '../MapView/MapView';
-import AddPhotos from '../AddPhotos/AddPhotos';
-import AddType from '../AddType/AddType';
-import AddLocationTime from '../AddLocationTime/AddLocationTime';
+import AddPhotos from '../AddLog/AddPhotos';
+import AddType from '../AddLog/AddType';
+import AddLocationTime from '../AddLog/AddLocationTime';
 
 import './App.css';
-import AddDescription from '../AddDescription/AddDescription';
+import AddDescription from '../AddLog/AddDescription';
 
 function App() {
   const dispatch = useDispatch();
