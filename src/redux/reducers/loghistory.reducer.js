@@ -28,6 +28,8 @@ const logToAdd = (state =
         date: moment().format(),
         details: undefined,
         selectedFile: '',
+        latitude: '',
+        longitude: '',
     }, action) => {
     switch (action.type) {
         case 'SET_LOG_TO_ADD':

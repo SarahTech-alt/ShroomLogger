@@ -24,6 +24,14 @@ function AddLocationTime() {
         height: '400px'
     };
 
+    const [displayNewMarker, setDisplayNewMarker] = useState(false);
+    const [showCurrentLocation, setShowCurrentLocation] = useState(true);
+    const [newMarkerLocation, setNewMakerLocation] = useState({
+        lat: location.lat,
+        lng: location.lng
+    });
+
+
     // on page load get current location from GoogleMaps
     // and set response to current location
     useEffect(() => {
@@ -42,24 +50,39 @@ function AddLocationTime() {
 
     // access information about new log
     // from redux store
-    const newMushroom =  useSelector(store => store.logHistory.logToAdd);
+    const newMushroom = useSelector(store => store.logHistory.logToAdd);
+
+
 
     // set redux store variables to 
     // current location on button click
-    const sendLocationData = () => {
+    const sendCurrentLocation = () => {
         newMushroom.latitude = location.lat;
         newMushroom.longitude = location.lng;
         console.log(newMushroom);
     }
 
-// function to get coordinates of map click
+    const sendNewLocation = () => {
+        newMushroom.latitude = newMarkerLocation.lat;
+        newMushroom.longitude = newMarkerLocation.lng;
+        console.log(newMushroom);
+    }
+
+    // function to get coordinates of map click
     const getClickData = (value) => {
-        console.log(value);
+        console.log(value.lat());
+        console.log(value.lng());
+        setNewMakerLocation({
+            lat: value.lat(),
+            lng: value.lng()
+        })
+        setShowCurrentLocation(!showCurrentLocation);
+        setDisplayNewMarker(!displayNewMarker);
     }
 
     return (
         <>
-        {JSON.stringify(newMushroom)}<br/>
+            {JSON.stringify(newMushroom)}<br />
             <h1>In Add Location and Time</h1>
             <LoadScript
                 googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
@@ -70,27 +93,31 @@ function AddLocationTime() {
                     mapContainerStyle={containerStyle}
                     center={center}
                     zoom={10}
-                    onClick={event=>getClickData(event.latLng)}
+                    onClick={event => getClickData(event.latLng)}
                 >
-                    {/* Marker shows current location */}
-                    <Marker
-                    position={center}
-                    clickable={true}
-                    draggable={true}
-                    ></Marker>
+                    {/* Marker shows current location  */}
+                    {showCurrentLocation && (
+                        <Marker
+                            position={center}
+                            clickable={true}
+                            draggable={true}
+                        ></Marker>
+                    )}
+                    {/* On map click display marker at click location */}
+                    {displayNewMarker && (
+                        <Marker
+                            position={newMarkerLocation}
+                        ></Marker>
+                    )}
                 </GoogleMap>
-            </LoadScript>
+            </LoadScript><br />
+            <div className="nav-buttons">
+                <button onClick={event => sendCurrentLocation()}>Use Current Location</button><br /><br />
+                <button onClick={event => sendNewLocation()}>Use New Location</button><br /><br />
+                <input type="date" onChange={(event) => ({ ...newMushroom.date = moment(event.target.value).format() })} placeholder="When"></input> <br /><br />
 
-            <button onClick={event=> sendLocationData()}>Use Current Location</button><br />
-
-            {/* <input type="number" value={newMushroom.latitude} onChange={(event) => ({ ...newMushroom.latitude=event.target.value })} placeholder="Latitude"></input> <br /> */}
-
-            {/* <input type="number" value={newMushroom.longitude} onChange={(event) => ({ ...newMushroom.longitude=event.target.value })} placeholder="Longitude"></input> <br />
- */}
-            <input type="date" onChange={(event) => ({...newMushroom.date= moment(event.target.value).format() })} placeholder="When"></input> <br />
-
-            <button onClick={event => history.push('/description')}>Next: Add Details</button>
-          
+                <button onClick={event => history.push('/description')}>Next: Add Details</button>
+            </div>
         </>
     );
 }
