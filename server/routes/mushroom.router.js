@@ -84,8 +84,8 @@ router.delete('/delete/:id', async (req, res) => {
 router.post('/', async (req, res) => {
     try {
         console.log('req.body in post', req.body);
-        const mushroomData = req.body.details;
-        const fileName = req.body.fileName;
+        const mushroomData = req.body;
+        const fileName = req.body.selectedFile;
         // RETURNING "id" will give us back the id of the created log
         const insertLogInfo = `
         INSERT INTO "log_entry" ("date", "latitude", "longitude", "details")

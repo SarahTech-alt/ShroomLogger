@@ -47,7 +47,7 @@ function MapView() {
     <div className='map-display'>
         {/* {JSON.stringify(logDetails)} */}
       <LoadScript
-        googleMapsApiKey='AIzaSyA5kx2R22QebhjWgNDJLG5_xuFJAg-gcrM'
+        googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
       >
         <GoogleMap
           mapContainerStyle={containerStyle}
