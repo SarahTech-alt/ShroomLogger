@@ -6,6 +6,7 @@ const aws = require('aws-sdk');
 const {
     rejectUnauthenticated,
 } = require('../modules/authentication-middleware');
+const { default: axios } = require('axios');
 
 const { AWS_S3_REGION, AWS_S3_BUCKET, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY } = process.env;
 aws.config.region = AWS_S3_REGION;
@@ -179,6 +180,17 @@ router.put('/editInfo/:id', async (req, res) => {
     }
 });
 
+router.post('/map', (req,res) => {
+    const googleKey = process.env.GOOGLE__MAPS_API_KEY
+    axios.post(`https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyA5kx2R22QebhjWgNDJLG5_xuFJAg-gcrM`)
+    .then(results => {
+        console.log('success in posting to api', results.data);
+        res.send(results.data);
+    }).catch(error =>{
+        console.log('there was an error posting to api', error);
+        res.sendStatus(500);
+    })
+})
 
 
 module.exports = router;

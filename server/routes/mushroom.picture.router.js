@@ -128,7 +128,7 @@ router.post('/s3', rejectUnauthenticated, async (req, res) => {
         await s3.upload(params).promise();
         // Send back medium image data.
         res.send(data);
-        console.log(data);
+        console.log('data after post to s3', data);
     } catch (error) {
         console.log('in s3 catch', error);
 
