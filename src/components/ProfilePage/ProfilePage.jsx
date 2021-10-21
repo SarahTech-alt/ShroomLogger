@@ -29,10 +29,12 @@ function ProfilePage() {
     const [selectedFile, setSelectedFile] = useState('');
     const [resizedFile, setResizedFile] = useState('');
     const [changePicture, setChangePicture] = useState(false);
+    const [showCurrentPhoto, setShowCurrentPhoto] = useState(true);
 
     // asynchronous function that
     // updates hooks from user inputted information
     const onFileChange = async (event) => {
+        setShowCurrentPhoto(false);
         console.log(event);
         const userFile = event.target.files[0];
         // const acceptedImageTypes = ['image/gif', 'image/jpeg', 'image/png', 'image/jpg'];
@@ -88,7 +90,7 @@ function ProfilePage() {
             Allows user to select a file from their local files */}
             {changePicture && (
                 <div>
-                    <input type="file" accept="image/*" onChange={onFileChange} />
+                    <input type="file" accept="image/*" onChange={onFileChange} /> <br/>
                     {/* Dispatches file to saga when the button is clicked */}
                     <button onClick={event => sendFormDataToServer()}>Submit</button>
                 </div>
@@ -96,11 +98,14 @@ function ProfilePage() {
             {/* <p>{JSON.stringify(profileInfo)}</p> */}
             {/* Map over the profileInfoReducer 
             to display username and profile image */}
+            
             {profileInfo.map((profile, index) =>
                 <div key={index}>
                     {/* When the user clicks their picture set change picture to true
                     which will conditionally render the file upload option */}
+                    {showCurrentPhoto && (
                     <img src={profile.profile_picture_medium} onClick={(event => setChangePicture(!changePicture))}></img>
+            )}
                     <p>Username: {profile.username}</p>
                     <p>Member since: {moment(userInfo.date_created).format('LL')}</p>
                     <button onClick={(event => history.push('/home'))}>Back</button>

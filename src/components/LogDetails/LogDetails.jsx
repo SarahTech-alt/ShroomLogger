@@ -2,6 +2,7 @@ import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import moment from 'moment';
 
 function LogDetails() {
     // matches parameters of current route
@@ -30,8 +31,8 @@ function LogDetails() {
 
     return (
         <>
-            {JSON.stringify(mushroomPhotos)}
-            {JSON.stringify(selectedLog)}
+            {/* {JSON.stringify(mushroomPhotos)} */}
+            {/* {JSON.stringify(selectedLog)} */}
             {/* Access information from the logDetail
             reducer and display on DOM 
             with a back button to navigate to previous page */}

@@ -20,10 +20,9 @@ import { useDispatch, useSelector } from 'react-redux';
    return (
         <>
         <h1>In Add Type</h1>
-        {JSON.stringify(newMushroom)}<br />
+        {/* {JSON.stringify(newMushroom)}<br /> */}
 
         <input type="text" value={newMushroom.commonName} onChange={(event) => ({ ... newMushroom.common_name = event.target.value })} placeholder="Common Name"></input> <br />
-        <br />
 
         <input type="text" value={newMushroom.scientificName} onChange={(event) => ({ ...newMushroom. scientific_name= event.target.value })} placeholder="Scientific Name (optional)"></input><br />
 
