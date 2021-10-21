@@ -9,14 +9,16 @@ function AddLocationTime() {
 
     // use history from react for page navigation
     const history = useHistory();
-    // use dispatch to call saga functions
-    const dispatch = useDispatch();
     // hook for accessing current location
-    const [location, setLocation] = useState({});
+    const [currentLocation, setCurrentLocation] = useState({});
+    // toggle which marker to show on rendered map
+    const [displayNewMarker, setDisplayNewMarker] = useState(false);
+    const [showCurrentLocation, setShowCurrentLocation] = useState(true);
+
     // use current location as map center
     const center = {
-        lat: location.lat,
-        lng: location.lng
+        lat: currentLocation.lat,
+        lng: currentLocation.lng
     }
     // maps display configuration
     const containerStyle = {
@@ -24,12 +26,10 @@ function AddLocationTime() {
         height: '400px'
     };
 
-    const [displayNewMarker, setDisplayNewMarker] = useState(false);
-    const [showCurrentLocation, setShowCurrentLocation] = useState(true);
-    const [newMarkerLocation, setNewMakerLocation] = useState({
-        lat: location.lat,
-        lng: location.lng
-    });
+    const [locationToSend, setLocationToSend] = useState({
+        lat: currentLocation.lat,
+        lng: currentLocation.lng
+    })
 
 
     // on page load get current location from GoogleMaps
@@ -38,7 +38,7 @@ function AddLocationTime() {
         axios.post(`api/mushroom/map/`)
             .then(res => {
                 console.log(res);
-                setLocation(res.data.location)
+                setCurrentLocation(res.data.location)
             })
             .catch(
                 error => {
@@ -52,30 +52,29 @@ function AddLocationTime() {
     // from redux store
     const newMushroom = useSelector(store => store.logHistory.logToAdd);
 
-
-
-    // set redux store variables to 
-    // current location on button click
-    const sendCurrentLocation = () => {
-        newMushroom.latitude = location.lat;
-        newMushroom.longitude = location.lng;
+    // on submit change latitude and longitude values
+    // of newMushroom in redux store
+    // and navigate user to description page
+    const sendLocationData = () => {
+        newMushroom.latitude = locationToSend.lat;
+        newMushroom.longitude = locationToSend.lng;
         console.log(newMushroom);
+        history.push('/description')
     }
-
-    const sendNewLocation = () => {
-        newMushroom.latitude = newMarkerLocation.lat;
-        newMushroom.longitude = newMarkerLocation.lng;
-        console.log(newMushroom);
-    }
+   
 
     // function to get coordinates of map click
+    // set the location to send variable
+    // to the new coordinates
     const getClickData = (value) => {
         console.log(value.lat());
         console.log(value.lng());
-        setNewMakerLocation({
+        setLocationToSend({
             lat: value.lat(),
             lng: value.lng()
         })
+        // change to show new marker 
+        // and hide the current location marker
         setShowCurrentLocation(!showCurrentLocation);
         setDisplayNewMarker(!displayNewMarker);
     }
@@ -98,7 +97,7 @@ function AddLocationTime() {
                     {/* Marker shows current location  */}
                     {showCurrentLocation && (
                         <Marker
-                            position={center}
+                            position={currentLocation}
                             clickable={true}
                             draggable={true}
                         ></Marker>
@@ -106,17 +105,15 @@ function AddLocationTime() {
                     {/* On map click display marker at click location */}
                     {displayNewMarker && (
                         <Marker
-                            position={newMarkerLocation}
+                            position={locationToSend}
                         ></Marker>
                     )}
                 </GoogleMap>
             </LoadScript><br />
             <div className="nav-buttons">
-                <button onClick={event => sendCurrentLocation()}>Use Current Location</button><br /><br />
-                <button onClick={event => sendNewLocation()}>Use New Location</button><br /><br />
                 <input type="date" onChange={(event) => ({ ...newMushroom.date = moment(event.target.value).format() })} placeholder="When"></input> <br /><br />
 
-                <button onClick={event => history.push('/description')}>Next: Add Details</button>
+                <button onClick={event => sendLocationData()}>Next: Add Details</button>
             </div>
         </>
     );
