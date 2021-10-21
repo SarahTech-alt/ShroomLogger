@@ -27,9 +27,10 @@ import MapView from '../MapView/MapView';
 import AddPhotos from '../AddLog/AddPhotos';
 import AddType from '../AddLog/AddType';
 import AddLocationTime from '../AddLog/AddLocationTime';
-
-import './App.css';
 import AddDescription from '../AddLog/AddDescription';
+import Summary from '../AddLog/Summary';
+import './App.css';
+
 
 function App() {
   const dispatch = useDispatch();
@@ -147,6 +148,16 @@ function App() {
             path="/description"
           >
             <AddDescription />
+
+            </ProtectedRoute>
+
+            <ProtectedRoute
+            // logged in shows AddDescription else shows LoginPage
+            exact
+            path="/summary"
+          >
+            <Summary />
+
           </ProtectedRoute>
 
           <Route
