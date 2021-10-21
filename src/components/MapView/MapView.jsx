@@ -27,17 +27,7 @@ function MapView() {
 
   // let logDetails.push({detailDisplayed:false});
 
-  const [detailsDisplayed, setDetailsDisplayed] = useState(false)
-
-  const toggleInfo = (id) => {
-    setDetailsDisplayed(!detailsDisplayed)
-  }
-
-  const viewDetails = (logId) => {
-    dispatch({type: 'SET_SELECTED_LOG', payload: logId});
-    history.push(`/details/${logId}`);
-  }
-
+  // On page load get the logs from the database
   useEffect(() => {
     console.log('component did mount');
     dispatch({ type: 'FETCH_LOGS' })
@@ -46,16 +36,19 @@ function MapView() {
   return (
     <div className='map-display'>
         {/* {JSON.stringify(logDetails)} */}
+        {/* Initialize API */}
       <LoadScript
         googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
       >
+        {/* Map that will display markers */}
         <GoogleMap
           mapContainerStyle={containerStyle}
           center={center}
           zoom={10}
         >
-          { /* Child components, such as markers, info windows, etc. */}
+         
           <>
+          {/* Map all the log details into MapDetails component */}
             {logDetails.map((coord, index) => (
              <MapDetails coord={coord}
              key={index}/>
