@@ -23,7 +23,7 @@ function ProfilePage() {
     const profileInfo = useSelector(store => store.profile.profileInfoReducer);
     const userInfo = useSelector(store => store.user)
     const userId = userInfo.id;
-    
+
     // hooks for image actions
     const [preview, setPreview] = useState('');
     const [selectedFile, setSelectedFile] = useState('');
@@ -37,25 +37,19 @@ function ProfilePage() {
         setShowCurrentPhoto(false);
         console.log(event);
         const userFile = event.target.files[0];
-        // const acceptedImageTypes = ['image/gif', 'image/jpeg', 'image/png', 'image/jpg'];
-        // if (acceptedImageTypes.includes(acceptedImageTypes.type)) {
         const copyFile = new Blob([userFile], { type: userFile.type });
         const resizedFile = await readAndCompressImage(copyFile, imageConfig);
         setSelectedFile(userFile);
         setResizedFile(resizedFile);
         setPreview(URL.createObjectURL(resizedFile));
-        // } 
-        // else {
-        //     alert('Invalid image file type. Must be gif, jpeg or png.');
-        // }
     }
 
     // send information from hooks to saga function
-    const sendFormDataToServer = () => {
+    const sendFormDataToServer = async () => {
         let action;
         // The file name seems to be dropped on resize, send both the
         // original and resized files.
-        action = {
+        await dispatch({
             type: 'UPLOAD_PHOTO',
             payload: {
                 // any other form data...
@@ -63,10 +57,10 @@ function ProfilePage() {
                 resizedFile,
                 userId,
             }
-        };
-        dispatch(action);
+        });
         setPreview('');
         setChangePicture(!changePicture);
+        setShowCurrentPhoto(!showCurrentPhoto)
     }
 
     // gets the user information from the reducer
@@ -90,7 +84,7 @@ function ProfilePage() {
             Allows user to select a file from their local files */}
             {changePicture && (
                 <div>
-                    <input type="file" accept="image/*" onChange={onFileChange} /> <br/>
+                    <input type="file" accept="image/*" onChange={onFileChange} /> <br />
                     {/* Dispatches file to saga when the button is clicked */}
                     <button onClick={event => sendFormDataToServer()}>Submit</button>
                 </div>
@@ -98,14 +92,13 @@ function ProfilePage() {
             {/* <p>{JSON.stringify(profileInfo)}</p> */}
             {/* Map over the profileInfoReducer 
             to display username and profile image */}
-            
             {profileInfo.map((profile, index) =>
                 <div key={index}>
                     {/* When the user clicks their picture set change picture to true
                     which will conditionally render the file upload option */}
                     {showCurrentPhoto && (
-                    <img src={profile.profile_picture_medium} onClick={(event => setChangePicture(!changePicture))}></img>
-            )}
+                        <img src={profile.profile_picture_medium} onClick={(event => setChangePicture(!changePicture))}></img>
+                    )}
                     <p>Username: {profile.username}</p>
                     <p>Member since: {moment(userInfo.date_created).format('LL')}</p>
                     <button onClick={(event => history.push('/home'))}>Back</button>
