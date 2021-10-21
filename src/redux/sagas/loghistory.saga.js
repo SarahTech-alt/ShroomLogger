@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 import { put, takeLatest } from 'redux-saga/effects';
 
 // worker Saga: will be fired on "FETCH_SECRETS" actions
@@ -48,6 +49,8 @@ function* postUpdatedLog(action) {
       console.log('something went wrong sending edited log to db', error);  
   }
 }
+
+
 
   function* logSaga() {
     yield takeLatest('FETCH_LOGS', fetchLogHistory),

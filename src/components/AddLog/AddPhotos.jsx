@@ -15,6 +15,11 @@ function AddPhotos() {
         quality: 1.0,
         maxHeight: 300,
     };
+     // hooks for image actions
+     const [preview, setPreview] = useState('');
+     const [selectedFile, setSelectedFile] = useState('');
+     const [resizedFile, setResizedFile] = useState('');
+     const [changePicture, setChangePicture] = useState(false);
     // use history for user navigation between pages
     const history = useHistory();
     // use to dispatch events to sagas
@@ -44,12 +49,6 @@ function AddPhotos() {
         // }
     }
 
-    // hooks for image actions
-
-    const [selectedFile, setSelectedFile] = useState('');
-    const [resizedFile, setResizedFile] = useState('');
-    const [changePicture, setChangePicture] = useState(false);
-
     // hook for storing input data
     const [newMushroom, setNewMushroom] = useState({
         common_name: '',
@@ -60,6 +59,7 @@ function AddPhotos() {
         details: undefined,
     });
     // dispatch newMushroom info from inputs to loghistory.saga
+    
     const addNewMushroom = () => {
         dispatch({
             type: 'ADD_MUSHROOM_PHOTO',
@@ -70,25 +70,36 @@ function AddPhotos() {
                 userId,
             }
         })
-        dispatch({
-            type: 'ADD_NEW_MUSHROOM',
-            payload:
-                { newMushroom, selectedFile }
-        })
-        setChangePicture(!changePicture);
-        history.push('/home');
-    };
+    }
+    //     dispatch({
+    //         type: 'ADD_NEW_MUSHROOM',
+    //         payload:
+    //             { newMushroom, selectedFile }
+    //     })
+    //     setChangePicture(!changePicture);
+    //     history.push('/home');
+    // };
+    const sendInfoToRedux = () => {
+        dispatch({type:'SET_LOG_TO_ADD', payload: newMushroom});
+        history.push('/addType')
+    }
 
     return (
         <>
             {/* Show file upload when the user clicks their profile picture
             Allows user to select a file from their local files */}
             <input type="file" accept="image/*" onChange={onFileChange} /><br />
+            {preview && (
+                <img
+                    className="placeholder-photo-preview"
+                    src={preview}
+                    alt="Photo preview"
+                />
+            )}
 
-            {/* <p>picture upload placeholder</p> */}
-
-            
-            <input type="text" value={newMushroom.commonName} onChange={(event) => setNewMushroom({ ...newMushroom, common_name: event.target.value })} placeholder="Common Name"></input> <br />
+            <button onClick={event => { sendInfoToRedux() }}>
+                Next: Add Type
+            </button>
 
             <input type="text" value={newMushroom.scientificName} onChange={(event) => setNewMushroom({ ...newMushroom, scientific_name: event.target.value })} placeholder="Scientific Name (optional)"></input><br />
 
