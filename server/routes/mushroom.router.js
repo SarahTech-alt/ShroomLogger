@@ -27,7 +27,7 @@ aws.config.region = AWS_S3_REGION;
  *      HTTP/1.1 201 OK
  */
 
-router.get('/detail/:id', (req, res) => {
+router.get('/detail/:id', rejectUnauthenticated, (req, res) => {
     const selectedId = Number(req.params.id);
     console.log('selected log id in router', selectedId);
     const userId = req.user.id;
@@ -48,7 +48,7 @@ router.get('/detail/:id', (req, res) => {
         })
 })
 
-router.delete('/delete/:id', async (req, res) => {
+router.delete('/delete/:id', rejectUnauthenticated, async (req, res) => {
     // GETS THE LOG ID OF SELECTED ENTRY
     const logId = req.params.id;
     try {
@@ -81,7 +81,7 @@ router.delete('/delete/:id', async (req, res) => {
     }
 })
 
-router.post('/', async (req, res) => {
+router.post('/', rejectUnauthenticated, async (req, res) => {
     try {
         console.log('req.body in post', req.body);
         const mushroomData = req.body;
@@ -123,7 +123,7 @@ router.post('/', async (req, res) => {
     }
 })
 
-router.get('/', (req, res) => {
+router.get('/', rejectUnauthenticated, (req, res) => {
     // GET USER ID OF LOGGED IN USER
     const userId = req.user.id;
     // GET INFORMATION FROM JOINING TABLES ON JUNCTION TABLE
@@ -146,7 +146,7 @@ router.get('/', (req, res) => {
 })
 
 
-router.put('/editInfo/:id', async (req, res) => {
+router.put('/editInfo/:id', rejectUnauthenticated, async (req, res) => {
     console.log('req.params in update log', req.params);
     console.log('req.body in update router', req.body);
     let mushroomInfo = req.body;
@@ -180,7 +180,7 @@ router.put('/editInfo/:id', async (req, res) => {
     }
 });
 
-router.post('/map', (req,res) => {
+router.post('/map', rejectUnauthenticated, (req,res) => {
     const googleKey = process.env.GOOGLE__MAPS_API_KEY
     axios.post(`https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyA5kx2R22QebhjWgNDJLG5_xuFJAg-gcrM`)
     .then(results => {
