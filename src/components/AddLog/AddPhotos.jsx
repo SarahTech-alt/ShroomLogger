@@ -38,7 +38,7 @@ function AddPhotos() {
     // const userInfo = useSelector(store => store.user)
     // const userId = userInfo.id;
 
-    // asynchronous function that
+      // asynchronous function that
     // updates hooks from user inputted information
     const onFileChange = async (event) => {
         console.log(event);
@@ -49,24 +49,12 @@ function AddPhotos() {
         const resizedFile = await readAndCompressImage(copyFile, imageConfig);
         setSelectedFile(userFile);
         setResizedFile(resizedFile);
-        
-
+        setPreview(URL.createObjectURL(resizedFile));
         // } 
         // else {
         //     alert('Invalid image file type. Must be gif, jpeg or png.');
         // }
     }
-
-    // hook for storing input data
-    // const [newMushroom, setNewMushroom] = useState({
-    //     common_name: '',
-    //     scientific_name: undefined,
-    //     latitude: undefined,
-    //     longitude: undefined,
-    //     date: moment().format(),
-    //     details: undefined,
-    // });
-    // dispatch newMushroom info from inputs to loghistory.saga
     
     const addNewMushroomPhoto = () => {
         
@@ -83,14 +71,7 @@ function AddPhotos() {
         newMushroom.selectedFile=selectedFile.name;
     }
 
-    //     dispatch({
-    //         type: 'ADD_NEW_MUSHROOM',
-    //         payload:
-    //             { newMushroom, selectedFile }
-    //     })
-    //     setChangePicture(!changePicture);
-    //     history.push('/home');
-    // };
+ 
     const sendInfoToRedux = () => {
         dispatch({type:'SET_LOG_TO_ADD', payload: newMushroom});
         history.push('/addType')
@@ -108,13 +89,14 @@ function AddPhotos() {
                     src={preview}
                     alt="Photo preview"
                 />
-            )}
-
+            )} <br />
+            
+             <button onClick={event => history.goBack()}>Go Back</button>
             <button onClick={event => {addNewMushroomPhoto()}}>
                 Next: Add Type
             </button>
 
-            <button onClick={event => history.goBack()}>Go Back</button>
+           
            
         </>
     );
