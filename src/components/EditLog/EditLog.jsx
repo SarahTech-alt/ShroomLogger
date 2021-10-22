@@ -177,17 +177,6 @@ function EditLog() {
                 onChange={event => ({ ...selectedLog.scientific_name = event.target.value })}
                 placeholder={selectedLog.scientific_name}
             />
-            <br />
-            <input
-                type="text"
-                onChange={event => ({ ...selectedLog.latitude = event.target.value })}
-                placeholder={selectedLog.latitude}
-            /><br />
-            <input
-                type="text"
-                onChange={event => ({ ...selectedLog.longitude = event.target.value })}
-                placeholder={selectedLog.longitude}
-            /><br />
             <input
                 type="text"
                 onChange={event => ({ ...selectedLog.details = event.target.value })} placeholder={selectedLog.details} /><br />

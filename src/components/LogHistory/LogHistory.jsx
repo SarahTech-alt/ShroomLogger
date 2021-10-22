@@ -17,16 +17,6 @@ function LogHistory() {
     // from react-router-dom
     const history = useHistory();
 
-    const [selectedLogId, setSelectedLogId] = useState('')
-
-    // dispatch selected id to sagas and
-    // direct user to edit page
-    const editLog = (logId) => {
-        // setSelectedLogId(logId);
-        // console.log(logId);
-        history.push(`/edit/${logId}`);
-    }
-
     // dispatch selected id to sagas and
     // direct user to view details page
     const viewLog = (logId) => {
@@ -58,8 +48,8 @@ function LogHistory() {
                     <td>{logs.scientific_name}</td>
                     <td>{logs.date}</td>
                     <td>{logs.details}</td>
-                    <td><button onClick={event => viewLog(logs.log_id)}>View</button>
-                    <button onClick={event => editLog(logs.log_id)}>edit</button></td>
+                    <td><button onClick={event => viewLog(logs.log_id)}>View</button></td>
+                    
                     </tr>
                 ))}
                </tbody>
