@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 import './EditLog.css';
 import { readAndCompressImage } from 'browser-image-resizer';
 import moment from 'moment';
+import { GoogleMap, InfoWindow, LoadScript, Marker } from '@react-google-maps/api';
 
 function EditLog() {
 
@@ -13,11 +14,22 @@ function EditLog() {
         maxHeight: 300,
     };
 
+  
+    const containerStyle = {
+        width: '400px',
+        height: '400px'
+    };
+    // Google Maps data about each marker
+    const onLoad = marker => {
+        console.log('marker: ', marker)
+    }
+
     // hooks for image actions
     const [preview, setPreview] = useState('');
     const [selectedFile, setSelectedFile] = useState('');
     const [resizedFile, setResizedFile] = useState('');
     const [changePicture, setChangePicture] = useState(false);
+   
 
     // matches parameters of current route
     const allParams = useParams();
@@ -52,7 +64,43 @@ function EditLog() {
         dispatch({ type: 'SET_SELECTED_MUSHROOM_PHOTO', payload: logId })
     }, [logId]);
 
+    const markerLat = Number(selectedLog.latitude);
+    const markerLng = Number(selectedLog.longitude);
+    const center = {
+        lat: markerLat,
+        lng: markerLng
+    };
+    const [locationToSend, setLocationToSend] = useState({
+        lat: markerLat,
+        lng: markerLng
+    })
+         // hook for accessing current log location
+         const [currentLocation, setCurrentLocation] = useState({
+            lat: markerLat,
+            lng: markerLng
+         });
+         // toggle which marker to show on rendered map
+         const [displayNewMarker, setDisplayNewMarker] = useState(false);
+         const [showCurrentLocation, setShowCurrentLocation] = useState(true);
 
+
+   // function to get coordinates of map click
+    // set the location to send variable
+    // to the new coordinates
+    const getClickData = (value) => {
+        console.log(value.lat());
+        console.log(value.lng());
+        setLocationToSend({
+            lat: value.lat(),
+            lng: value.lng()
+        })
+        selectedLog.latitude = value.lat();
+        selectedLog.longitude = value.lng();
+        // change to show new marker 
+        // and hide the current location marker
+        setShowCurrentLocation(!showCurrentLocation);
+        setDisplayNewMarker(!displayNewMarker);
+    }
 
     const onFileChange = async (event) => {
         console.log(event);
@@ -65,7 +113,7 @@ function EditLog() {
         setResizedFile(resizedFile);
         setPreview(URL.createObjectURL(resizedFile));
         console.log(process.env.REACT_APP_AWS_S3_BUCKET);
-        selectedLog.mushroom_picture_thumb = `https://solospikebucket.s3.us-east-2.amazonaws.com/photos/thumb/${userFile.name}`; 
+        selectedLog.mushroom_picture_thumb = `https://solospikebucket.s3.us-east-2.amazonaws.com/photos/thumb/${userFile.name}`;
         selectedLog.mushroom_picture_medium = `https://solospikebucket.s3.us-east-2.amazonaws.com/photos/medium/${userFile.name}`;
 
     }
@@ -104,7 +152,7 @@ function EditLog() {
     }
     // dispatches to delete saga on delete button click
     const deleteLog = () => {
-        console.log('in delete log on component',logId);
+        console.log('in delete log on component', logId);
         dispatch({ type: 'DELETE_SELECTED_LOG', payload: logId })
         history.goBack();
     }
@@ -138,7 +186,7 @@ function EditLog() {
             <input
                 type="text"
                 onChange={event => ({ ...selectedLog.longitude = event.target.value })}
-                placeholder= {selectedLog.longitude}
+                placeholder={selectedLog.longitude}
             /><br />
             <input
                 type="text"
@@ -170,7 +218,37 @@ function EditLog() {
                     <input type="file" accept="image/*" onChange={onFileChange} />
                     {/* Dispatches file to saga when the button is clicked */}
                 </div>
-            )}
+            )}<br />
+            <div>
+            <LoadScript
+                googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
+            >
+                {JSON.stringify(locationToSend)}
+                {/* Map with event listener */}
+                   {/* Map with event listener */}
+                   <GoogleMap
+                    mapContainerStyle={containerStyle}
+                    center={center}
+                    zoom={10}
+                    onClick={event => getClickData(event.latLng)}
+                >
+                    {/* Marker shows current location  */}
+                    {showCurrentLocation && (
+                        <Marker
+                            position={currentLocation}
+                            clickable={true}
+                            draggable={true}
+                        ></Marker>
+                    )}
+                    {/* On map click display marker at click location */}
+                    {displayNewMarker && (
+                        <Marker
+                            position={locationToSend}
+                        ></Marker>
+                    )}
+                </GoogleMap>
+            </LoadScript><br />
+            </div>
 
             <br /> <br />
             <button onClick={event => sendFormDataToServer()}>Submit</button>
