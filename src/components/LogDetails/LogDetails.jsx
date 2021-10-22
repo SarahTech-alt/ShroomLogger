@@ -37,6 +37,14 @@ function LogDetails() {
     const onLoad = marker => {
         console.log('marker: ', marker)
     }
+
+      // dispatch selected id to sagas and
+    // direct user to edit page
+    const editLog = (logId) => {
+        console.log('id from details to send to edit',logId);
+        history.push(`/edit/${logId}`);
+    }
+
     // on page load dispatch to selected log saga
     // send logId that was retried with useParams
     useEffect(() => {
@@ -53,10 +61,7 @@ function LogDetails() {
             reducer and display on DOM 
             with a back button to navigate to previous page */}
             <h1>View Details</h1>
-            <button
-                onClick={event => deleteLog()}>
-                Edit
-            </button>
+            <button onClick={event => editLog(selectedLog.id)}>edit</button><br/>
             <p> Common Name: {selectedLog.common_name}</p>
             <p> Scientific Name: {selectedLog.scientific_name}</p>
             <p> Date of Entry: {moment(selectedLog.date).format('LL')} </p>
