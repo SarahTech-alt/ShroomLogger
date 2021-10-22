@@ -27,8 +27,6 @@ function AddLocationTime() {
     };
 
     const [locationToSend, setLocationToSend] = useState({
-        lat: currentLocation.lat,
-        lng: currentLocation.lng
     })
 
 
@@ -39,6 +37,7 @@ function AddLocationTime() {
             .then(res => {
                 console.log(res);
                 setCurrentLocation(res.data.location)
+                setLocationToSend(res.data.location)
             })
             .catch(
                 error => {
