@@ -23,7 +23,7 @@ function AddDescription() {
         <h1>In Add Description</h1>
         {/* {JSON.stringify(newMushroom)} */}
 
-        <input type="text" value={newMushroom.details} onChange={(event) => ({...newMushroom.details= event.target.value })} placeholder="Details"></input> <br />
+        <input type="text" onChange={(event) => ({...newMushroom.details= event.target.value })} placeholder="Details"></input> <br />
         <br />
         <button onClick={event => history.push('/summary')}>Next: View Summary</button>
         </>

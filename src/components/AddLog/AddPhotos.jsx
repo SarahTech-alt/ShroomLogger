@@ -93,7 +93,7 @@ function AddPhotos() {
             
              <button onClick={event => history.goBack()}>Go Back</button>
             <button onClick={event => {addNewMushroomPhoto()}}>
-                Next: Add Type
+                Next: Add Name
             </button>
 
            
