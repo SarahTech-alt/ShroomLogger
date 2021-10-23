@@ -6,6 +6,10 @@ import { readAndCompressImage } from 'browser-image-resizer';
 import AddType from './AddType.jsx';
 import AddLocationTime from './AddLocationTime.jsx';
 import AddDescription from './AddDescription.jsx';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
 
 
 
@@ -80,6 +84,17 @@ function AddPhotos() {
 
     return (
         <>
+                  <img src='/mushroom.png' className="logo" />< br /><br /><br /><br />
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+  <Tabs>
+  <Tab label="Home" onClick={event => history.push('/home')} />
+    <Tab label="View History" onClick={event => history.push('/history')} />
+    <Tab label="Map"  onClick={event => history.push('/map')}/>
+    <Tab label="Add New" onClick={event => history.push('/addPhotos')} />
+  </Tabs>
+</Box>
+</Box><br />
             {/* Show file upload when the user clicks their profile picture
             Allows user to select a file from their local files */}
             <input type="file" accept="image/*" onChange={onFileChange} /><br />

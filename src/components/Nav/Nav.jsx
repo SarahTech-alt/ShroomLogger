@@ -6,7 +6,7 @@ import './Nav.css';
 import { useSelector } from 'react-redux';
 import ListOutlinedIcon from '@mui/icons-material/ListOutlined';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+
 import MapOutlinedIcon from '@mui/icons-material/MapOutlined';
 import { useHistory } from 'react-router-dom'
 
@@ -38,7 +38,7 @@ function Nav() {
             <MapOutlinedIcon sx={{height:100, width:50, pr:1}} onClick={event => history.push("/map")} />
             </>
         )}
-            <InfoOutlinedIcon sx={{height:100, width:50, pr:1}} onClick={event => history.push("/about")} />
+            
 
             {user.id && (
           <>
