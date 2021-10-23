@@ -1,12 +1,10 @@
-# Application Name
-
 ShroomLogger
 
 ## Description
 
 Duration: Two week build
 
-This application is designed for users to be able to log and track their mushroom finds. The log will contain user-inputted pictures, mushroom names, location, date and time, and any other details about their find. They will be able to view the locations on a map and click to get more information about each instance. This solves the problem of people forgetting where they found mushrooms by providing them a way to easily track their discoveries. 
+Finding mushrooms in the wild can be a very time consuming process. It can take days, weeks, sometimes months to find a particular species. Mushrooms also tend to grow back in the same spot year after year, so the last thing you want to happen after finding the jackpot is to forget where you found it. This application solves that problem by allowing you to keep record of the location. picture and types of mushrooms you find. 
 
 ## Prerequisites
 - Node.js
@@ -16,12 +14,19 @@ This application is designed for users to be able to log and track their mushroo
 - Material UI
 
 ## Built With
+- AWS S3 https://docs.aws.amazon.com/s3/index.html
+- Google Maps API https://developers.google.com/maps/documentation
+- JavaScript https://developer.mozilla.org/en-US/docs/Web/JavaScript
 - Express https://expressjs.com/en/starter/installing.html
 - React https://reactjs.org/
-- PG https://www.postgresql.org/download/
+- PostgreSQL https://www.postgresql.org/download/
 - Node https://nodejs.org/en/download/
 - Axios https://axios-http.com/docs/intro
+- Passport http://www.passportjs.org/
 - Material UI https://mui.com/getting-started/usage/
+- HTML https://developer.mozilla.org/en-US/docs/Web/HTML
+- CSS https://developer.mozilla.org/en-US/docs/Web/CSS
+- jQuery https://api.jquery.com/
 
 ## Installation
 
