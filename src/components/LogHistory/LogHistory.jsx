@@ -36,7 +36,7 @@ function LogHistory() {
         <>
             {/* {JSON.stringify(logHistory)} */}
             <ArrowBackOutlinedIcon sx={{height:100, width:50}} onClick={event => history.goBack()} />
-            <img src='/mushroom.png' />
+            <img src='/mushroom.png' className="logo" />
             <table>
                 <tbody>
                 <tr>

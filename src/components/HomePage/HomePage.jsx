@@ -3,6 +3,7 @@ import LogOutButton from '../LogOutButton/LogOutButton';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
+import Avatar from '@mui/material/Avatar';
 
 
 function HomePage() {
@@ -38,7 +39,8 @@ const viewLogDetail = (logId) => {
       <div className="container">
         <p><img 
         src={profile.profile_picture_thumb}
-        onClick={event => history.push('/profile')}></img></p>
+        onClick={event => history.push('/profile')}></img> 
+        <img className ="logo" src="/mushroom.png"/></p>
         <p>Feed</p> <hr />
         <button
           onClick={event => history.push('/addPhotos')}>
