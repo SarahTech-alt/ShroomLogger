@@ -43,17 +43,17 @@ const viewLogDetail = (logId) => {
       {/* {JSON.stringify(profile)} */}
       {/* {JSON.stringify(logHistory)} */}
       <div className="container">
-        <p><img 
+        <div class="row" style={{alignItems: 'flex-start'}}><img 
         src={profile.profile_picture_thumb}
         onClick={event => history.push('/profile')}></img> 
-        <img className ="logo" src="/mushroom.png"/></p>
+        <img style={{paddingTop:'0px', paddingLeft:'10px' }} className ="logo" src="/mushroom.png"/></div>
         
         
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             
   <Tabs>
-  <Tab label="Home" onClick={event => history.push('/home')} />
-    <Tab label="View History" onClick={event => history.push('/history')} />
+  <Tab label="Home" sx={{ borderBottom: 1}} onClick={event => history.push('/home')} />
+    <Tab label="History" onClick={event => history.push('/history')} />
     <Tab label="Map"  onClick={event => history.push('/map')}/>
     <Tab label="Add New" onClick={event => history.push('/addPhotos')} />
   </Tabs>
