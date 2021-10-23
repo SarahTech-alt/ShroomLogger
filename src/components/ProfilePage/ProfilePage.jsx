@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { readAndCompressImage } from 'browser-image-resizer';
 import { useHistory } from 'react-router-dom';
 import moment from 'moment';
+import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
+
 
 
 function ProfilePage() {
@@ -71,6 +73,7 @@ function ProfilePage() {
 
     return (
         <>
+        <ArrowBackOutlinedIcon sx={{height:100, width:50}} onClick={event => history.goBack()} />
             {/* display preview of image once selected
         onFileChange sets the state of preview */}
             {preview && (
@@ -101,7 +104,7 @@ function ProfilePage() {
                     )}
                     <p>Username: {profile.username}</p>
                     <p>Member since: {moment(userInfo.date_created).format('LL')}</p>
-                    <button onClick={(event => history.push('/home'))}>Back</button>
+                    
                 </div>
             )}
         </>

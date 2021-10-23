@@ -8,8 +8,9 @@ import React from 'react';
 function AboutPage() {
   return (
     <div className="container">
+      <img className="logo" src="/mushroom.png" /> <br />
       <div>
-        <p>This about page is for anyone to read!</p>
+        <p>Never Lose Your Mushroom Spot Again!</p>
       </div>
     </div>
   );
