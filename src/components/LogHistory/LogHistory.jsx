@@ -2,6 +2,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import moment from 'moment';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
 
 
 function LogHistory() {
@@ -33,7 +35,8 @@ function LogHistory() {
     return (
         <>
             {/* {JSON.stringify(logHistory)} */}
-
+            <ArrowBackOutlinedIcon sx={{height:100, width:50}} onClick={event => history.goBack()} />
+            <img src='/mushroom.png' />
             <table>
                 <tbody>
                 <tr>
@@ -49,13 +52,13 @@ function LogHistory() {
                     <td>{logs.scientific_name}</td>
                     <td>{moment(logs.date).format('LL')}</td>
                     <td>{logs.details}</td>
-                    <td><button onClick={event => viewLog(logs.log_id)}>View</button></td>
+                    <td><EditOutlinedIcon onClick={event => viewLog(logs.log_id)}>View</EditOutlinedIcon></td>
                     
                     </tr>
                 ))}
                </tbody>
             </table>
-            <button onClick={event => history.goBack()}>Go Back</button>
+          
         </>
     );
 }

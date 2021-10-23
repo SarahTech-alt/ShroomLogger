@@ -5,7 +5,8 @@ import { useHistory } from 'react-router-dom';
 import './EditLog.css';
 import { readAndCompressImage } from 'browser-image-resizer';
 import moment from 'moment';
-import { GoogleMap, InfoWindow, LoadScript, Marker } from '@react-google-maps/api';
+import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
 
 function EditLog() {
 
@@ -154,7 +155,7 @@ function EditLog() {
     const deleteLog = () => {
         console.log('in delete log on component', logId);
         dispatch({ type: 'DELETE_SELECTED_LOG', payload: logId })
-        history.goBack();
+        history.push('/history');
     }
 
     return (
@@ -176,7 +177,7 @@ function EditLog() {
                 type="text"
                 onChange={event => ({ ...selectedLog.scientific_name = event.target.value })}
                 placeholder={selectedLog.scientific_name}
-            />
+            /><br />
             <input
                 type="text"
                 onChange={event => ({ ...selectedLog.details = event.target.value })} placeholder={selectedLog.details} /><br />
@@ -212,7 +213,7 @@ function EditLog() {
             <LoadScript
                 googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
             >
-                {JSON.stringify(locationToSend)}
+                {/* {JSON.stringify(locationToSend)} */}
                 {/* Map with event listener */}
                    {/* Map with event listener */}
                    <GoogleMap
@@ -244,7 +245,7 @@ function EditLog() {
             <br /><br />
 
             {/* <button onClick={event => setEditThing(!editThing)}>Edit</button> */}
-            <button onClick={event => history.goBack()}>back</button>
+            <ArrowBackOutlinedIcon sx={{height:100, width:50}} onClick={event => history.goBack()} />
         </>
     );
 }
