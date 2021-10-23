@@ -4,6 +4,10 @@ import { useHistory } from 'react-router-dom';
 import moment from 'moment';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
 
 
 function LogHistory() {
@@ -34,9 +38,17 @@ function LogHistory() {
 
     return (
         <>
+
             {/* {JSON.stringify(logHistory)} */}
-            <ArrowBackOutlinedIcon sx={{height:100, width:50}} onClick={event => history.goBack()} />
-            <img src='/mushroom.png' className="logo" />
+            {/* <ArrowBackOutlinedIcon sx={{height:100, width:50}} onClick={event => history.goBack()} /> */}
+            <img src='/mushroom.png' className="logo" />< br /><br /><br /><br />
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+  <Tabs>
+    <Tab label="Home" onClick={event => history.push('/home')} />
+    <Tab label="Map"  onClick={event => history.push('/map')}/>
+    <Tab label="Add New" onClick={event => history.push('/addPhotos')} />
+  </Tabs>
+</Box><br />
             <table>
                 <tbody>
                 <tr>

@@ -207,7 +207,7 @@ function App() {
             <h1>404</h1>
           </Route>
         </Switch>
-        <Nav />
+        {/* <Nav /> */}
         <Footer />
       </div>
     </Router>

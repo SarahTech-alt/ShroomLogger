@@ -4,8 +4,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import moment from 'moment';
 import { GoogleMap, InfoWindow, LoadScript, Marker } from '@react-google-maps/api';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
+import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
+
+
+
 
 function LogDetails() {
+    const profile = useSelector(store => store.user);
     // matches parameters of current route
     const allParams = useParams();
     // selects the id from the parameters
@@ -30,8 +40,8 @@ function LogDetails() {
         lng: markerLng
     };
     const containerStyle = {
-        width: '400px',
-        height: '400px'
+        width: '300px',
+        height: '300px'
       };
     // Google Maps data about each marker
     const onLoad = marker => {
@@ -55,13 +65,29 @@ function LogDetails() {
 
     return (
         <>
+
+<div className="container">
+        <p><img 
+        src={profile.profile_picture_thumb}
+        onClick={event => history.push('/profile')}></img> 
+        <img className ="logo" src="/mushroom.png"/></p>
+        
+        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+  <Tabs>
+    <Tab label="Home" onClick={event => history.push('/home')} />
+    <Tab label="Map"  onClick={event => history.push('/map')}/>
+    <Tab label="Add New" onClick={event => history.push('/addPhotos')} />
+  </Tabs>
+</Box>
             {/* {JSON.stringify(mushroomPhotos)} */}
-            {JSON.stringify(selectedLog)}
+            {/* {JSON.stringify(selectedLog)} */}
             {/* Access information from the logDetail
             reducer and display on DOM 
             with a back button to navigate to previous page */}
-            <h1>View Details</h1>
-            <button onClick={event => editLog(selectedLog.id)}>edit</button><br/>
+            <h1>View Details
+            <ModeEditOutlineOutlinedIcon sx={{ml:8, height:35, width:40}} onClick={event => editLog(selectedLog.id)} />
+            </h1>
+            
             <p> Common Name: {selectedLog.common_name}</p>
             <p> Scientific Name: {selectedLog.scientific_name}</p>
             <p> Date of Entry: {moment(selectedLog.date).format('LL')} </p>
@@ -87,7 +113,8 @@ function LogDetails() {
                         </GoogleMap>
                     </LoadScript>
                 </div>
-                <button onClick={event => history.goBack()}>back</button>
+                <ArrowBackOutlinedIcon sx={{height:100, width:50}} onClick={event => history.goBack()} />
+                </div>
             </>
             )
 }

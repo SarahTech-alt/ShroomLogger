@@ -4,6 +4,11 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import useReduxStore from '../../hooks/useReduxStore';
 import MapDetails from './MapDetails.jsx';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+
 
 
 const containerStyle = {
@@ -34,6 +39,15 @@ function MapView() {
   }, [dispatch]);
 
   return (
+    <>
+    <div><img className ="logo" src="/mushroom.png"/></div><br /><br/><br/><br></br>
+    <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+    <Tabs>
+      <Tab label="Home" onClick={event => history.push('/home')} />
+      <Tab label="History"  onClick={event => history.push('/history')}/>
+      <Tab label="Add New" onClick={event => history.push('/addPhotos')} />
+    </Tabs>
+  </Box><br/>
     <div className='map-display'>
         {/* {JSON.stringify(logDetails)} */}
         {/* Initialize API */}
@@ -56,8 +70,8 @@ function MapView() {
           </>
         </GoogleMap>
       </LoadScript> <br />
-      <button onClick={event => history.goBack()}>Back</button>
     </div>
+    </>
   )
 }
 
