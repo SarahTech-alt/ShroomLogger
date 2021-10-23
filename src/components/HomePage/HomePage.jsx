@@ -10,6 +10,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
 
+
 function HomePage() {
 
   // // matches parameters of current route
@@ -47,13 +48,17 @@ const viewLogDetail = (logId) => {
         onClick={event => history.push('/profile')}></img> 
         <img className ="logo" src="/mushroom.png"/></p>
         
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+        
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+            
   <Tabs>
+  <Tab label="Home" onClick={event => history.push('/home')} />
     <Tab label="View History" onClick={event => history.push('/history')} />
     <Tab label="Map"  onClick={event => history.push('/map')}/>
     <Tab label="Add New" onClick={event => history.push('/addPhotos')} />
   </Tabs>
-</Box>
+
+</Box><br />
        
         {logHistory.map((logs) => (
                     <div key={logs.log_id}>

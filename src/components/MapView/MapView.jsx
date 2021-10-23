@@ -40,14 +40,17 @@ function MapView() {
 
   return (
     <>
-    <div><img className ="logo" src="/mushroom.png"/></div><br /><br/><br/><br></br>
-    <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-    <Tabs>
-      <Tab label="Home" onClick={event => history.push('/home')} />
-      <Tab label="History"  onClick={event => history.push('/history')}/>
-      <Tab label="Add New" onClick={event => history.push('/addPhotos')} />
-    </Tabs>
-  </Box><br/>
+            <img src='/mushroom.png' className="logo" />< br /><br /><br /><br />
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+  <Tabs>
+  <Tab label="Home" onClick={event => history.push('/home')} />
+    <Tab label="View History" onClick={event => history.push('/history')} />
+    <Tab label="Map"  onClick={event => history.push('/map')}/>
+    <Tab label="Add New" onClick={event => history.push('/addPhotos')} />
+  </Tabs>
+</Box>
+</Box><br />
     <div className='map-display'>
         {/* {JSON.stringify(logDetails)} */}
         {/* Initialize API */}

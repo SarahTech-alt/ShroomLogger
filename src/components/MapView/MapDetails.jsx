@@ -40,9 +40,8 @@ function MapDetails({ coord, key }) {
       position={{ lat: Number(coord.latitude), lng: Number(coord.longitude) }}
       averageCenter={true}
       onLoad={onLoad}
-      onClick={event => viewDetails(coord.log_id)}
-      onMouseOver={event => setDetailsDisplayed(!detailsDisplayed)}
-      onMouseOut={event => setDetailsDisplayed(!detailsDisplayed)}
+      onClick={event => setDetailsDisplayed(!detailsDisplayed)}
+      onDblClick={event => viewDetails(coord.log_id)}
     > {detailsDisplayed && (
       <InfoWindow
         position={{ lat: Number(coord.latitude), lng: Number(coord.longitude) }}>
