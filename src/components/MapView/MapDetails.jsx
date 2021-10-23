@@ -1,5 +1,7 @@
 import { GoogleMap, InfoWindow, LoadScript, Marker } from '@react-google-maps/api';
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 
 function MapDetails({ coord, key }) {
@@ -8,6 +10,9 @@ function MapDetails({ coord, key }) {
   const onLoad = marker => {
     console.log('marker: ', marker)
   }
+
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   // Coordinates to use to establish map center on load
   const center = {

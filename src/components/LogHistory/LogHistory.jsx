@@ -8,6 +8,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import PageviewOutlinedIcon from '@mui/icons-material/PageviewOutlined';
 
 
 function LogHistory() {
@@ -64,7 +65,7 @@ function LogHistory() {
                     <td>{logs.scientific_name}</td>
                     <td>{moment(logs.date).format('LL')}</td>
                     <td>{logs.details}</td>
-                    <td><EditOutlinedIcon onClick={event => viewLog(logs.log_id)}>View</EditOutlinedIcon></td>
+                    <td><PageviewOutlinedIcon sx={{mt:.5, height:30}}onClick={event => viewLog(logs.log_id)}/></td>
                     
                     </tr>
                 ))}
