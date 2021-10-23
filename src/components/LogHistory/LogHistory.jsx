@@ -9,7 +9,6 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import PageviewOutlinedIcon from '@mui/icons-material/PageviewOutlined';
-import BasicTabs from '../Tabs/BasicTabs';
 
 
 function LogHistory() {
@@ -43,16 +42,14 @@ function LogHistory() {
 
             {/* {JSON.stringify(logHistory)} */}
             {/* <ArrowBackOutlinedIcon sx={{height:100, width:50}} onClick={event => history.goBack()} /> */}
-            <img src='/mushroom.png' className="logo" />< br /><br /><br /><br />
-            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+            <img src='/mushroom.png' className="logo" />< br /><br /><br /><br /><br/>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
   <Tabs>
   <Tab label="Home" onClick={event => history.push('/home')} />
-    <Tab label="View History" onClick={event => history.push('/history')} />
+    <Tab label="View History" sx={{ borderBottom: 1}} onClick={event => history.push('/history')} />
     <Tab label="Map"  onClick={event => history.push('/map')}/>
     <Tab label="Add New" onClick={event => history.push('/addPhotos')} />
   </Tabs>
-</Box>
 </Box><br />
             <table>
                 <tbody>

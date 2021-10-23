@@ -7,6 +7,10 @@ import { readAndCompressImage } from 'browser-image-resizer';
 import moment from 'moment';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
 
 function EditLog() {
 
@@ -164,7 +168,15 @@ function EditLog() {
             {/* Access information from the logDetail
             reducer and display on DOM with buttons to edit logs
             and a back button to navigate to previous page */}
-            <h1>Edit Page</h1>
+             <img src='/mushroom.png' className="logo" />< br /><br /><br /><br />
+                        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+  <Tabs>
+  <Tab label="Home" onClick={event => history.push('/home')} />
+    <Tab label="History" onClick={event => history.push('/history')} />
+    <Tab label="Map"  onClick={event => history.push('/map')}/>
+    <Tab label="Add New" onClick={event => history.push('/addPhotos')} />
+  </Tabs>
+</Box><br />
             <button onClick={event => deleteLog()}>delete log </button>
             <br /><br />
             <input

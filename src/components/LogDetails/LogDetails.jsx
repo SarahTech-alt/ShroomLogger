@@ -14,6 +14,7 @@ import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
 
 
 
+
 function LogDetails() {
     const profile = useSelector(store => store.user);
     // matches parameters of current route
@@ -67,14 +68,12 @@ function LogDetails() {
         <>
 
 <div className="container">
-        <p><img 
-        src={profile.profile_picture_thumb}
-        onClick={event => history.push('/profile')}></img> 
-        <img className ="logo" src="/mushroom.png"/></p>
+<img src='/mushroom.png' className="logo" />< br /><br /><br /><br /><br />
         
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
   <Tabs>
     <Tab label="Home" onClick={event => history.push('/home')} />
+    <Tab label="History" onClick={event => history.push('/history')} />
     <Tab label="Map"  onClick={event => history.push('/map')}/>
     <Tab label="Add New" onClick={event => history.push('/addPhotos')} />
   </Tabs>
