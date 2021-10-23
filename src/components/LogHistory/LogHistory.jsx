@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import moment from 'moment';
 
 
 function LogHistory() {
@@ -46,7 +47,7 @@ function LogHistory() {
                     <tr key={logs.log_id}>
                     <td>{logs.common_name}</td>
                     <td>{logs.scientific_name}</td>
-                    <td>{logs.date}</td>
+                    <td>{moment(logs.date).format('LL')}</td>
                     <td>{logs.details}</td>
                     <td><button onClick={event => viewLog(logs.log_id)}>View</button></td>
                     
