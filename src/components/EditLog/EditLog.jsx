@@ -1,21 +1,35 @@
 import { useParams } from 'react-router-dom';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Fragment } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import './EditLog.css';
 import { readAndCompressImage } from 'browser-image-resizer';
 import moment from 'moment';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
-import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import FormControl from '@mui/material/FormControl';
+import TextField from '@mui/material/TextField';
+import {
+    MuiPickersUtilsProvider,
+    KeyboardDatePicker
+} from "@material-ui/pickers";
+import MomentUtils from "@date-io/moment";
 
 function EditLog() {
+
+    // on page load dispatch to selected log saga
+    // send logId that was retried with useParams
+    useEffect(() => {
+        console.log('process env', process.env)
+        dispatch({ type: 'SET_SELECTED_LOG', payload: logId });
+        console.log('log id on page load', logId);
+        dispatch({ type: 'SET_SELECTED_MUSHROOM_PHOTO', payload: logId })
+    }, [logId]);
 
     const imageConfig = {
         quality: 1.0,
@@ -26,11 +40,6 @@ function EditLog() {
         width: '300px',
         height: '350px'
     };
-    
-    // Google Maps data about each marker
-    const onLoad = marker => {
-        console.log('marker: ', marker)
-    }
 
     // hooks for image actions
     const [preview, setPreview] = useState('');
@@ -62,15 +71,6 @@ function EditLog() {
 
     // variable for navigation purposes
     const history = useHistory();
-
-    // on page load dispatch to selected log saga
-    // send logId that was retried with useParams
-    useEffect(() => {
-        console.log('process env', process.env)
-        dispatch({ type: 'SET_SELECTED_LOG', payload: logId });
-        console.log('log id on page load', logId);
-        dispatch({ type: 'SET_SELECTED_MUSHROOM_PHOTO', payload: logId })
-    }, [logId]);
 
     const markerLat = Number(selectedLog.latitude);
     const markerLng = Number(selectedLog.longitude);
@@ -165,6 +165,19 @@ function EditLog() {
         history.push('/history');
     }
 
+    const [selectedDate, setDate] = useState(moment(selectedLog.date).format("YYYY-MM-DD"));
+    const [inputValue, setInputValue] = useState(moment(selectedLog.date).format("YYYY-MM-DD"));
+
+    const onDateChange = (date, value) => {
+        selectedLog.date = date;
+        setDate(date);
+        setInputValue(value);
+    };
+
+    const dateFormatter = str => {
+        return str;
+    };
+
     return (
         <>
             {/* {JSON.stringify(selectedLog)}<hr /> */}
@@ -174,113 +187,125 @@ function EditLog() {
             <div className="container">
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                     <Tabs>
-                        <Tab label="Home" onClick={event => history.push('/home')} />
+                        <Tab color='#858585' label="Home" onClick={event => history.push('/home')} />
                         <Tab label="History" onClick={event => history.push('/history')} />
                         <Tab label="Map" onClick={event => history.push('/map')} />
                         <Tab label="Add New" onClick={event => history.push('/addPhotos')} />
                     </Tabs>
                 </Box><br />
                 <Box sx={{ mx: "auto", width: 300 }}>
-                <Stack spacing={1} direction="row">
-                        <Button 
-                        variant="outlined"
-                        fontSize='large'
-                        sx={{position:'absolute', right:40, top:220}}
-                        style={{color: '#615246', borderColor:'#080706'}}
-                        startIcon={<DeleteOutlineIcon />}
-                            onClick={event => deleteLog()}>
-                        Delete
-                        </Button>
-                    </Stack>
-                
-                <input
-                    type="text"
-                    onChange={event => ({ ...selectedLog.common_name = event.target.value })}
-                    placeholder={selectedLog.common_name}
-                />
-                <br />
-                <input
-                    type="text"
-                    onChange={event => ({ ...selectedLog.scientific_name = event.target.value })}
-                    placeholder={selectedLog.scientific_name}
-                /><br />
-                <input
-                    type="text"
-                    onChange={event => ({ ...selectedLog.details = event.target.value })} placeholder={selectedLog.details} /><br />
-                <input
-                    type="date"
-                    value={moment().format('MMMM Do YYYY, h:mm:ss a')}
-                    onChange={event => ({ ...selectedLog.date = event.target.value })}
-                    onfocus={selectedLog.date}
-                /><br />
-                <img
-                    src={selectedLog.mushroom_picture_medium}
-                    alt={selectedLog.common_name}
-                    onClick={(event => setChangePicture(!changePicture))}
-                /><br/>
-                {/* display preview of image once selected
-        onFileChange sets the state of preview */}
-                {preview && (
-                    <img
-                        className="placeholder-photo-preview"
-                        src={preview}
-                        alt="Photo preview"
-                    />
-                )}
-                {/* Show file upload when the user clicks their profile picture
-            Allows user to select a file from their local files */}
-                {changePicture && (
-                    <div>
-                        <input type="file" accept="image/*" onChange={onFileChange} />
-                        {/* Dispatches file to saga when the button is clicked */}
-                    </div>
-                )}<br />
-                <div>
-                    <LoadScript
-                        googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
-                    >
-                        {/* {JSON.stringify(locationToSend)} */}
-                        {/* Map with event listener */}
-                        {/* Map with event listener */}
-                        <GoogleMap
-                            mapContainerStyle={containerStyle}
-                            center={center}
-                            zoom={10}
-                            onClick={event => getClickData(event.latLng)}
-                        >
-                            {/* Marker shows current location  */}
-                            {showCurrentLocation && (
-                                <Marker
-                                    position={currentLocation}
-                                    clickable={true}
-                                    draggable={true}
-                                ></Marker>
-                            )}
-                            {/* On map click display marker at click location */}
-                            {displayNewMarker && (
-                                <Marker
-                                    position={locationToSend}
-                                ></Marker>
-                            )}
-                        </GoogleMap>
-                    </LoadScript>
-                </div>
 
-                <br /> 
-                <Stack spacing={2} direction="row">
+
+                    <FormControl>
+                        {/* <InputLabel htmlFor="component-outlined">Scientific Name</InputLabel> */}
+                        <TextField
+                            id="component-outlined"
+                            placeholder={selectedLog.common_name}
+                            onChange={event => ({ ...selectedLog.common_name = event.target.value })}
+                            helperText="common Name"
+                        />
+                        <br />
+                        <TextField
+                            id="component-outlined"
+                            placeholder={selectedLog.scientific_name}
+                            onChange={event => ({ ...selectedLog.scientific_name = event.target.value })}
+                            helperText="science name"
+                        />
+                        <br />
+                        <Fragment>
+                            <MuiPickersUtilsProvider libInstance={moment} utils={MomentUtils}>
+                                <KeyboardDatePicker
+                                    autoOk={true}
+                                    showTodayButton={true}
+                                    value={selectedDate}
+                                    format="YYYY-MM-DD"
+                                    inputValue={inputValue}
+                                    onChange={onDateChange}
+                                    rifmFormatter={dateFormatter}
+                                    helperText="date"
+                                />
+                            </MuiPickersUtilsProvider>
+                        </Fragment>
+                        <br />
+                        <TextField
+                            multiline
+                            minRows={3}
+                            id="component-outlined"
+                            placeholder={selectedLog.details}
+                            onChange={event => ({ ...selectedLog.details = event.target.value })}
+                            helperText="details"
+                        />
+                    </FormControl>
+                    <br />
+                    {/* display preview of image once selected
+        onFileChange sets the state of preview */}
+                    {preview && (
+                        <img
+                            className="placeholder-photo-preview"
+                            src={preview}
+                            alt="Photo preview"
+                        />
+                    )}
+                    {/* Show file upload when the user clicks their profile picture
+            Allows user to select a file from their local files */}
+                    {changePicture && (
+                        <div>
+                            <input type="file" accept="image/*" onChange={onFileChange} />
+                            {/* Dispatches file to saga when the button is clicked */}
+                        </div>
+                    )}<br />
+                    <div>
+                        <LoadScript
+                            googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
+                        >
+                            {/* {JSON.stringify(locationToSend)} */}
+                            {/* Map with event listener */}
+                            {/* Map with event listener */}
+                            <GoogleMap
+                                mapContainerStyle={containerStyle}
+                                center={center}
+                                zoom={10}
+                                onClick={event => getClickData(event.latLng)}
+                            >
+                                {/* Marker shows current location  */}
+                                {showCurrentLocation && (
+                                    <Marker
+                                        position={currentLocation}
+                                        clickable={true}
+                                        draggable={true}
+                                    ></Marker>
+                                )}
+                                {/* On map click display marker at click location */}
+                                {displayNewMarker && (
+                                    <Marker
+                                        position={locationToSend}
+                                    ></Marker>
+                                )}
+                            </GoogleMap>
+                        </LoadScript>
+                    </div>
+
+                    <br />
+                    <Stack spacing={2} direction="row">
+                        <Button
+                            variant="outlined"
+                            style={{ color: '#615246', borderColor: '#080706' }}
+                            startIcon={<DeleteOutlineIcon />}
+                            onClick={event => deleteLog()}>
+                            Delete
+                        </Button>
                         <Button variant="outlined"
-                        style={{color: '#615246', borderColor: '#080706'}}
+                            style={{ color: '#615246', borderColor: '#080706' }}
                             onClick={event => history.goBack()}>
-                            Go Back
+                            Back
                         </Button>
                         <Button
                             variant="outlined"
-                            style={{color: '#615246', borderColor:'#080706'}}
+                            style={{ color: '#615246', borderColor: '#080706' }}
                             onClick={event => sendFormDataToServer()}>
                             Submit
                         </Button>
                     </Stack>
-
                 </Box>
             </div>
         </>

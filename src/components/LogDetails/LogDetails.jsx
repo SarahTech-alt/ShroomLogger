@@ -10,6 +10,8 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
 
 
 
@@ -107,7 +109,14 @@ function LogDetails() {
                 </Marker>
                 </GoogleMap>
                 </LoadScript>
-                </div>
+                </div><br />
+                <Stack spacing={1} direction="row">
+                        <Button variant="outlined"
+                        style={{color: '#615246', borderColor: '#080706'}}
+                            onClick={event => history.goBack()}>
+                            Go Back
+                        </Button>
+                    </Stack>
                 </Box>
             </div>
     );
