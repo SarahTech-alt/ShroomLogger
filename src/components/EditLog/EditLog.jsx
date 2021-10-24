@@ -19,9 +19,9 @@ function EditLog() {
         maxHeight: 300,
     };
 
-  
+
     const containerStyle = {
-        width: '400px',
+        width: '350px',
         height: '400px'
     };
     // Google Maps data about each marker
@@ -34,7 +34,7 @@ function EditLog() {
     const [selectedFile, setSelectedFile] = useState('');
     const [resizedFile, setResizedFile] = useState('');
     const [changePicture, setChangePicture] = useState(false);
-   
+
 
     // matches parameters of current route
     const allParams = useParams();
@@ -79,17 +79,17 @@ function EditLog() {
         lat: markerLat,
         lng: markerLng
     })
-         // hook for accessing current log location
-         const [currentLocation, setCurrentLocation] = useState({
-            lat: markerLat,
-            lng: markerLng
-         });
-         // toggle which marker to show on rendered map
-         const [displayNewMarker, setDisplayNewMarker] = useState(false);
-         const [showCurrentLocation, setShowCurrentLocation] = useState(true);
+    // hook for accessing current log location
+    const [currentLocation, setCurrentLocation] = useState({
+        lat: markerLat,
+        lng: markerLng
+    });
+    // toggle which marker to show on rendered map
+    const [displayNewMarker, setDisplayNewMarker] = useState(false);
+    const [showCurrentLocation, setShowCurrentLocation] = useState(true);
 
 
-   // function to get coordinates of map click
+    // function to get coordinates of map click
     // set the location to send variable
     // to the new coordinates
     const getClickData = (value) => {
@@ -168,96 +168,97 @@ function EditLog() {
             {/* Access information from the logDetail
             reducer and display on DOM with buttons to edit logs
             and a back button to navigate to previous page */}
-             <img src='/mushroom.png' className="logo" />< br /><br /><br /><br />
-                        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-  <Tabs>
-  <Tab label="Home" onClick={event => history.push('/home')} />
-    <Tab label="History" onClick={event => history.push('/history')} />
-    <Tab label="Map"  onClick={event => history.push('/map')}/>
-    <Tab label="Add New" onClick={event => history.push('/addPhotos')} />
-  </Tabs>
-</Box><br />
-            <button onClick={event => deleteLog()}>delete log </button>
-            <br /><br />
-            <input
-                type="text"
-                onChange={event => ({ ...selectedLog.common_name = event.target.value })}
-                placeholder={selectedLog.common_name}
-            />
-            <br />
-            <input
-                type="text"
-                onChange={event => ({ ...selectedLog.scientific_name = event.target.value })}
-                placeholder={selectedLog.scientific_name}
-            /><br />
-            <input
-                type="text"
-                onChange={event => ({ ...selectedLog.details = event.target.value })} placeholder={selectedLog.details} /><br />
-            <input
-                type="date"
-                value={moment().format('MMMM Do YYYY, h:mm:ss a')}
-                onChange={event => ({ ...selectedLog.date = event.target.value })}
-                onfocus={selectedLog.date}
-            /><br />
-            <img
-                src={selectedLog.mushroom_picture_medium}
-                alt={selectedLog.common_name}
-                onClick={(event => setChangePicture(!changePicture))}
-            />
-            {/* display preview of image once selected
-        onFileChange sets the state of preview */}
-            {preview && (
-                <img
-                    className="placeholder-photo-preview"
-                    src={preview}
-                    alt="Photo preview"
+            <div className="container">
+                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                    <Tabs>
+                        <Tab label="Home" onClick={event => history.push('/home')} />
+                        <Tab label="History" onClick={event => history.push('/history')} />
+                        <Tab label="Map" onClick={event => history.push('/map')} />
+                        <Tab label="Add New" onClick={event => history.push('/addPhotos')} />
+                    </Tabs>
+                </Box><br />
+                <Box sx={{ mx: "auto", width: 350 }}>
+                <button onClick={event => deleteLog()}>delete log </button>
+                <br /><br />
+                <input
+                    type="text"
+                    onChange={event => ({ ...selectedLog.common_name = event.target.value })}
+                    placeholder={selectedLog.common_name}
                 />
-            )}
-            {/* Show file upload when the user clicks their profile picture
+                <br />
+                <input
+                    type="text"
+                    onChange={event => ({ ...selectedLog.scientific_name = event.target.value })}
+                    placeholder={selectedLog.scientific_name}
+                /><br />
+                <input
+                    type="text"
+                    onChange={event => ({ ...selectedLog.details = event.target.value })} placeholder={selectedLog.details} /><br />
+                <input
+                    type="date"
+                    value={moment().format('MMMM Do YYYY, h:mm:ss a')}
+                    onChange={event => ({ ...selectedLog.date = event.target.value })}
+                    onfocus={selectedLog.date}
+                /><br />
+                <img
+                    src={selectedLog.mushroom_picture_medium}
+                    alt={selectedLog.common_name}
+                    onClick={(event => setChangePicture(!changePicture))}
+                /><br/>
+                {/* display preview of image once selected
+        onFileChange sets the state of preview */}
+                {preview && (
+                    <img
+                        className="placeholder-photo-preview"
+                        src={preview}
+                        alt="Photo preview"
+                    />
+                )}
+                {/* Show file upload when the user clicks their profile picture
             Allows user to select a file from their local files */}
-            {changePicture && (
+                {changePicture && (
+                    <div>
+                        <input type="file" accept="image/*" onChange={onFileChange} />
+                        {/* Dispatches file to saga when the button is clicked */}
+                    </div>
+                )}<br />
                 <div>
-                    <input type="file" accept="image/*" onChange={onFileChange} />
-                    {/* Dispatches file to saga when the button is clicked */}
+                    <LoadScript
+                        googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
+                    >
+                        {/* {JSON.stringify(locationToSend)} */}
+                        {/* Map with event listener */}
+                        {/* Map with event listener */}
+                        <GoogleMap
+                            mapContainerStyle={containerStyle}
+                            center={center}
+                            zoom={10}
+                            onClick={event => getClickData(event.latLng)}
+                        >
+                            {/* Marker shows current location  */}
+                            {showCurrentLocation && (
+                                <Marker
+                                    position={currentLocation}
+                                    clickable={true}
+                                    draggable={true}
+                                ></Marker>
+                            )}
+                            {/* On map click display marker at click location */}
+                            {displayNewMarker && (
+                                <Marker
+                                    position={locationToSend}
+                                ></Marker>
+                            )}
+                        </GoogleMap>
+                    </LoadScript>
                 </div>
-            )}<br />
-            <div>
-            <LoadScript
-                googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
-            >
-                {/* {JSON.stringify(locationToSend)} */}
-                {/* Map with event listener */}
-                   {/* Map with event listener */}
-                   <GoogleMap
-                    mapContainerStyle={containerStyle}
-                    center={center}
-                    zoom={10}
-                    onClick={event => getClickData(event.latLng)}
-                >
-                    {/* Marker shows current location  */}
-                    {showCurrentLocation && (
-                        <Marker
-                            position={currentLocation}
-                            clickable={true}
-                            draggable={true}
-                        ></Marker>
-                    )}
-                    {/* On map click display marker at click location */}
-                    {displayNewMarker && (
-                        <Marker
-                            position={locationToSend}
-                        ></Marker>
-                    )}
-                </GoogleMap>
-            </LoadScript><br />
+
+                <br /> 
+                <button onClick={event => sendFormDataToServer()}>Submit</button>
+                
+
+                </Box>
             </div>
-
-            <br /> <br />
-            <button onClick={event => sendFormDataToServer()}>Submit</button>
-            <br /><br />
-
-            {/* <button onClick={event => setEditThing(!editThing)}>Edit</button> */}
-            <ArrowBackOutlinedIcon sx={{height:100, width:50}} onClick={event => history.goBack()} />
         </>
     );
 }

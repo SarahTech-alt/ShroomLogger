@@ -30,6 +30,7 @@ import AddLocationTime from '../AddLog/AddLocationTime';
 import AddDescription from '../AddLog/AddDescription';
 import Summary from '../AddLog/Summary';
 import './App.css';
+import Header from '../Header/Header';
 
 
 function App() {
@@ -44,7 +45,7 @@ function App() {
   return (
     <Router>
       <div>
-        
+        <Header />
         <Switch>
           {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
           <Redirect exact from="/" to="/home" />

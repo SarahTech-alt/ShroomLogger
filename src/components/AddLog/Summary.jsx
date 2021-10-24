@@ -3,16 +3,19 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { GoogleMap, InfoWindow, LoadScript, Marker } from '@react-google-maps/api';
 import moment from 'moment';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Box from '@mui/material/Box';
 
 
 function Summary() {
 
     const dispatch = useDispatch();
-    const newMushroom =  useSelector(store => store.logHistory.logToAdd);
-    const history=useHistory();
+    const newMushroom = useSelector(store => store.logHistory.logToAdd);
+    const history = useHistory();
 
-  const addNewMushroom = () => {
-              dispatch({
+    const addNewMushroom = () => {
+        dispatch({
             type: 'ADD_NEW_MUSHROOM',
             payload:
                 { newMushroom }
@@ -27,23 +30,34 @@ function Summary() {
         lng: markerLng
     };
     const containerStyle = {
-        width: '400px',
+        width: '350px',
         height: '400px'
-      };
+    };
     // Google Maps data about each marker
     const onLoad = marker => {
         console.log('marker: ', marker)
     }
-  
+
 
     return (
-        <>
-        {JSON.stringify(newMushroom)}
-        <p> Common Name: {newMushroom.common_name}</p>
-            <p> Scientific Name: {newMushroom.scientific_name}</p>
-            <p> Date of Entry: {moment(newMushroom.date).format('LL')} </p>
-            <p> Description: {newMushroom.details} </p>
-            <img src={`https://${process.env.REACT_APP_AWS_S3_BUCKET}.s3.${process.env.REACT_APP_AWS_S3_REGION}.amazonaws.com/photos/medium/${newMushroom.selectedFile}`} alt={newMushroom.common_name}/><br /><br />
+        <div className="container">
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+
+                <Tabs>
+                    <Tab label="Home" onClick={event => history.push('/home')} />
+                    <Tab label="History" onClick={event => history.push('/history')} />
+                    <Tab label="Map" onClick={event => history.push('/map')} />
+                    <Tab label="Add New" onClick={event => history.push('/addPhotos')} />
+                </Tabs>
+
+            </Box><br />
+            <Box sx={{ mx: "auto", height: 350, width: 350 }}>
+                {/* {JSON.stringify(newMushroom)} */}
+                <p> Common Name: {newMushroom.common_name}</p>
+                <p> Scientific Name: {newMushroom.scientific_name}</p>
+                <p> Date of Entry: {moment(newMushroom.date).format('LL')} </p>
+                <p> Description: {newMushroom.details} </p>
+                <img src={`https://${process.env.REACT_APP_AWS_S3_BUCKET}.s3.${process.env.REACT_APP_AWS_S3_REGION}.amazonaws.com/photos/medium/${newMushroom.selectedFile}`} alt={newMushroom.common_name} /><br /><br />
                 <div className='map-display'>
                     {/* {JSON.stringify(logDetails)} */}
                     {/* Initialize API */}
@@ -69,9 +83,9 @@ function Summary() {
 
 
 
-     <button onClick={event => addNewMushroom()}>Add</button>
-
-        </>
+                <button onClick={event => addNewMushroom()}>Add</button>
+            </Box>
+        </div>
     );
 }
 

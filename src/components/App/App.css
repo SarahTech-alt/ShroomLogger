@@ -6,14 +6,19 @@ body,
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Kalam', cursive;
   margin: 0px;
- 
+ background-color: #C8BA89;
 }
 
 img {
   display: inline-block;
   max-width: 100%;
+}
+h1 {
+  font-family: 'Kalam', cursive;
+  font-size: 40px;
+  font-weight: bold;
 }
 
 .logo {
