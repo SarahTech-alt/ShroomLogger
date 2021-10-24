@@ -19,12 +19,12 @@ function AddPhotos() {
         quality: 1.0,
         maxHeight: 300,
     };
-     // hooks for image actions
-     const [preview, setPreview] = useState('');
-     const [selectedFile, setSelectedFile] = useState('');
-     const [resizedFile, setResizedFile] = useState('');
-     const [changePicture, setChangePicture] = useState(false);
-         // access the logHistory reducer from the store
+    // hooks for image actions
+    const [preview, setPreview] = useState('');
+    const [selectedFile, setSelectedFile] = useState('');
+    const [resizedFile, setResizedFile] = useState('');
+    const [changePicture, setChangePicture] = useState(false);
+    // access the logHistory reducer from the store
     const userInfo = useSelector(store => store.user);
 
     // getting user id from the store to send 
@@ -34,7 +34,7 @@ function AddPhotos() {
     const history = useHistory();
     // use to dispatch events to sagas
     const dispatch = useDispatch();
-    const newMushroom =  useSelector(store => store.logHistory.logToAdd);
+    const newMushroom = useSelector(store => store.logHistory.logToAdd);
 
     // select the logDetail from the combined logHistory reducer
     const logInfo = useSelector(store => store.logHistory);
@@ -42,7 +42,7 @@ function AddPhotos() {
     // const userInfo = useSelector(store => store.user)
     // const userId = userInfo.id;
 
-      // asynchronous function that
+    // asynchronous function that
     // updates hooks from user inputted information
     const onFileChange = async (event) => {
         console.log(event);
@@ -59,58 +59,58 @@ function AddPhotos() {
         //     alert('Invalid image file type. Must be gif, jpeg or png.');
         // }
     }
-    
+
     const addNewMushroomPhoto = () => {
-        
+
         dispatch({
             type: 'ADD_MUSHROOM_PHOTO',
             payload: {
                 // any other form data...
                 selectedFile,
                 resizedFile,
-                
+
             }
         })
         history.push('/addType')
-        newMushroom.selectedFile=selectedFile.name;
+        newMushroom.selectedFile = selectedFile.name;
     }
 
- 
+
     const sendInfoToRedux = () => {
-        dispatch({type:'SET_LOG_TO_ADD', payload: newMushroom});
+        dispatch({ type: 'SET_LOG_TO_ADD', payload: newMushroom });
         history.push('/addType')
     }
- 
+
 
     return (
         <>
-                  <img src='/mushroom.png' className="logo" />< br /><br /><br /><br /><br />
-            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-  <Tabs>
-  <Tab label="Home" onClick={event => history.push('/home')} />
-    <Tab label="History" onClick={event => history.push('/history')} />
-    <Tab label="Map"  onClick={event => history.push('/map')}/>
-    <Tab label="Add New" sx={{ borderBottom: 1}} onClick={event => history.push('/addPhotos')} />
-  </Tabs>
-</Box><br />
+            <div className="container">
+           
+                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                <Tabs>
+                <Tab label="Home" onClick={event => history.push('/home')} />
+                <Tab label="History" onClick={event => history.push('/history')} />
+                <Tab label="Map"  onClick={event => history.push('/map')}/>
+                <Tab label="Add New" onClick={event => history.push('/addPhotos')} />
+                </Tabs>
+                </Box><br />
             {/* Show file upload when the user clicks their profile picture
             Allows user to select a file from their local files */}
-            <input type="file" accept="image/*" onChange={onFileChange} /><br />
+             <Box sx={{ mx: "auto", height: 350, width: 350 }}>
+                <input type ="file" accept="image/*" onChange={onFileChange} /><br />
             {preview && (
                 <img
-                    className="placeholder-photo-preview"
-                    src={preview}
-                    alt="Photo preview"
+                className="placeholder-photo-preview"
+                src={preview}
+                alt="Photo preview"
                 />
             )} <br />
-            
-             <button onClick={event => history.goBack()}>Go Back</button>
-            <button onClick={event => {addNewMushroomPhoto()}}>
+                <button onClick={event => history.goBack()}>Go Back</button>
+                <button onClick={event => {addNewMushroomPhoto()}}>
                 Next: Add Name
-            </button>
-
-           
-           
+                </button>
+                </Box>
+            </div>
         </>
     );
 }

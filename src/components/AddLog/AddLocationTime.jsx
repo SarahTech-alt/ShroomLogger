@@ -4,6 +4,9 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { GoogleMap, InfoWindow, LoadScript, Marker } from '@react-google-maps/api';
 import moment from 'moment';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Box from '@mui/material/Box';
 
 function AddLocationTime() {
 
@@ -22,7 +25,7 @@ function AddLocationTime() {
     }
     // maps display configuration
     const containerStyle = {
-        width: '400px',
+        width: '350px',
         height: '400px'
     };
 
@@ -79,13 +82,23 @@ function AddLocationTime() {
     }
 
     return (
-        <>
-            {JSON.stringify(newMushroom)}<br />
-            <h1>In Add Location and Time</h1>
+        <div className="container">
+        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+            <Tabs>
+                <Tab label="Home" onClick={event => history.push('/home')} />
+                <Tab label="History" onClick={event => history.push('/history')} />
+                <Tab label="Map" onClick={event => history.push('/map')} />
+                <Tab label="Add New" onClick={event => history.push('/addPhotos')} />
+            </Tabs>
+
+        </Box><br />
+        <Box sx={{ mx: "auto", height: 350, width: 350 }}>
+            {/* {JSON.stringify(newMushroom)}<br /> */}
+            <h1>Where And When</h1>
             <LoadScript
                 googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
             >
-                {JSON.stringify(location)}
+                {/* {JSON.stringify(location)} */}
                 {/* Map with event listener */}
                 <GoogleMap
                     mapContainerStyle={containerStyle}
@@ -114,7 +127,8 @@ function AddLocationTime() {
 
                 <button onClick={event => sendLocationData()}>Next: Add Details</button>
             </div>
-        </>
+            </Box>
+        </div>
     );
 }
 

@@ -38,42 +38,42 @@ function LogHistory() {
     }, [dispatch]);
 
     return (
-        <>
-
+        
+        <div className="container">
             {/* {JSON.stringify(logHistory)} */}
             {/* <ArrowBackOutlinedIcon sx={{height:100, width:50}} onClick={event => history.goBack()} /> */}
-            <img src='/mushroom.png' className="logo" />< br /><br /><br /><br /><br/>
-            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-  <Tabs>
-  <Tab label="Home" onClick={event => history.push('/home')} />
-    <Tab label="View History" sx={{ borderBottom: 1}} onClick={event => history.push('/history')} />
-    <Tab label="Map"  onClick={event => history.push('/map')}/>
-    <Tab label="Add New" onClick={event => history.push('/addPhotos')} />
-  </Tabs>
-</Box><br />
-            <table>
-                <tbody>
-                <tr>
-                    <th>Common Name</th>
-                    <th>Scientific Name</th>
-                    <th>Date of Entry</th>
-                    <th>Description</th>
-                </tr>
-                
-                {logHistory.map((logs) => (
-                    <tr key={logs.log_id}>
-                    <td>{logs.common_name}</td>
-                    <td>{logs.scientific_name}</td>
-                    <td>{moment(logs.date).format('LL')}</td>
-                    <td>{logs.details}</td>
-                    <td><PageviewOutlinedIcon sx={{mt:.5, height:30}}onClick={event => viewLog(logs.log_id)}/></td>
-                    
-                    </tr>
-                ))}
-               </tbody>
-            </table>
-          
-        </>
+
+            <Tabs>
+                <Tab label="Home" onClick={event => history.push('/home')} />
+                <Tab label="History" sx={{ borderBottom: 1 }} onClick={event => history.push('/history')} />
+                <Tab label="Map" onClick={event => history.push('/map')} />
+                <Tab label="Add New" onClick={event => history.push('/addPhotos')} />
+            </Tabs>
+            <Box sx={{ mx: "auto", height: 350, width: 350 }}>
+                <table>
+                    <tbody>
+                        <tr>
+                            <th>Common Name</th>
+                            <th>Scientific Name</th>
+                            <th>Date of Entry</th>
+                            <th>Description</th>
+                        </tr>
+
+                        {logHistory.map((logs) => (
+                            <tr key={logs.log_id}>
+                                <td>{logs.common_name}</td>
+                                <td>{logs.scientific_name}</td>
+                                <td>{moment(logs.date).format('LL')}</td>
+                                <td>{logs.details}</td>
+                                <td><PageviewOutlinedIcon sx={{ mt: .5, height: 30 }} onClick={event => viewLog(logs.log_id)} /></td>
+
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </Box>
+        </div>
+
     );
 }
 

@@ -43,16 +43,16 @@ function LogDetails() {
     const containerStyle = {
         width: '300px',
         height: '300px'
-      };
+    };
     // Google Maps data about each marker
     const onLoad = marker => {
         console.log('marker: ', marker)
     }
 
-      // dispatch selected id to sagas and
+    // dispatch selected id to sagas and
     // direct user to edit page
     const editLog = (logId) => {
-        console.log('id from details to send to edit',logId);
+        console.log('id from details to send to edit', logId);
         history.push(`/edit/${logId}`);
     }
 
@@ -65,58 +65,53 @@ function LogDetails() {
     }, [logId]);
 
     return (
-        <>
-
-<div className="container">
-<img src='/mushroom.png' className="logo" />< br /><br /><br /><br /><br />
-        
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-  <Tabs>
-    <Tab label="Home" onClick={event => history.push('/home')} />
-    <Tab label="History" onClick={event => history.push('/history')} />
-    <Tab label="Map"  onClick={event => history.push('/map')}/>
-    <Tab label="Add New" onClick={event => history.push('/addPhotos')} />
-  </Tabs>
-</Box>
+            <div className="container">
+                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                <Tabs>
+                <Tab label="Home" onClick={event => history.push('/home')} />
+                <Tab label="History" onClick={event => history.push('/history')} />
+                <Tab label="Map"  onClick={event => history.push('/map')}/>
+                <Tab label="Add New" onClick={event => history.push('/addPhotos')} />
+                </Tabs>
+                </Box>
             {/* {JSON.stringify(mushroomPhotos)} */}
             {/* {JSON.stringify(selectedLog)} */}
             {/* Access information from the logDetail
             reducer and display on DOM 
             with a back button to navigate to previous page */}
-            <h1>View Details
-            <ModeEditOutlineOutlinedIcon sx={{ml:8, height:35, width:40}} onClick={event => editLog(selectedLog.id)} />
-            </h1>
-            
-            <p> Common Name: {selectedLog.common_name}</p>
-            <p> Scientific Name: {selectedLog.scientific_name}</p>
-            <p> Date of Entry: {moment(selectedLog.date).format('LL')} </p>
-            <p> Description: {selectedLog.details} </p>
-            <img src={selectedLog.mushroom_picture_medium} alt={selectedLog.mushroom_picture_medium}/><br /><br />
+             <Box sx={{ mx: "auto", width: 300 }}>
+                <h1>View Details
+                <ModeEditOutlineOutlinedIcon sx={{ml: 8, height: 35, width: 37}} onClick={event => editLog(selectedLog.id)} />
+                </h1>
+                <p> Common Name: {selectedLog.common_name}</p>
+                <p> Scientific Name: {selectedLog.scientific_name}</p>
+                <p> Date of Entry: {moment(selectedLog.date).format('LL')} </p>
+                <p> Description: {selectedLog.details} </p>
+                <img src={selectedLog.mushroom_picture_medium} alt={selectedLog.mushroom_picture_medium}/><br /><br />
                 <div className='map-display'>
-                    {/* {JSON.stringify(logDetails)} */}
-                    {/* Initialize API */}
-                    <LoadScript
-                        googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
-                    >
-                        {/* Map that will display markers */}
-                        <GoogleMap
-                            mapContainerStyle={containerStyle}
-                            center={center}
-                            zoom={10}
-                        >
-                            <Marker
-                                position={center}
-                                onLoad={onLoad}
-                            >
-                            </Marker>
-                        </GoogleMap>
-                    </LoadScript>
+            {/* {JSON.stringify(logDetails)} */}
+            {/* Initialize API */}
+                <LoadScript
+                googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
+                >
+            {/* Map that will display markers */}
+                <GoogleMap
+                mapContainerStyle={containerStyle}
+                center={center}
+                zoom={10}
+                >
+                <Marker
+                position={center}
+                onLoad={onLoad}
+                >
+                </Marker>
+                </GoogleMap>
+                </LoadScript>
                 </div>
-                <ArrowBackOutlinedIcon sx={{height:100, width:50}} onClick={event => history.goBack()} />
-                </div>
-            </>
-            )
+                </Box>
+            </div>
+    );
 }
 
 
-            export default LogDetails;
+export default LogDetails;

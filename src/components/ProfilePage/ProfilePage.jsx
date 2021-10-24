@@ -76,7 +76,8 @@ function ProfilePage() {
     }, []);
 
     return (
-        <>
+
+        <div className="container">
             <img src='/mushroom.png' className="logo" />< br /><br /><br /><br /><br />
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <Tabs>
@@ -88,38 +89,42 @@ function ProfilePage() {
             </Box><br />
             {/* display preview of image once selected
         onFileChange sets the state of preview */}
-            {preview && (
-                <img
-                    className="placeholder-photo-preview"
-                    src={preview}
-                    alt="Photo preview"
-                />
-            )}
-            {/* Show file upload when the user clicks their profile picture
+            <Box sx={{ mx: "auto", height: 350, width: 350 }}>
+                {preview && (
+                    <img
+                        className="placeholder-photo-preview"
+                        src={preview}
+                        alt="Photo preview"
+                    />
+                )}
+                {/* Show file upload when the user clicks their profile picture
             Allows user to select a file from their local files */}
-            {changePicture && (
-                <div>
-                    <input type="file" accept="image/*" onChange={onFileChange} /> <br />
-                    {/* Dispatches file to saga when the button is clicked */}
-                    <button onClick={event => sendFormDataToServer()}>Submit</button>
-                </div>
-            )}
-            {/* <p>{JSON.stringify(profileInfo)}</p> */}
-            {/* Map over the profileInfoReducer 
+                {changePicture && (
+                    <div>
+                        <input type="file" accept="image/*" onChange={onFileChange} /> <br />
+                        {/* Dispatches file to saga when the button is clicked */}
+                        <button onClick={event => sendFormDataToServer()}>Submit</button>
+                    </div>
+                )}
+                {/* <p>{JSON.stringify(profileInfo)}</p> */}
+                {/* Map over the profileInfoReducer 
             to display username and profile image */}
-            {profileInfo.map((profile, index) =>
-                <div key={index}>
-                    {/* When the user clicks their picture set change picture to true
+                {profileInfo.map((profile, index) =>
+                    <div key={index}>
+                        {/* When the user clicks their picture set change picture to true
                     which will conditionally render the file upload option */}
-                    {showCurrentPhoto && (
-                        <img src={profile.profile_picture_medium} onClick={(event => setChangePicture(!changePicture))}></img>
-                    )}
-                    <p>Username: {profile.username}</p>
-                    <p>Member since: {moment(userInfo.date_created).format('LL')}</p>
+                        {showCurrentPhoto && (
+                            <img src={profile.profile_picture_medium} onClick={(event => setChangePicture(!changePicture))}></img>
+                        )}
+                        <p>Username: {profile.username}</p>
+                        <p>Member since: {moment(userInfo.date_created).format('LL')}</p>
 
-                </div>
-            )}
-        </>
+                    </div>
+
+                )}
+            </Box>
+        </div>
+
 
     );
 }

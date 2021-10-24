@@ -12,7 +12,7 @@ import Box from '@mui/material/Box';
 
 
 const containerStyle = {
-  width: '400px',
+  width: '350px',
   height: '400px'
 };
 
@@ -40,40 +40,43 @@ function MapView() {
 
   return (
     <>
-            <img src='/mushroom.png' className="logo" />< br /><br /><br /><br />
-            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-            
-  <Tabs>
-  <Tab label="Home" onClick={event => history.push('/home')} />
-    <Tab label="History" onClick={event => history.push('/history')} />
-    <Tab label="Map" sx={{ borderBottom: 1}} onClick={event => history.push('/map')}/>
-    <Tab label="Add New" onClick={event => history.push('/addPhotos')} />
-  </Tabs>
+      <div className="container">
 
-</Box><br />
-    <div className='map-display'>
-        {/* {JSON.stringify(logDetails)} */}
-        {/* Initialize API */}
-      <LoadScript
-        googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
-      >
-        {/* Map that will display markers */}
-        <GoogleMap
-          mapContainerStyle={containerStyle}
-          center={center}
-          zoom={10}
-        >
-         
-          <>
-          {/* Map all the log details into MapDetails component */}
-            {logDetails.map((coord, index) => (
-             <MapDetails coord={coord}
-             key={index}/>
-            ))}
-          </>
-        </GoogleMap>
-      </LoadScript> <br />
-    </div>
+        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+
+          <Tabs>
+            <Tab label="Home" onClick={event => history.push('/home')} />
+            <Tab label="History" onClick={event => history.push('/history')} />
+            <Tab label="Map" sx={{ borderBottom: 1 }} onClick={event => history.push('/map')} />
+            <Tab label="Add New" onClick={event => history.push('/addPhotos')} />
+          </Tabs>
+
+        </Box><br />
+        <Box sx={{ mx: "auto", height: 350, width: 350 }}>
+          <div className='map-display'>
+            {/* {JSON.stringify(logDetails)} */}
+            {/* Initialize API */}
+            <LoadScript
+              googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
+            >
+              {/* Map that will display markers */}
+              <GoogleMap
+                mapContainerStyle={containerStyle}
+                center={center}
+                zoom={10}
+              >
+                <>
+                  {/* Map all the log details into MapDetails component */}
+                  {logDetails.map((coord, index) => (
+                    <MapDetails coord={coord}
+                      key={index} />
+                  ))}
+                </>
+              </GoogleMap>
+            </LoadScript>
+          </div>
+        </Box>
+      </div>
     </>
   )
 }
