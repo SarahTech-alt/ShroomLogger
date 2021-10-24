@@ -82,9 +82,9 @@ function LogDetails() {
             reducer and display on DOM 
             with a back button to navigate to previous page */}
              <Box sx={{ mx: "auto", width: 300 }}>
-                <h1>View Details
-                <ModeEditOutlineOutlinedIcon sx={{ml: 8, height: 35, width: 37}} onClick={event => editLog(selectedLog.id)} />
-                </h1>
+                
+                <ModeEditOutlineOutlinedIcon sx={{ml: 8, height: 35, width: 37, position:'absolute', top:210, right:50}} onClick={event => editLog(selectedLog.id)} />
+                
                 <p> Common Name: {selectedLog.common_name}</p>
                 <p> Scientific Name: {selectedLog.scientific_name}</p>
                 <p> Date of Entry: {moment(selectedLog.date).format('LL')} </p>
