@@ -9,6 +9,7 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import PageviewOutlinedIcon from '@mui/icons-material/PageviewOutlined';
+import './LogHistory.css'
 
 
 function LogHistory() {
@@ -49,7 +50,8 @@ function LogHistory() {
                 <Tab label="Map" onClick={event => history.push('/map')} />
                 <Tab label="Add New" onClick={event => history.push('/addPhotos')} />
             </Tabs>
-            <Box sx={{ mx: "auto", height: 350, width: 350 }}>
+           
+            <Box sx={{ mx: "auto", height: 'auto', width: 350, pt:3 }}>
                 <table>
                     <tbody>
                         <tr>
@@ -61,12 +63,11 @@ function LogHistory() {
 
                         {logHistory.map((logs) => (
                             <tr key={logs.log_id}>
-                                <td>{logs.common_name}</td>
+                                <td onClick={event => viewLog(logs.log_id)} style={{textDecoration:'underline', color:'blue'}}> {logs.common_name}</td>
                                 <td>{logs.scientific_name}</td>
                                 <td>{moment(logs.date).format('LL')}</td>
                                 <td>{logs.details}</td>
-                                <td><PageviewOutlinedIcon sx={{ mt: .5, height: 30 }} onClick={event => viewLog(logs.log_id)} /></td>
-
+                                
                             </tr>
                         ))}
                     </tbody>

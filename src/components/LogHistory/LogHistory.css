@@ -1,0 +1,29 @@
+table {
+    border-collapse: collapse;
+}
+
+th {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: left;
+    background-color: #624643;
+    color: #858585;
+    border-bottom: 1px solid black;
+  }
+
+ td,
+  th {
+  height:15px;
+    padding: 0px;
+    color:#080706;
+  }
+
+  tr {
+    border-bottom: 1px solid #080706;
+    border-width:1px 0;
+    
+  }
+
+  tr:nth-child(even){background-color: #C1B189;}
+
+  tr:hover {background-color: #ddd;}
