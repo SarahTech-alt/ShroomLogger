@@ -6,6 +6,8 @@ import moment from 'moment';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
 
 
 function Summary() {
@@ -51,7 +53,7 @@ function Summary() {
                 </Tabs>
 
             </Box><br />
-            <Box sx={{ mx: "auto", height: 350, width: 350 }}>
+            <Box sx={{ mx: "auto", height: 'auto', width: 350 }}>
                 {/* {JSON.stringify(newMushroom)} */}
                 <p> Common Name: {newMushroom.common_name}</p>
                 <p> Scientific Name: {newMushroom.scientific_name}</p>
@@ -78,12 +80,22 @@ function Summary() {
                         </GoogleMap>
                     </LoadScript>
                 </div>
-
-
-
-
-
-                <button onClick={event => addNewMushroom()}>Add</button>
+                <br/>
+                <Stack spacing={5} direction="row">
+                <Button
+                            variant="outlined"
+                            style={{color: '#615246', borderColor:'#080706'}}
+                            onClick={event => history.push('/home')}
+                            sx={{position:'flex-start'}}>
+                            Cancel
+                        </Button>
+                        <Button
+                            variant="outlined"
+                            style={{color: '#615246', borderColor:'#080706'}}
+                            onClick={event => addNewMushroom()}>
+                            Submit
+                        </Button>
+                    </Stack>
             </Box>
         </div>
     );

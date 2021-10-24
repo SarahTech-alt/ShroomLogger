@@ -10,6 +10,8 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
 
 
 
@@ -85,30 +87,39 @@ function AddPhotos() {
     return (
         <>
             <div className="container">
-           
+
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <Tabs>
-                <Tab label="Home" onClick={event => history.push('/home')} />
-                <Tab label="History" onClick={event => history.push('/history')} />
-                <Tab label="Map"  onClick={event => history.push('/map')}/>
-                <Tab label="Add New" onClick={event => history.push('/addPhotos')} />
-                </Tabs>
+                    <Tabs>
+                        <Tab label="Home" onClick={event => history.push('/home')} />
+                        <Tab label="History" onClick={event => history.push('/history')} />
+                        <Tab label="Map" onClick={event => history.push('/map')} />
+                        <Tab label="Add New" onClick={event => history.push('/addPhotos')} />
+                    </Tabs>
                 </Box><br />
-            {/* Show file upload when the user clicks their profile picture
+                {/* Show file upload when the user clicks their profile picture
             Allows user to select a file from their local files */}
-             <Box sx={{ mx: "auto", height: 350, width: 350 }}>
-                <input type ="file" accept="image/*" onChange={onFileChange} /><br />
-            {preview && (
-                <img
-                className="placeholder-photo-preview"
-                src={preview}
-                alt="Photo preview"
-                />
-            )} <br />
-                <button onClick={event => history.goBack()}>Go Back</button>
-                <button onClick={event => {addNewMushroomPhoto()}}>
-                Next: Add Name
-                </button>
+                <Box sx={{ mx: "auto", height: 350, width: 350 }}>
+                    <input type="file" accept="image/*" onChange={onFileChange} /><br />
+                    {preview && (
+                        <img
+                            className="placeholder-photo-preview"
+                            src={preview}
+                            alt="Photo preview"
+                        />
+                    )} <br />
+                    <Stack spacing={2} direction="row">
+                        <Button variant="outlined"
+                        style={{color: '#615246', borderColor: '#080706'}}
+                            onClick={event => history.goBack()}>
+                            Go Back
+                        </Button>
+                        <Button
+                            variant="outlined"
+                            style={{color: '#615246', borderColor:'#080706'}}
+                            onClick={event => { addNewMushroomPhoto() }}>
+                            Next: Add Name
+                        </Button>
+                    </Stack>
                 </Box>
             </div>
         </>
