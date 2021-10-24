@@ -6,6 +6,7 @@ import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField'
 
    function AddType(){
 
@@ -37,11 +38,29 @@ import Button from '@mui/material/Button';
 <Box sx={{ mx: "auto", height: 350, width: 350 }}>
         <h1>Names:</h1>
         {/* {JSON.stringify(newMushroom)}<br /> */}
-        <input type="text" onChange={(event) => ({ ... newMushroom.common_name = event.target.value })} placeholder="Common Name"></input> <br />
+        <TextField
+                            id="component-outlined"
+                            required
+                            onChange={event => ({ ...newMushroom.common_name = event.target.value })}
+                            helperText="common name"
+                            placeholder="common name"
+                            label="Required"
+                        />
+                        <br />
+                        <TextField 
+                        sx={{pt:2}}
+                            id="component-outlined"
+                            
+                            onChange={event => ({ ...newMushroom.scientific_name = event.target.value })}
+                            helperText="scientific name"
+                            // placeholder="scientific name"
+                        />
+                        <br />
+        {/* <input type="text" onChange={(event) => ({ ... newMushroom.common_name = event.target.value })} placeholder="Common Name"></input> <br />
 
-        <input type="text" onChange={(event) => ({ ...newMushroom. scientific_name= event.target.value })} placeholder="Scientific Name (optional)"></input><br /><br />
+        <input type="text" onChange={(event) => ({ ...newMushroom. scientific_name= event.target.value })} placeholder="Scientific Name (optional)"></input><br /><br /> */}
 
-        <Stack spacing={1} direction="row">
+        <Stack spacing={1} sx={{pt:3}} direction="row">
                         <Button
                             variant="outlined"
                             style={{color: '#615246', borderColor:'#080706'}}

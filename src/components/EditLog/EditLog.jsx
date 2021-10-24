@@ -286,7 +286,20 @@ function EditLog() {
                     </div>
 
                     <br />
-                    <Stack spacing={2} direction="row">
+                    <Stack spacing={6} direction="row">
+                    <Button variant="outlined"
+            
+                            style={{ color: '#615246', borderColor: '#080706'}}
+                            onClick={event => history.goBack()}>
+                            Back
+                        </Button>
+                    <Button
+                            variant="outlined"
+                            style={{ color: '#615246', borderColor: '#080706' }}
+                            onClick={event => sendFormDataToServer()}>
+                            Submit
+                        </Button>
+                   
                         <Button
                             variant="outlined"
                             style={{ color: '#615246', borderColor: '#080706' }}
@@ -294,17 +307,7 @@ function EditLog() {
                             onClick={event => deleteLog()}>
                             Delete
                         </Button>
-                        <Button variant="outlined"
-                            style={{ color: '#615246', borderColor: '#080706' }}
-                            onClick={event => history.goBack()}>
-                            Back
-                        </Button>
-                        <Button
-                            variant="outlined"
-                            style={{ color: '#615246', borderColor: '#080706' }}
-                            onClick={event => sendFormDataToServer()}>
-                            Submit
-                        </Button>
+                      
                     </Stack>
                 </Box>
             </div>

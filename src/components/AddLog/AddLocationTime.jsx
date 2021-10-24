@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Fragment } from "react";
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { GoogleMap, InfoWindow, LoadScript, Marker } from '@react-google-maps/api';
@@ -9,6 +9,11 @@ import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
+import {
+    MuiPickersUtilsProvider,
+    KeyboardDatePicker
+} from "@material-ui/pickers";
+import MomentUtils from "@date-io/moment";
 
 
 function AddLocationTime() {
@@ -35,6 +40,18 @@ function AddLocationTime() {
     const [locationToSend, setLocationToSend] = useState({
     })
 
+    const [selectedDate, setDate] = useState(moment().format("YYYY-MM-DD"));
+    const [inputValue, setInputValue] = useState(moment().format("YYYY-MM-DD"));
+
+    const onDateChange = (date, value) => {
+        newMushroom.date = date;
+        setDate(date);
+        setInputValue(value);
+    };
+
+    const dateFormatter = str => {
+        return str;
+    };
 
     // on page load get current location from GoogleMaps
     // and set response to current location
@@ -126,7 +143,20 @@ function AddLocationTime() {
                 </GoogleMap>
             </LoadScript><br />
             <div className="nav-buttons">
-                <input type="date" onChange={(event) => ({ ...newMushroom.date = moment(event.target.value).format() })} placeholder="When"></input> <br /><br />
+            <Fragment>
+      <MuiPickersUtilsProvider libInstance={moment} utils={MomentUtils}>
+        <KeyboardDatePicker
+          autoOk={true}
+          showTodayButton={true}
+          value={selectedDate}
+          format="YYYY-MM-DD"
+          inputValue={inputValue}
+          onChange={onDateChange}
+          rifmFormatter={dateFormatter}
+        />
+      </MuiPickersUtilsProvider>
+    </Fragment>
+     <br /><br />
                 <Stack spacing={1} direction="row">
                         <Button
                             variant="outlined"
