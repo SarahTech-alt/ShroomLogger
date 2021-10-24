@@ -9,6 +9,8 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { positions } from '@mui/system';
+import ImageList from '@mui/material/ImageList';
+import ImageListItem from '@mui/material/ImageListItem';
 
 
 
@@ -61,19 +63,20 @@ function HomePage() {
           </Tabs>
 
         </Box>
-        <Box sx={{ mx: "auto", width: 250 }}>
+        <ImageList sx={{ mx: "auto", width: 250 }} cols={1}>
           {logHistory.map((logs) => (
-            <div key={logs.log_id}>
+            <ImageListItem key={logs.log_id}>
+            
               <img width="250"
                 height="200"
                 src={logs.mushroom_picture_medium}
                 alt={logs.common_name}
                 onClick={(event => viewLogDetail(logs.log_id))} />
               <p>{logs.common_name}</p>
-            </div>
+              </ImageListItem>
 
           ))}
-        </Box>
+        </ImageList>
         <hr />
 
         {/* <button

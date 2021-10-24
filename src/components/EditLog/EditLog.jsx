@@ -19,11 +19,11 @@ function EditLog() {
         maxHeight: 300,
     };
 
-
     const containerStyle = {
-        width: '350px',
-        height: '400px'
+        width: '300px',
+        height: '350px'
     };
+    
     // Google Maps data about each marker
     const onLoad = marker => {
         console.log('marker: ', marker)
@@ -177,7 +177,7 @@ function EditLog() {
                         <Tab label="Add New" onClick={event => history.push('/addPhotos')} />
                     </Tabs>
                 </Box><br />
-                <Box sx={{ mx: "auto", width: 350 }}>
+                <Box sx={{ mx: "auto", width: 300 }}>
                 <button onClick={event => deleteLog()}>delete log </button>
                 <br /><br />
                 <input
