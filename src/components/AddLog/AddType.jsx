@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
 
    function AddType(){
 
@@ -33,14 +35,20 @@ import Box from '@mui/material/Box';
 
 </Box><br />
 <Box sx={{ mx: "auto", height: 350, width: 350 }}>
-        <h1>In Add Type</h1>
+        <h1>Names:</h1>
         {/* {JSON.stringify(newMushroom)}<br /> */}
-
         <input type="text" onChange={(event) => ({ ... newMushroom.common_name = event.target.value })} placeholder="Common Name"></input> <br />
 
-        <input type="text" onChange={(event) => ({ ...newMushroom. scientific_name= event.target.value })} placeholder="Scientific Name (optional)"></input><br />
+        <input type="text" onChange={(event) => ({ ...newMushroom. scientific_name= event.target.value })} placeholder="Scientific Name (optional)"></input><br /><br />
 
-        <button onClick={event => history.push('/locationtime')}>Next: Add location and time</button>
+        <Stack spacing={1} direction="row">
+                        <Button
+                            variant="outlined"
+                            style={{color: '#615246', borderColor:'#080706'}}
+                            onClick={event => { history.push('/locationtime') }}>
+                            Next: Location/Time
+                        </Button>
+                    </Stack>
         </Box>
         </div>
     );

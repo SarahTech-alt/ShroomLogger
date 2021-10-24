@@ -11,6 +11,9 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 function EditLog() {
 
@@ -178,8 +181,18 @@ function EditLog() {
                     </Tabs>
                 </Box><br />
                 <Box sx={{ mx: "auto", width: 300 }}>
-                <button onClick={event => deleteLog()}>delete log </button>
-                <br /><br />
+                <Stack spacing={1} direction="row">
+                        <Button 
+                        variant="outlined"
+                        fontSize='large'
+                        sx={{position:'absolute', right:40, top:220}}
+                        style={{color: '#615246', borderColor:'#080706'}}
+                        startIcon={<DeleteOutlineIcon />}
+                            onClick={event => deleteLog()}>
+                        Delete
+                        </Button>
+                    </Stack>
+                
                 <input
                     type="text"
                     onChange={event => ({ ...selectedLog.common_name = event.target.value })}
@@ -254,8 +267,19 @@ function EditLog() {
                 </div>
 
                 <br /> 
-                <button onClick={event => sendFormDataToServer()}>Submit</button>
-                
+                <Stack spacing={2} direction="row">
+                        <Button variant="outlined"
+                        style={{color: '#615246', borderColor: '#080706'}}
+                            onClick={event => history.goBack()}>
+                            Go Back
+                        </Button>
+                        <Button
+                            variant="outlined"
+                            style={{color: '#615246', borderColor:'#080706'}}
+                            onClick={event => sendFormDataToServer()}>
+                            Submit
+                        </Button>
+                    </Stack>
 
                 </Box>
             </div>

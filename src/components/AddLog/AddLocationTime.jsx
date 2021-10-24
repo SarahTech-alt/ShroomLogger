@@ -7,6 +7,9 @@ import moment from 'moment';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+
 
 function AddLocationTime() {
 
@@ -92,7 +95,7 @@ function AddLocationTime() {
             </Tabs>
 
         </Box><br />
-        <Box sx={{ mx: "auto", height: 350, width: 350 }}>
+        <Box sx={{ mx: "auto", height: 'auto', width: 350 }}>
             {/* {JSON.stringify(newMushroom)}<br /> */}
             <h1>Where And When</h1>
             <LoadScript
@@ -124,8 +127,14 @@ function AddLocationTime() {
             </LoadScript><br />
             <div className="nav-buttons">
                 <input type="date" onChange={(event) => ({ ...newMushroom.date = moment(event.target.value).format() })} placeholder="When"></input> <br /><br />
-
-                <button onClick={event => sendLocationData()}>Next: Add Details</button>
+                <Stack spacing={1} direction="row">
+                        <Button
+                            variant="outlined"
+                            style={{color: '#615246', borderColor:'#080706'}}
+                            onClick={event => sendLocationData()}>
+                            Next: Add Details
+                        </Button>
+                    </Stack>
             </div>
             </Box>
         </div>

@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
 
 
 function AddDescription() {
@@ -34,12 +36,19 @@ function AddDescription() {
 
             </Box><br />
             <Box sx={{ mx: "auto", height: 350, width: 350 }}>
-                <h1>In Add Description</h1>
+                <h1>Additional Details:</h1>
                 {/* {JSON.stringify(newMushroom)} */}
 
                 <input type="text" onChange={(event) => ({ ...newMushroom.details = event.target.value })} placeholder="Details"></input> <br />
-                <br />
-                <button onClick={event => history.push('/summary')}>Next: View Summary</button>
+             
+                <Stack spacing={1} direction="row">
+                        <Button
+                            variant="outlined"
+                            style={{color: '#615246', borderColor:'#080706'}}
+                            onClick={event => history.push('/summary')}>
+                            Next: Add Details
+                        </Button>
+                    </Stack>
             </Box>
         </div>
     );

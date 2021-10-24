@@ -78,7 +78,6 @@ function ProfilePage() {
     return (
 
         <div className="container">
-            <img src='/mushroom.png' className="logo" />< br /><br /><br /><br /><br />
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <Tabs>
                     <Tab label="Home" onClick={event => history.push('/home')} />
