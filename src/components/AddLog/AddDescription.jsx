@@ -6,6 +6,7 @@ import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
 
 
 function AddDescription() {
@@ -30,7 +31,7 @@ function AddDescription() {
                 <Tabs>
                     <Tab label="Home" onClick={event => history.push('/home')} />
                     <Tab label="History" onClick={event => history.push('/history')} />
-                    <Tab label="Map" sx={{ borderBottom: 1 }} onClick={event => history.push('/map')} />
+                    <Tab label="Map" onClick={event => history.push('/map')} />
                     <Tab label="Add New" onClick={event => history.push('/addPhotos')} />
                 </Tabs>
 
@@ -39,14 +40,23 @@ function AddDescription() {
                 <h1>Additional Details:</h1>
                 {/* {JSON.stringify(newMushroom)} */}
 
-                <input type="text" onChange={(event) => ({ ...newMushroom.details = event.target.value })} placeholder="Details"></input> <br />
+                <TextField
+                            multiline
+                            minRows={3}
+                            id="component-outlined"
+                            placeholder="details"
+                            onChange={event => ({ ...newMushroom.details = event.target.value })}
+                        />
+
+                {/* <input type="text" onChange={(event) => ({ ...newMushroom.details = event.target.value })} placeholder="Details"></input> <br /> */}
              
                 <Stack spacing={1} direction="row">
                         <Button
+                        sx={{mt:5}}
                             variant="outlined"
                             style={{color: '#615246', borderColor:'#080706'}}
                             onClick={event => history.push('/summary')}>
-                            Next: Add Details
+                            Next: Summary
                         </Button>
                     </Stack>
             </Box>
