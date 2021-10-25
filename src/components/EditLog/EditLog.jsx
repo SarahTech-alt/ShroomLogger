@@ -202,14 +202,14 @@ function EditLog() {
                             id="component-outlined"
                             placeholder={selectedLog.common_name}
                             onChange={event => ({ ...selectedLog.common_name = event.target.value })}
-                            helperText="common Name"
+                            helperText="common name"
                         />
                         <br />
                         <TextField
                             id="component-outlined"
                             placeholder={selectedLog.scientific_name}
                             onChange={event => ({ ...selectedLog.scientific_name = event.target.value })}
-                            helperText="science name"
+                            helperText="scientific name"
                         />
                         <br />
                         <Fragment>
