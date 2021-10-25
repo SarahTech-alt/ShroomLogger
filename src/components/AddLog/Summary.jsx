@@ -32,8 +32,8 @@ function Summary() {
         lng: markerLng
     };
     const containerStyle = {
-        width: '350px',
-        height: '400px'
+        width: '300px',
+        height: '350px'
     };
     // Google Maps data about each marker
     const onLoad = marker => {
@@ -43,7 +43,7 @@ function Summary() {
 
     return (
         <div className="container">
-            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+            {/* <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
 
                 <Tabs>
                     <Tab label="Home" onClick={event => history.push('/home')} />
@@ -52,7 +52,7 @@ function Summary() {
                     <Tab label="Add New" onClick={event => history.push('/addPhotos')} />
                 </Tabs>
 
-            </Box><br />
+            </Box><br /> */}
             <Box sx={{ mx: "auto", height: 'auto', width: 350 }}>
                 {/* {JSON.stringify(newMushroom)} */}
                 <p> Common Name: {newMushroom.common_name}</p>
@@ -70,7 +70,7 @@ function Summary() {
                         <GoogleMap
                             mapContainerStyle={containerStyle}
                             center={center}
-                            zoom={10}
+                            zoom={15}
                         >
                             <Marker
                                 position={center}

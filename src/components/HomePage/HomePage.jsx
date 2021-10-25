@@ -3,7 +3,7 @@ import LogOutButton from '../LogOutButton/LogOutButton';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
-import Avatar from '@mui/material/Avatar';
+
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
@@ -53,16 +53,16 @@ function HomePage() {
         onClick={event => history.push('/profile')}></Avatar> </Box> */}
 
 
-        <Box sx={{ mb: 3, borderBottom: 1, borderColor: 'divider' }}>
+        {/* <Box sx={{ mb: 3, borderBottom: 1, borderColor: 'divider' }}> */}
 
-          <Tabs>
+          {/* <Tabs>
             <Tab label="Home" sx={{ borderBottom: 1 }} onClick={event => history.push('/home')} />
             <Tab label="History" onClick={event => history.push('/history')} />
             <Tab label="Map" onClick={event => history.push('/map')} />
             <Tab label="Add New" onClick={event => history.push('/addPhotos')} />
           </Tabs>
 
-        </Box>
+        </Box> */}
         <ImageList sx={{ mx: "auto", width: 250 }} cols={1}>
           {logHistory.map((logs) => (
             <ImageListItem key={logs.log_id}>
@@ -91,8 +91,9 @@ function HomePage() {
           onClick={event => history.push('/addPhotos')}>
           Add Log
         </button><br /><br /> */}
-
-        <p onClick={() => dispatch({ type: 'LOGOUT' })}> Logout </p>
+ {/* <div className="push"></div>
+        <p onClick={() => dispatch({ type: 'LOGOUT' })}> Logout </p> */}
+       
       </div>
     </>
   );

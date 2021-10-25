@@ -68,14 +68,14 @@ function LogDetails() {
 
     return (
             <div className="container">
-                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                {/* <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <Tabs>
                 <Tab label="Home" onClick={event => history.push('/home')} />
                 <Tab label="History" onClick={event => history.push('/history')} />
                 <Tab label="Map"  onClick={event => history.push('/map')}/>
                 <Tab label="Add New" onClick={event => history.push('/addPhotos')} />
                 </Tabs>
-                </Box>
+                </Box> */}
             {/* {JSON.stringify(mushroomPhotos)} */}
             {/* {JSON.stringify(selectedLog)} */}
             {/* Access information from the logDetail
@@ -83,7 +83,7 @@ function LogDetails() {
             with a back button to navigate to previous page */}
              <Box sx={{ mx: "auto", width: 300 }}>
                 
-                <ModeEditOutlineOutlinedIcon sx={{ml: 8, height: 35, width: 37, position:'absolute', top:210, right:50}} onClick={event => editLog(selectedLog.id)} />
+                <ModeEditOutlineOutlinedIcon sx={{ml: 8, height: 35, width: 37, position:'absolute', top:160, right:50}} onClick={event => editLog(selectedLog.id)} />
                 
                 <p> Common Name: {selectedLog.common_name}</p>
                 <p> Scientific Name: {selectedLog.scientific_name}</p>

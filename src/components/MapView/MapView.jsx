@@ -42,7 +42,7 @@ function MapView() {
     <>
       <div className="container">
 
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+        {/* <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
 
           <Tabs>
             <Tab label="Home" onClick={event => history.push('/home')} />
@@ -51,7 +51,7 @@ function MapView() {
             <Tab label="Add New" onClick={event => history.push('/addPhotos')} />
           </Tabs>
 
-        </Box><br />
+        </Box><br /> */}
         <Box sx={{ mx: "auto", height: 350, width: 350 }}>
           <div className='map-display'>
             {/* {JSON.stringify(logDetails)} */}
