@@ -28,8 +28,8 @@ function AddLocationTime() {
 
     // use current location as map center
     const center = {
-        lat: currentLocation.lat,
-        lng: currentLocation.lng
+        lat: 44.938974763896276,
+        lng: -93.01299158944599
     }
     // maps display configuration
     const containerStyle = {
@@ -83,7 +83,7 @@ function AddLocationTime() {
         console.log(newMushroom);
         history.push('/description')
     }
-   
+
 
     // function to get coordinates of map click
     // set the location to send variable
@@ -97,13 +97,13 @@ function AddLocationTime() {
         })
         // change to show new marker 
         // and hide the current location marker
-        setShowCurrentLocation(!showCurrentLocation);
-        setDisplayNewMarker(!displayNewMarker);
+        setShowCurrentLocation(false);
+        setDisplayNewMarker(true);
     }
 
     return (
         <div className="container">
-        {/* <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+            {/* <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <Tabs>
                 <Tab label="Home" onClick={event => history.push('/home')} />
                 <Tab label="History" onClick={event => history.push('/history')} />
@@ -112,60 +112,79 @@ function AddLocationTime() {
             </Tabs>
 
         </Box><br /> */}
-        <Box sx={{ mx: "auto", height: 'auto', width: 350 }}>
-            {/* {JSON.stringify(newMushroom)}<br /> */}
-            <h1>Where And When</h1>
-            <LoadScript
-                googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
-            >
-                {/* {JSON.stringify(location)} */}
-                {/* Map with event listener */}
-                <GoogleMap
-                    mapContainerStyle={containerStyle}
-                    center={center}
-                    zoom={10}
-                    onClick={event => getClickData(event.latLng)}
+            <Box sx={{ mx: "auto", height: 'auto', width: 350 }}>
+                {/* {JSON.stringify(newMushroom)}<br /> */}
+                <h1>Where And When</h1>
+                <LoadScript
+                    googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
                 >
-                    {/* Marker shows current location  */}
+                    {/* {JSON.stringify(location)} */}
+                    {/* Map with event listener */}
                     {showCurrentLocation && (
-                        <Marker
-                            position={currentLocation}
-                            clickable={true}
-                            draggable={true}
-                        ></Marker>
+                        <GoogleMap
+                            mapContainerStyle={containerStyle}
+                            center={center}
+                            zoom={15}
+                            onClick={event => getClickData(event.latLng)}
+                        >
+                            {/* Marker shows current location  */}
+
+                            <Marker
+                                position={currentLocation}
+                                clickable={true}
+                                draggable={true}
+                            ></Marker>
+
+                            {/* On map click display marker at click location */}
+
+                        </GoogleMap>
                     )}
-                    {/* On map click display marker at click location */}
+
                     {displayNewMarker && (
-                        <Marker
-                            position={locationToSend}
-                        ></Marker>
+                        <GoogleMap
+                            mapContainerStyle={containerStyle}
+                            center={locationToSend}
+                            zoom={15}
+                            onClick={event => getClickData(event.latLng)}
+                        >
+                            {/* Marker shows current location  */}
+
+                            <Marker
+                                position={locationToSend}
+                                clickable={true}
+                                draggable={true}
+                            ></Marker>
+
+                            {/* On map click display marker at click location */}
+
+                        </GoogleMap>
+
                     )}
-                </GoogleMap>
-            </LoadScript><br />
-            <div className="nav-buttons">
-            <Fragment>
-      <MuiPickersUtilsProvider libInstance={moment} utils={MomentUtils}>
-        <KeyboardDatePicker
-          autoOk={true}
-          showTodayButton={true}
-          value={selectedDate}
-          format="YYYY-MM-DD"
-          inputValue={inputValue}
-          onChange={onDateChange}
-          rifmFormatter={dateFormatter}
-        />
-      </MuiPickersUtilsProvider>
-    </Fragment>
-     <br /><br />
-                <Stack spacing={1} direction="row">
+                </LoadScript><br />
+                <div className="nav-buttons">
+                    <Fragment>
+                        <MuiPickersUtilsProvider libInstance={moment} utils={MomentUtils}>
+                            <KeyboardDatePicker
+                                autoOk={true}
+                                showTodayButton={true}
+                                value={selectedDate}
+                                format="YYYY-MM-DD"
+                                inputValue={inputValue}
+                                onChange={onDateChange}
+                                rifmFormatter={dateFormatter}
+                            />
+                        </MuiPickersUtilsProvider>
+                    </Fragment>
+                    <br /><br />
+                    <Stack spacing={1} direction="row">
                         <Button
                             variant="outlined"
-                            style={{color: '#615246', borderColor:'#080706'}}
+                            style={{ color: '#615246', borderColor: '#080706' }}
                             onClick={event => sendLocationData()}>
                             Next: Add Details
                         </Button>
                     </Stack>
-            </div>
+                </div>
             </Box>
         </div>
     );
