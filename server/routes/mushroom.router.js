@@ -131,7 +131,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
     JOIN "mushroom_junction" ON  "mushroom_junction"."log_id"="log_entry"."id"
     JOIN "mushroom_names" ON "mushroom_junction"."mushroom_names_id"="mushroom_names"."id" 
     JOIN "mushroom_pictures" ON "mushroom_junction"."mushroom_picture_id"="mushroom_pictures"."id"
-    WHERE "user_id"=$1;`;
+    WHERE "user_id"=$1 ORDER BY "date" ASC;`;
     pool.query(queryText, [userId])
         .then(results => {
             // SEND RESULTS BACK TO CLIENT

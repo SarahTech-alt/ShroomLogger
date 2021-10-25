@@ -8,9 +8,11 @@ import React from 'react';
 function AboutPage() {
   return (
     <div className="container">
-      <img className="logo" src="/mushroom.png" /> <br />
+    
       <div>
         <p>Never Lose Your Mushroom Spot Again!</p>
+
+ <footer>ShroomLogger &copy; Sarah Fuoss</footer>
       </div>
     </div>
   );

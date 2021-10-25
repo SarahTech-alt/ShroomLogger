@@ -6,7 +6,7 @@ body,
 }
 
 body {
-  font-family: 'Kalam', cursive;
+  font-family: 'Mali', cursive;
   margin: 0px;
  background-color: #C8BA89;
 }
@@ -16,6 +16,7 @@ img {
   max-width: 100%;
 }
 h1 {
+  
   font-family: 'Kalam', cursive;
   font-size: 40px;
   font-weight: bold;
@@ -26,6 +27,11 @@ h1 {
   float: right;
   margin:0px;
 }
+
+hr { display: block; height: 1px;
+  
+  border: 0; border-top: thin solid #615246;
+  margin: 1em 0; padding: 0; }
 
 /* --------------------------------------------------------------------------------
 Container

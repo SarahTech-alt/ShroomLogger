@@ -25,7 +25,7 @@ import TextField from '@mui/material/TextField'
 
    return (
     <div className="container">
-              <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+              {/* <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
 
 <Tabs>
   <Tab label="Home" onClick={event => history.push('/home')} />
@@ -34,7 +34,7 @@ import TextField from '@mui/material/TextField'
   <Tab label="Add New" onClick={event => history.push('/addPhotos')} />
 </Tabs>
 
-</Box><br />
+</Box><br /> */}
 <Box sx={{ mx: "auto", height: 350, width: 350 }}>
         <h1>Names:</h1>
         {/* {JSON.stringify(newMushroom)}<br /> */}

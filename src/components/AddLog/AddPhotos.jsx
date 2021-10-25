@@ -87,14 +87,14 @@ function AddPhotos() {
     return (
         <>
             <div className="container">
-                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                {/* <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                     <Tabs>
                         <Tab label="Home" onClick={event => history.push('/home')} />
                         <Tab label="History" onClick={event => history.push('/history')} />
                         <Tab label="Map" onClick={event => history.push('/map')} />
                         <Tab sx={{ borderBottom: 1 }} label="Add New" onClick={event => history.push('/addPhotos')} />
                     </Tabs>
-                </Box><br />
+                </Box><br /> */}
                 {/* Show file upload when the user clicks their profile picture
             Allows user to select a file from their local files */}
                 <Box sx={{ mx: "auto", height: 350, width: 350 }}>

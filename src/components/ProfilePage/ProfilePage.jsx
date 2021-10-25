@@ -8,6 +8,8 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
 
 
 
@@ -76,54 +78,65 @@ function ProfilePage() {
     }, []);
 
     return (
-
-        <div className="container">
-            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+        <>
+            <div className="container">
+                {/* <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <Tabs>
                     <Tab label="Home" onClick={event => history.push('/home')} />
                     <Tab label="History" onClick={event => history.push('/history')} />
                     <Tab label="Map" onClick={event => history.push('/map')} />
                     <Tab label="Add New" onClick={event => history.push('/addPhotos')} />
                 </Tabs>
-            </Box><br />
-            {/* display preview of image once selected
+            </Box><br /> */}
+                {/* display preview of image once selected
         onFileChange sets the state of preview */}
-            <Box sx={{ mx: "auto", height: 350, width: 350 }}>
-                {preview && (
-                    <img
-                        className="placeholder-photo-preview"
-                        src={preview}
-                        alt="Photo preview"
-                    />
-                )}
-                {/* Show file upload when the user clicks their profile picture
+                <Box sx={{ mx: "auto", height: 'auto', width: 350 }}>
+                    {preview && (
+                        <img
+                            className="placeholder-photo-preview"
+                            src={preview}
+                            alt="Photo preview"
+                        />
+                    )}
+                    {/* Show file upload when the user clicks their profile picture
             Allows user to select a file from their local files */}
-                {changePicture && (
-                    <div>
-                        <input type="file" accept="image/*" onChange={onFileChange} /> <br />
-                        {/* Dispatches file to saga when the button is clicked */}
-                        <button onClick={event => sendFormDataToServer()}>Submit</button>
-                    </div>
-                )}
-                {/* <p>{JSON.stringify(profileInfo)}</p> */}
-                {/* Map over the profileInfoReducer 
+                    {changePicture && (
+                        <div>
+                            <input type="file" accept="image/*" onChange={onFileChange} /> <br />
+                            {/* Dispatches file to saga when the button is clicked */}
+                            <button onClick={event => sendFormDataToServer()}>Submit</button>
+                        </div>
+                    )}
+                    {/* <p>{JSON.stringify(profileInfo)}</p> */}
+                    {/* Map over the profileInfoReducer 
             to display username and profile image */}
-                {profileInfo.map((profile, index) =>
-                    <div key={index}>
-                        {/* When the user clicks their picture set change picture to true
+                    {profileInfo.map((profile, index) =>
+                        <div key={index}>
+                            {/* When the user clicks their picture set change picture to true
                     which will conditionally render the file upload option */}
-                        {showCurrentPhoto && (
-                            <img src={profile.profile_picture_medium} onClick={(event => setChangePicture(!changePicture))}></img>
-                        )}
-                        <p>Username: {profile.username}</p>
-                        <p>Member since: {moment(userInfo.date_created).format('LL')}</p>
+                            {showCurrentPhoto && (
+                                <img src={profile.profile_picture_medium} onClick={(event => setChangePicture(!changePicture))}></img>
+                            )}
+                            <p>Username: {profile.username}</p>
+                            <p>Member since: {moment(userInfo.date_created).format('LL')}</p>
 
-                    </div>
+                        </div>
 
-                )}
-            </Box>
-        </div>
+                    )}
 
+                    <Stack spacing={2} direction="row">
+                        <Button variant="outlined"
+                            style={{ color: '#615246', borderColor: '#080706' }}
+                            onClick={() => dispatch({ type: 'LOGOUT' })}>
+                            Log Out
+                        </Button>
+
+                    </Stack>
+                </Box>
+
+
+            </div>
+        </>
 
     );
 }

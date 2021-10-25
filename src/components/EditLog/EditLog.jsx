@@ -185,18 +185,18 @@ function EditLog() {
             reducer and display on DOM with buttons to edit logs
             and a back button to navigate to previous page */}
             <div className="container">
-                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                {/* <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                     <Tabs>
                         <Tab color='#858585' label="Home" onClick={event => history.push('/home')} />
                         <Tab label="History" onClick={event => history.push('/history')} />
                         <Tab label="Map" onClick={event => history.push('/map')} />
                         <Tab label="Add New" onClick={event => history.push('/addPhotos')} />
                     </Tabs>
-                </Box><br />
+                </Box><br /> */}
                 <Box sx={{ mx: "auto", width: 300 }}>
 
 
-                    <FormControl>
+                    <FormControl sx={{width:300}}>
                         {/* <InputLabel htmlFor="component-outlined">Scientific Name</InputLabel> */}
                         <TextField
                             id="component-outlined"

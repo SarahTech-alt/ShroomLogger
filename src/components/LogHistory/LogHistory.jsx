@@ -44,12 +44,12 @@ function LogHistory() {
             {/* {JSON.stringify(logHistory)} */}
             {/* <ArrowBackOutlinedIcon sx={{height:100, width:50}} onClick={event => history.goBack()} /> */}
 
-            <Tabs>
+            {/* <Tabs>
                 <Tab label="Home" onClick={event => history.push('/home')} />
                 <Tab label="History" sx={{ borderBottom: 1 }} onClick={event => history.push('/history')} />
                 <Tab label="Map" onClick={event => history.push('/map')} />
                 <Tab label="Add New" onClick={event => history.push('/addPhotos')} />
-            </Tabs>
+            </Tabs> */}
            
             <Box sx={{ mx: "auto", height: 'auto', width: 350, pt:3 }}>
                 <table>
