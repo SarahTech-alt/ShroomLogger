@@ -45,6 +45,13 @@ Finding mushrooms in the wild can be a very time consuming process. It can take 
 4. There is a table view of past logs that a user can access by clicking the list icon on the home page. Here the user can edit their log history.
 5. The user can add new finds via an icon on the home screen. The information they can add includes pictures, the type of mushroom, date and time, location, and additional details they wish to add. 
 
+## Screenshots
+![Home](https://user-images.githubusercontent.com/38589057/138919368-95fb794a-d8c4-4b2f-89f2-2e50f62bae8b.png)
+![History](https://user-images.githubusercontent.com/38589057/138919410-60a611f6-f46f-459c-81e7-8923bd34f4bf.png)
+![Map](https://user-images.githubusercontent.com/38589057/138919488-6b9ea8c7-9f0e-44e6-9827-b4e313c6bb12.png)
+![History](https://user-images.githubusercontent.com/38589057/138919498-0b095eaa-93bd-4979-9bca-8c2111b93f8f.png)
+
+
 ## Acknowledgement
 
 Thank you to Prime Digital Academy, all of my classmates, and my friends and family for providing the support and instruction to help make this application a reality.
