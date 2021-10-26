@@ -46,10 +46,10 @@ Finding mushrooms in the wild can be a very time consuming process. It can take 
 5. The user can add new finds via an icon on the home screen. The information they can add includes pictures, the type of mushroom, date and time, location, and additional details they wish to add. 
 
 ## Screenshots
-![Home](https://user-images.githubusercontent.com/38589057/138919368-95fb794a-d8c4-4b2f-89f2-2e50f62bae8b.png)
-![History](https://user-images.githubusercontent.com/38589057/138919410-60a611f6-f46f-459c-81e7-8923bd34f4bf.png)
-![Map](https://user-images.githubusercontent.com/38589057/138919488-6b9ea8c7-9f0e-44e6-9827-b4e313c6bb12.png)
-![History](https://user-images.githubusercontent.com/38589057/138919498-0b095eaa-93bd-4979-9bca-8c2111b93f8f.png)
+![Home](https://user-images.githubusercontent.com/38589057/138920088-e76179d9-f442-4c07-81fd-aeb93f41bd45.png)
+![Details](https://user-images.githubusercontent.com/38589057/138920600-e4754d0d-5c0c-40e8-a187-6d5a1a187665.png)
+![Map](https://user-images.githubusercontent.com/38589057/138920242-1db4494a-9cb3-4410-be54-42237b4ade6a.png)
+![History](https://user-images.githubusercontent.com/38589057/138920283-e59f2c9f-05ac-4728-8dbc-2f59ede555bd.png)
 
 
 ## Acknowledgement
