@@ -4,13 +4,13 @@
 
 Duration: Two week build
 
-Finding mushrooms in the wild can be a very time consuming process. It can take days, weeks, sometimes months to find a particular species. Mushrooms also tend to grow back in the same spot year after year, so the last thing you want to happen after finding the jackpot is to forget where you found it. This application solves that problem by allowing you to keep record of the location. picture and types of mushrooms you find. 
+Finding mushrooms in the wild can be a very time consuming process. It can take days, weeks, sometimes months to find a particular species. Mushrooms also tend to grow back in the same spot year after year, so the last thing you want to happen after finding the jackpot is to forget where you found it. This application solves that problem by allowing you to keep record of the locations, dates, pictures and types of mushrooms you find. 
 
 ## Prerequisites
 - Node.js
 - React.js
 - Express.js
-- postgresql
+- postgreSQL
 - Material UI
 
 ## Built With
