@@ -1,6 +1,7 @@
--- CREATE DATABASE "saga_movies_weekend"
+-- CREATE DATABASE "shroom_logger"
 
-
+-- USER TABLE WITH PROFILE INFORMATION
+-- STORES IMAGE URL FROM AWS S3
 CREATE TABLE "user" (
   "id" SERIAL PRIMARY KEY,
   "username" VARCHAR(120) NOT NULL UNIQUE,
@@ -10,7 +11,7 @@ CREATE TABLE "user" (
   "profile_picture_thumb" VARCHAR(120) DEFAULT 'https://solospikebucket.s3.us-east-2.amazonaws.com/photos/thumb/gone%20camping.jpeg'
 );
 
-
+-- LOG ENTRY TABLE 
 CREATE TABLE "log_entry" (
   "id" SERIAL PRIMARY KEY,
   "date" TIMESTAMP NOT NULL DEFAULT NOW(),
@@ -19,12 +20,15 @@ CREATE TABLE "log_entry" (
   "details" VARCHAR(2000)
 );
 
+-- MUSHROOM NAMES TABLE
 CREATE TABLE "mushroom_names" (
 "id" SERIAL PRIMARY KEY,
-"common_name" VARCHAR(100),
+"common_name" VARCHAR(100) NOT NULL,
 "scientific_name" VARCHAR(255)
 );
 
+-- MUSHROOM PICTURE TABLE
+-- STORES IMAGE URL FROM AWS S3
 CREATE TABLE "mushroom_pictures" (
 "id" SERIAL PRIMARY KEY,
 "mushroom_picture_thumb" VARCHAR(100),
@@ -32,7 +36,6 @@ CREATE TABLE "mushroom_pictures" (
 );
 
 -- JUNCTION TABLE
--- Logs can have multiple photos and multiple names
 -- This is many-to-many
 CREATE TABLE "mushroom_junction" (
   "id" SERIAL PRIMARY KEY,
