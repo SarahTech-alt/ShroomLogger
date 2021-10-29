@@ -24,7 +24,30 @@ aws.config.region = AWS_S3_REGION;
  * @apiParam {File}   image             Mandatory image
  *
  * @apiSuccessExample {json} Success-Response:
- *      HTTP/1.1 201 OK
+ *      HTTP/1.1 200 OK
+ */
+
+/**
+ * @api {get} /api/mushroom Get All Mushroom Data
+ * @apiName GetMushrooms
+ * @apiGroup Mushrooms
+ * @apiPermission authenticated user
+ * 
+ * @apiSuccess {String} user_id The user id
+ * @apiSuccess {String} log_id The log entry id
+ * 
+ * @apiSuccessExample Success-Response:
+ * HTTP/1.1 200 OK
+ * {
+ * "id": "3",
+ * "mushroom_name": "morel"
+ * }
+ * 
+ * @apiErrorExample Error-Response:
+ * HTTP/1.1 500
+ * {
+ * "error": "there was an error getting the logs Internal Service Error" 
+ * }
  */
 
 router.get('/detail/:id', rejectUnauthenticated, (req, res) => {

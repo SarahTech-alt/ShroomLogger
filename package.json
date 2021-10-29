@@ -45,6 +45,11 @@
     "apidoc": "apidoc -i server/routes/ -o apidoc/",
     "eject": "react-scripts eject"
   },
+  "apidoc": {
+    "title": "ShroomLogger Application",
+    "version": "1",
+    "description": "API documentation for solo project ShroomLogger"
+  },
   "devDependencies": {
     "nodemon": "^2.0.4"
   },
