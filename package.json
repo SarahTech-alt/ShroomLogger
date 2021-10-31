@@ -42,8 +42,14 @@
     "server": "nodemon --watch server server/server.js",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
+    "testServer": "NODE_ENV=test jest test/*.*.test.js --coverage --forceExit --detectOpenHandles",
     "apidoc": "apidoc -i server/routes/ -o apidoc/",
     "eject": "react-scripts eject"
+  },
+  "apidoc": {
+    "title": "ShroomLogger Application",
+    "version": "1",
+    "description": "API documentation for solo project ShroomLogger"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"
