@@ -11,7 +11,7 @@ import Box from '@mui/material/Box';
 import { positions } from '@mui/system';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
-
+import ImageListItemBar from '@mui/material/ImageListItemBar';
 
 
 
@@ -33,6 +33,7 @@ function HomePage() {
 
   useEffect(() => {
     dispatch({ type: 'FETCH_LOGS' });
+    dispatch({ type: 'FETCH_PROFILE_INFO' });
     console.log('log id on page load', profile);
   }, [dispatch]);
 
@@ -47,53 +48,21 @@ function HomePage() {
       {/* {JSON.stringify(profile)} */}
       {/* {JSON.stringify(logHistory)} */}
       <div className="container">
-
-        {/* <Box sx={{ position:'absolute', height:90, width:95, right:50, left:5, top:110}}> <Avatar sx={{height:100, width:100}}
-        src={profile.profile_picture_thumb}
-        onClick={event => history.push('/profile')}></Avatar> </Box> */}
-
-
-        {/* <Box sx={{ mb: 3, borderBottom: 1, borderColor: 'divider' }}> */}
-
-          {/* <Tabs>
-            <Tab label="Home" sx={{ borderBottom: 1 }} onClick={event => history.push('/home')} />
-            <Tab label="History" onClick={event => history.push('/history')} />
-            <Tab label="Map" onClick={event => history.push('/map')} />
-            <Tab label="Add New" onClick={event => history.push('/addPhotos')} />
-          </Tabs>
-
-        </Box> */}
-        <ImageList sx={{ mx: "auto", width: 250 }} cols={1}>
+        <ImageList sx={{ mx: "auto", width: 250 }} cols={1} gap={6}>
           {logHistory.map((logs) => (
-            <ImageListItem key={logs.log_id}>
-            
-              <img width="250"
-                height="200"
+            <ImageListItem key={logs.log_id} >
+              <img
                 src={logs.mushroom_picture_medium}
                 alt={logs.common_name}
-                onClick={(event => viewLogDetail(logs.log_id))} />
-              <p>{logs.common_name}</p>
-              </ImageListItem>
+                onClick={(event => viewLogDetail(logs.log_id))}
+                loading="lazy" />
+              <ImageListItemBar position="below" title={logs.common_name}/>
+            </ImageListItem>
 
           ))}
         </ImageList>
         <hr />
 
-        {/* <button
-          onClick={event => history.push('/history')}>
-          Log History
-        </button>
-        <button
-          onClick={event => history.push('/map')}>
-          Map
-        </button>
-        <button
-          onClick={event => history.push('/addPhotos')}>
-          Add Log
-        </button><br /><br /> */}
- {/* <div className="push"></div>
-        <p onClick={() => dispatch({ type: 'LOGOUT' })}> Logout </p> */}
-       
       </div>
     </>
   );

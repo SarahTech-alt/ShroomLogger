@@ -16,7 +16,7 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import AboutPage from '../AboutPage/AboutPage';
 import HomePage from '../HomePage/HomePage';
 import InfoPage from '../InfoPage/InfoPage';
-import LandingPage from '../LandingPage/LandingPage';
+// import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import ProfilePage from '../ProfilePage/ProfilePage';
@@ -189,7 +189,7 @@ function App() {
             }
           </Route>
 
-          <Route
+          {/* <Route
             exact
             path="/home"
           >
@@ -201,7 +201,7 @@ function App() {
               // Otherwise, show the Landing page
               <LandingPage />
             }
-          </Route>
+          </Route> */}
 
           {/* If none of the other routes matched, we will show a 404. */}
           <Route>
