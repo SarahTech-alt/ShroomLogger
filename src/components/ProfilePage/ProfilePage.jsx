@@ -68,7 +68,7 @@ function ProfilePage() {
         });
         setPreview('');
         setChangePicture(!changePicture);
-        setShowCurrentPhoto(!showCurrentPhoto)
+        setShowCurrentPhoto(!showCurrentPhoto);
     }
 
     // gets the user information from the reducer
@@ -80,16 +80,6 @@ function ProfilePage() {
     return (
         <>
             <div className="container">
-                {/* <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <Tabs>
-                    <Tab label="Home" onClick={event => history.push('/home')} />
-                    <Tab label="History" onClick={event => history.push('/history')} />
-                    <Tab label="Map" onClick={event => history.push('/map')} />
-                    <Tab label="Add New" onClick={event => history.push('/addPhotos')} />
-                </Tabs>
-            </Box><br /> */}
-                {/* display preview of image once selected
-        onFileChange sets the state of preview */}
                 <Box sx={{ mx: "auto", height: 'auto', width: 350 }}>
                     {preview && (
                         <img

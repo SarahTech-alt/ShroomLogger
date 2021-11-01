@@ -97,7 +97,7 @@ function AddPhotos() {
                 </Box><br /> */}
                 {/* Show file upload when the user clicks their profile picture
             Allows user to select a file from their local files */}
-                <Box sx={{ mx: "auto", height: 350, width: 350 }}>
+                <Box sx={{ mx: "auto", height: "auto", width: 350 }}>
                     <input type="file" accept="image/*" onChange={onFileChange} /><br />
                     {preview && (
                         <img
