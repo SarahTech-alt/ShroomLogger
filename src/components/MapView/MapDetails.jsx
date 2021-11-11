@@ -1,4 +1,4 @@
-import { GoogleMap, InfoWindow, LoadScript, Marker } from '@react-google-maps/api';
+import { InfoWindow, Marker } from '@react-google-maps/api';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';

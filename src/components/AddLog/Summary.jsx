@@ -1,10 +1,7 @@
-import { useHistory, useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { GoogleMap, InfoWindow, LoadScript, Marker } from '@react-google-maps/api';
+import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import moment from 'moment';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
@@ -43,16 +40,6 @@ function Summary() {
 
     return (
         <div className="container">
-            {/* <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-
-                <Tabs>
-                    <Tab label="Home" onClick={event => history.push('/home')} />
-                    <Tab label="History" onClick={event => history.push('/history')} />
-                    <Tab label="Map" onClick={event => history.push('/map')} />
-                    <Tab label="Add New" onClick={event => history.push('/addPhotos')} />
-                </Tabs>
-
-            </Box><br /> */}
             <Box sx={{ mx: "auto", height: 'auto', width: 350 }}>
                 {/* {JSON.stringify(newMushroom)} */}
                 <p> Common Name: {newMushroom.common_name}</p>
@@ -61,7 +48,6 @@ function Summary() {
                 <p> Description: {newMushroom.details} </p>
                 <img src={`https://${process.env.REACT_APP_AWS_S3_BUCKET}.s3.${process.env.REACT_APP_AWS_S3_REGION}.amazonaws.com/photos/medium/${newMushroom.selectedFile}`} alt={newMushroom.common_name} /><br /><br />
                 <div className='map-display'>
-                    {/* {JSON.stringify(logDetails)} */}
                     {/* Initialize API */}
                     <LoadScript
                         googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}

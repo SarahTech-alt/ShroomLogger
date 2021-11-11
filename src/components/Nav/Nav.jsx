@@ -30,24 +30,15 @@ function Nav() {
         {user.id && (
           <>
             <HomeOutlinedIcon sx={{height:100, width:50, pr:1}} onClick={event => history.push("/home")} />
-            
-
             <ListOutlinedIcon sx={{height:100, width:50, pr:1}} onClick={event => history.push("/history")} />
-              
-
             <MapOutlinedIcon sx={{height:100, width:50, pr:1}} onClick={event => history.push("/map")} />
             </>
         )}
-            
-
             {user.id && (
           <>
             <p className="navLink" onClick={() => dispatch({ type: 'LOGOUT' })}>Logout</p>
             </>
             )}
-
-        
-          
       </div>
     </div>
   );

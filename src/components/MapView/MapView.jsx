@@ -30,8 +30,6 @@ function MapView() {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  // let logDetails.push({detailDisplayed:false});
-
   // On page load get the logs from the database
   useEffect(() => {
     console.log('component did mount');
@@ -42,16 +40,6 @@ function MapView() {
     <>
       <div className="container">
 
-        {/* <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-
-          <Tabs>
-            <Tab label="Home" onClick={event => history.push('/home')} />
-            <Tab label="History" onClick={event => history.push('/history')} />
-            <Tab label="Map" sx={{ borderBottom: 1 }} onClick={event => history.push('/map')} />
-            <Tab label="Add New" onClick={event => history.push('/addPhotos')} />
-          </Tabs>
-
-        </Box><br /> */}
         <Box sx={{ mx: "auto", height: 350, width: 350 }}>
           <div className='map-display'>
             {/* {JSON.stringify(logDetails)} */}

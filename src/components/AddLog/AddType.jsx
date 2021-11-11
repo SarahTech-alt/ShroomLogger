@@ -1,8 +1,6 @@
 import { useHistory, useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
@@ -25,16 +23,6 @@ import TextField from '@mui/material/TextField'
 
    return (
     <div className="container">
-              {/* <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-
-<Tabs>
-  <Tab label="Home" onClick={event => history.push('/home')} />
-  <Tab label="History" onClick={event => history.push('/history')} />
-  <Tab label="Map" onClick={event => history.push('/map')} />
-  <Tab label="Add New" onClick={event => history.push('/addPhotos')} />
-</Tabs>
-
-</Box><br /> */}
 <Box sx={{ mx: "auto", height: 350, width: 350 }}>
         <h1>Names:</h1>
         {/* {JSON.stringify(newMushroom)}<br /> */}
@@ -53,12 +41,8 @@ import TextField from '@mui/material/TextField'
                             
                             onChange={event => ({ ...newMushroom.scientific_name = event.target.value })}
                             helperText="scientific name"
-                            // placeholder="scientific name"
                         />
                         <br />
-        {/* <input type="text" onChange={(event) => ({ ... newMushroom.common_name = event.target.value })} placeholder="Common Name"></input> <br />
-
-        <input type="text" onChange={(event) => ({ ...newMushroom. scientific_name= event.target.value })} placeholder="Scientific Name (optional)"></input><br /><br /> */}
 
         <Stack spacing={1} sx={{pt:3}} direction="row">
                         <Button
