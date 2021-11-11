@@ -1,8 +1,7 @@
 import axios from 'axios';
-
 import { put, takeLatest } from 'redux-saga/effects';
 
-// worker Saga: will be fired on "FETCH_SECRETS" actions
+
 function* fetchLogHistory() {
     console.log('in fetch log history saga');
     const response = yield axios.get('/api/mushroom');
@@ -27,14 +26,11 @@ function* deleteSelectedLog(action) {
 }
 
 function* addMushroomLog(action) {
-  // console.log('in add mushroom. new mushroom info', action.payload.newMushroom);
   console.log('in add mushroom fileName is', action.payload.selectedFile);
   const infoToAdd = action.payload;
   const newMushroomInfo = 
-  // {details: 
   infoToAdd.newMushroom
  
-    // fileName: infoToAdd.selectedFile.name }
 const addMushroom = yield axios.post('/api/mushroom', newMushroomInfo);
   yield console.log('response of adding mushroom', addMushroom.data.log_id)
   yield put({ type:'FETCH_LOGS'});
@@ -44,17 +40,13 @@ const addMushroom = yield axios.post('/api/mushroom', newMushroomInfo);
 function* postUpdatedLog(action) {
   try{
       const selectedLog = action.payload.logId
-      // console.log('log id to send to post in edit', action.payload);
       const updatedMushroomDetails = action.payload.logInfo.logDetail;
-      // console.log('edited log info to send to post', updatedMushroomDetails);
       yield axios.put(`api/mushroom/editInfo/${selectedLog}`, updatedMushroomDetails);
       yield put({type:'FETCH_LOGS'})
   } catch (error) {
       console.log('something went wrong sending edited log to db', error);  
   }
 }
-
-
 
   function* logSaga() {
     yield takeLatest('FETCH_LOGS', fetchLogHistory),
@@ -63,7 +55,5 @@ function* postUpdatedLog(action) {
     yield takeLatest('ADD_NEW_MUSHROOM', addMushroomLog),
     yield takeLatest('EDIT_LOG_DETAILS', postUpdatedLog)
   }
-
-
 
 export default logSaga;

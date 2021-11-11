@@ -7,6 +7,7 @@ import Avatar from '@mui/material/Avatar';
 import PropTypes from 'prop-types';
 
 function Item(props) {
+  // configure material UI box settings
   const { sx, ...other } = props;
   return (
     <Box
@@ -25,7 +26,9 @@ Item.propTypes = {
 };
 
 function Header() {
+  // select user info from the root reducer
   const profile = useSelector(store => store.user);
+  // access use history component for user navigation
   const history = useHistory();
   
   return (

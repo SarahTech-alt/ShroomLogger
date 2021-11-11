@@ -3,13 +3,9 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import moment from 'moment';
-import { GoogleMap, InfoWindow, LoadScript, Marker } from '@react-google-maps/api';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
+import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import Box from '@mui/material/Box';
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
-import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 
@@ -29,8 +25,6 @@ function LogDetails() {
     const selectedLog = logInfo.logDetail;
     // access mushroom photos
     const mushroomPhotos = useSelector(store => store.mushroomPhotos);
-    // access selected mushroom photo from store
-    // const selectedPhoto = mushroomPhotos.selectedMushroomPicture;
     // variable for dispatching actions to sagas
     const dispatch = useDispatch();
     // variable for navigation purposes
@@ -68,19 +62,7 @@ function LogDetails() {
 
     return (
             <div className="container">
-                {/* <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <Tabs>
-                <Tab label="Home" onClick={event => history.push('/home')} />
-                <Tab label="History" onClick={event => history.push('/history')} />
-                <Tab label="Map"  onClick={event => history.push('/map')}/>
-                <Tab label="Add New" onClick={event => history.push('/addPhotos')} />
-                </Tabs>
-                </Box> */}
-            {/* {JSON.stringify(mushroomPhotos)} */}
-            {/* {JSON.stringify(selectedLog)} */}
-            {/* Access information from the logDetail
-            reducer and display on DOM 
-            with a back button to navigate to previous page */}
+
              <Box sx={{ mx: "auto", width: 300 }}>
                 
                 <ModeEditOutlineOutlinedIcon sx={{ml: 8, height: 35, width: 37, position:'absolute', top:160, right:50}} onClick={event => editLog(selectedLog.id)} />

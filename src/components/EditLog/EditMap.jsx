@@ -1,5 +1,5 @@
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
-import React, { useEffect, useState, Fragment } from 'react';
+import React, { useState } from 'react';
 
 function EditMap( {selectedLog} ) {
     
@@ -54,7 +54,6 @@ function EditMap( {selectedLog} ) {
                             googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
                         >
                             {/* {JSON.stringify(locationToSend)} */}
-                            {/* Map with event listener */}
                             {/* Map with event listener */}
                             <GoogleMap
                                 mapContainerStyle={containerStyle}

@@ -1,3 +1,6 @@
+// userReducer holds the information
+// for the user that is currently logged in
+
 const userReducer = (state = [], action) => {
   switch (action.type) {
     case 'SET_USER':

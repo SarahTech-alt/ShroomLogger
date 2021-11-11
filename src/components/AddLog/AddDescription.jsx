@@ -1,8 +1,6 @@
 import { useHistory, useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
@@ -26,19 +24,9 @@ function AddDescription() {
 
     return (
         <div className="container">
-            {/* <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-
-                <Tabs>
-                    <Tab label="Home" onClick={event => history.push('/home')} />
-                    <Tab label="History" onClick={event => history.push('/history')} />
-                    <Tab label="Map" onClick={event => history.push('/map')} />
-                    <Tab label="Add New" onClick={event => history.push('/addPhotos')} />
-                </Tabs>
-
-            </Box><br /> */}
+    
             <Box sx={{ mx: "auto", height: 350, width: 350 }}>
                 <h1>Additional Details:</h1>
-                {/* {JSON.stringify(newMushroom)} */}
 
                 <TextField
                             multiline
@@ -47,8 +35,6 @@ function AddDescription() {
                             placeholder="details"
                             onChange={event => ({ ...newMushroom.details = event.target.value })}
                         />
-
-                {/* <input type="text" onChange={(event) => ({ ...newMushroom.details = event.target.value })} placeholder="Details"></input> <br /> */}
              
                 <Stack spacing={1} direction="row">
                         <Button

@@ -1,6 +1,8 @@
 import { combineReducers } from "redux";
 import moment from 'moment';
 
+// logHistory holds the information of
+// all of the entered logs for a user
 const logHistory = (state = [], action) => {
     switch (action.type) {
         case 'SET_LOG_HISTORY':
@@ -10,6 +12,8 @@ const logHistory = (state = [], action) => {
     }
 };
 
+// logDetail holds the information for
+// a specific log when it is selected
 const logDetail = (state = [], action) => {
     switch (action.type) {
         case 'SET_LOG_DETAIL':
@@ -19,6 +23,11 @@ const logDetail = (state = [], action) => {
     }
 };
 
+// logToAdd holds the information of
+// a newly created log entry
+// default state is object with
+// undefined values to allow for
+// fields being left empty
 const logToAdd = (state =
     {
         common_name: '',
@@ -41,20 +50,11 @@ const logToAdd = (state =
     }
 }
 
-const locationInfo = (state = {}, action) => {
-    switch (action.type) {
-        case 'SET_LOCATION_INFO':
-            return action.payload;
-        default:
-            return state;
-    }
-}
-
-
-
+// export all the reducers here
+// to the root reducer to be
+// accessed throughout the application
 export default combineReducers({
     logHistory,
     logDetail,
     logToAdd,
-    locationInfo,
 });

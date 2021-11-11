@@ -3,7 +3,6 @@ import LogOutButton from '../LogOutButton/LogOutButton';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
-
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
@@ -17,19 +16,13 @@ import ImageListItemBar from '@mui/material/ImageListItemBar';
 
 function HomePage() {
 
-  // // matches parameters of current route
-  // const allParams = useParams();
-  // // // selects the id from the parameters
-  // const logId = allParams.id;
-  // // get profile info from the reducer store
+  // get profile info from the reducer store
   const profile = useSelector(store => store.user);
   const logHistory = useSelector(store => store.logHistory.logHistory)
 
   // allows access to useHistory module from React
   const history = useHistory();
   const dispatch = useDispatch();
-  // access profile picture reducer
-  // const profilePicture = profile.profilePictureReducer[0];
 
   useEffect(() => {
     dispatch({ type: 'FETCH_LOGS' });

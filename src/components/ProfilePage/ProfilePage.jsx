@@ -3,10 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { readAndCompressImage } from 'browser-image-resizer';
 import { useHistory } from 'react-router-dom';
 import moment from 'moment';
-import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
@@ -31,7 +27,6 @@ function ProfilePage() {
     const profileInfo = useSelector(store => store.profile.profileInfoReducer);
     const userInfo = useSelector(store => store.user)
     const userId = userInfo.id;
-
     // hooks for image actions
     const [preview, setPreview] = useState('');
     const [selectedFile, setSelectedFile] = useState('');
@@ -55,8 +50,6 @@ function ProfilePage() {
     // send information from hooks to saga function
     const sendFormDataToServer = async () => {
         let action;
-        // The file name seems to be dropped on resize, send both the
-        // original and resized files.
         await dispatch({
             type: 'UPLOAD_PHOTO',
             payload: {
@@ -109,25 +102,18 @@ function ProfilePage() {
                             )}
                             <p>Username: {profile.username}</p>
                             <p>Member since: {moment(userInfo.date_created).format('LL')}</p>
-
                         </div>
-
                     )}
-
                     <Stack spacing={2} direction="row">
                         <Button variant="outlined"
                             style={{ color: '#615246', borderColor: '#080706' }}
                             onClick={() => dispatch({ type: 'LOGOUT' })}>
                             Log Out
                         </Button>
-
                     </Stack>
                 </Box>
-
-
             </div>
         </>
-
     );
 }
 

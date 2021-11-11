@@ -1,5 +1,5 @@
-import React, { useEffect, useState, Fragment } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState} from 'react';
+import { useDispatch } from 'react-redux';
 import { readAndCompressImage } from 'browser-image-resizer';
 import { useHistory } from 'react-router-dom';
 
@@ -21,8 +21,6 @@ function EditPhoto( { selectedLog, logId } ) {
     const onFileChange = async (event) => {
         console.log(event);
         const userFile = event.target.files[0];
-        // const acceptedImageTypes = ['image/gif', 'image/jpeg', 'image/png', 'image/jpg'];
-        // if (acceptedImageTypes.includes(acceptedImageTypes.type)) {
         const copyFile = new Blob([userFile], { type: userFile.type });
         const resizedFile = await readAndCompressImage(copyFile, imageConfig);
         setSelectedFile(userFile);
