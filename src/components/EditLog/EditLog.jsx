@@ -157,7 +157,8 @@ function EditLog() {
                         <Button variant="outlined"
 
                             style={{ color: '#615246', borderColor: '#080706' }}
-                            onClick={event => history.goBack()}>
+                            onClick={event => 
+                                history.push(`/details/${logId}`)}>
                             Back
                         </Button>
                         {/* Submit sends the updated information

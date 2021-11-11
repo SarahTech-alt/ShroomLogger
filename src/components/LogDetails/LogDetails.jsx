@@ -10,9 +10,6 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 
 
-
-
-
 function LogDetails() {
     const profile = useSelector(store => store.user);
     // matches parameters of current route
