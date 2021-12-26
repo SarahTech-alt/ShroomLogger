@@ -26,8 +26,8 @@ function AddLocationTime() {
 
     // use current location as map center
     const center = {
-        lat: 44.938974763896276,
-        lng: -93.01299158944599
+        lat: currentLocation.lat,
+        lng: currentLocation.lng
     }
     // maps display configuration
     const containerStyle = {
@@ -54,7 +54,7 @@ function AddLocationTime() {
     // on page load get current location from GoogleMaps
     // and set response to current location
     useEffect(() => {
-        axios.post(`api/mushroom/map/`)
+        axios.post(`api/map`)
             .then(res => {
                 console.log(res);
                 setCurrentLocation(res.data.location)
@@ -156,7 +156,7 @@ function AddLocationTime() {
                                 autoOk={true}
                                 showTodayButton={true}
                                 value={selectedDate}
-                                format="YYYY-MM-DD"
+                                format="YYYY-MM-DD"bo
                                 inputValue={inputValue}
                                 onChange={onDateChange}
                                 rifmFormatter={dateFormatter}

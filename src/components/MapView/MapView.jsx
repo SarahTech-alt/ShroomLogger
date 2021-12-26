@@ -57,7 +57,8 @@ function MapView() {
                   {/* Map all the log details into MapDetails component */}
                   {logDetails.map((coord, index) => (
                     <MapDetails coord={coord}
-                      key={index} />
+                      key={index}
+                      averageCenter={true} />
                   ))}
                 </>
               </GoogleMap>
