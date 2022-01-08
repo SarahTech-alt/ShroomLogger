@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 
+
 function MapDetails({ coord, key }) {
 
   // Google Maps data about each marker
