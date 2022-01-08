@@ -4,32 +4,14 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import useReduxStore from '../../hooks/useReduxStore';
 import MapDetails from './MapDetails.jsx';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
-import TestMap from '../TestMap/TestMap';
-
-
-
-
-const containerStyle = {
-  width: '350px',
-  height: '400px'
-};
-
-const center = {
-  lat: 44.84657181221935,
-  lng: -92.79125855396293
-};
-
-
-
 
 function MapView() {
   const logInfo = useReduxStore(store => store.logInfo);
-  const logDetails = logInfo.logHistory.logHistory;
+  const logHistory = logInfo.logHistory.logHistory;
   const dispatch = useDispatch();
   const history = useHistory();
+
 
   // On page load get the logs from the database
   useEffect(() => {
@@ -37,13 +19,54 @@ function MapView() {
     dispatch({ type: 'FETCH_LOGS' })
   }, [dispatch]);
 
+  // Calculate the center the map 
+  // from the average
+  // of historical latitudes and longitudes
+
+  const averageLat = () => {
+    let latSum = 0;
+    let latCount = 0;
+    for (let i = 0; i < logHistory.length; i++) {
+      latSum += parseFloat(logHistory[i].latitude);
+      latCount++;
+      console.log("average latitude sum", latSum);
+    }
+    return latSum / latCount;
+  }
+
+  const averageLng = () => {
+    let lngSum = 0;
+    let lngCount = 0;
+    for (let i = 0; i < logHistory.length; i++) {
+      lngSum += parseFloat(logHistory[i].longitude);
+      lngCount++;
+    }
+    return lngSum / lngCount;
+  }
+  const [allLatitudes, setAllLatitudes] = useState([]);
+  const [allLongitudes, setAllLongitudes] = useState([]);
+
+  for (let i = 0; i < logHistory.length; i++) {
+    allLatitudes.push(parseInt(logHistory[i].latitude));
+    allLongitudes.push(parseInt(logHistory[i].longitude));
+  };
+
+  const historicalCenter = {
+    lat: averageLat(allLatitudes),
+    lng: averageLng(allLongitudes)
+  }
+
+  const containerStyle = {
+    width: '350px',
+    height: '400px'
+  };
+
   return (
     <>
       <div className="container">
 
         <Box sx={{ mx: "auto", height: 350, width: 350 }}>
           <div className='map-display'>
-            {/* {JSON.stringify(logDetails)} */}
             {/* Initialize API */}
             <LoadScript
               googleMapsApiKey='AIzaSyA5kx2R22QebhjWgNDJLG5_xuFJAg-gcrM'
@@ -51,12 +74,12 @@ function MapView() {
               {/* Map that will display markers */}
               <GoogleMap
                 mapContainerStyle={containerStyle}
-                center={center}
-                zoom={10}
+                center={historicalCenter}
+                zoom={8}
               >
                 <>
                   {/* Map all the log details into MapDetails component */}
-                  {logDetails.map((coord, index) => (
+                  {logHistory.map((coord, index) => (
                     <MapDetails coord={coord}
                       key={index}
                       averageCenter={true} />
