@@ -107,6 +107,7 @@ function EditLog() {
                 <Box sx={{ mx: "auto", width: 300 }}>
                     <FormControl sx={{ width: 300 }}>
                         <TextField
+                            required
                             id="component-outlined"
                             placeholder={selectedLog.common_name}
                             onChange={event => ({ ...selectedLog.common_name = event.target.value })}
@@ -158,7 +159,7 @@ function EditLog() {
 
                             style={{ color: '#615246', borderColor: '#080706' }}
                             onClick={event => 
-                                history.push(`/details/${logId}`)}>
+                                history.push(`/home`)}>
                             Back
                         </Button>
                         {/* Submit sends the updated information

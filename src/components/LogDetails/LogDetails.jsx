@@ -55,6 +55,7 @@ function LogDetails() {
         dispatch({ type: 'SET_SELECTED_LOG', payload: logId });
         console.log('id to send to photo router in component', logId)
         dispatch({ type: 'SET_SELECTED_MUSHROOM_PHOTO', payload: logId })
+        window.scrollTo(0, 0)
     }, [logId]);
 
     return (
