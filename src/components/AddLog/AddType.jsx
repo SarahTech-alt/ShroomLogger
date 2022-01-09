@@ -17,6 +17,15 @@ import TextField from '@mui/material/TextField'
 
     const newMushroom =  useSelector(store => store.logHistory.logToAdd);
 
+    const validateForm = () => {
+        if (newMushroom.common_name === '') {
+            alert('Please enter a type');
+        }
+        else {
+            history.push('/description');
+        }
+    }
+
     useEffect(() => {
 
     }, []);
@@ -48,7 +57,7 @@ import TextField from '@mui/material/TextField'
                         <Button
                             variant="outlined"
                             style={{color: '#615246', borderColor:'#080706'}}
-                            onClick={event => { history.push('/locationtime') }}>
+                            onClick={validateForm}>
                             Next: Location/Time
                         </Button>
                     </Stack>
