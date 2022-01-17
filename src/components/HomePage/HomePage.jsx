@@ -30,6 +30,7 @@ function HomePage() {
     console.log('log id on page load', profile);
   }, [dispatch]);
 
+
   const viewLogDetail = (logId) => {
     dispatch({ type: 'SET_SELECTED_LOG', payload: logId });
     history.push(`/details/${logId}`)
@@ -43,16 +44,22 @@ function HomePage() {
       <div className="container">
         <ImageList sx={{ mx: "auto", width: 250 }} cols={1} gap={6}>
           {logHistory.map((logs) => (
-            <ImageListItem key={logs.log_id} >
-              <img
-                src={logs.mushroom_picture_medium}
-                alt={logs.common_name}
-                onClick={(event => viewLogDetail(logs.log_id))}
-                loading="lazy" />
-              <ImageListItemBar position="below" title={logs.common_name}/>
-            </ImageListItem>
-
+            <div>
+              <ImageListItem key={logs.log_id} >
+                <img
+                  src={logs.mushroom_picture_medium}
+                  alt={logs.common_name}
+                  onClick={(event => viewLogDetail(logs.log_id))}
+                  loading="lazy" />
+                <ImageListItemBar position="below" title={logs.common_name} />
+              </ImageListItem>
+            </div>
           ))}
+          {!logHistory.length && <div
+            onClick={event => history.push('/addPhotos')}>
+            <img src="/images/mushroom.jpg"></img><br/>
+            <p>Add a log to get started!</p>
+          </div>}
         </ImageList>
         <hr />
 
