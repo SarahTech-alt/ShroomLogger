@@ -6,7 +6,8 @@ import moment from 'moment';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
-
+import AccountBoxOutlinedIcon from '@mui/icons-material/AccountBoxOutlined';
+import AddAPhotoOutlinedIcon from '@mui/icons-material/AddAPhotoOutlined';
 
 
 function ProfilePage() {
@@ -99,6 +100,10 @@ function ProfilePage() {
                     which will conditionally render the file upload option */}
                             {showCurrentPhoto && (
                                 <img src={profile.profile_picture_medium} onClick={(event => setChangePicture(!changePicture))}></img>
+                            )}
+                            {!profile.profile_picture_medium && (
+                                <AddAPhotoOutlinedIcon onClick={(event => setChangePicture(!changePicture))}/>
+                               
                             )}
                             <p>Username: {profile.username}</p>
                             <p>Member since: {moment(userInfo.date_created).format('LL')}</p>

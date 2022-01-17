@@ -22,7 +22,7 @@ import TextField from '@mui/material/TextField'
             alert('Please enter a type');
         }
         else {
-            history.push('/description');
+            history.push('/locationtime');
         }
     }
 
