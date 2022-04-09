@@ -39,7 +39,6 @@ function ProfilePage() {
     // updates hooks from user inputted information
     const onFileChange = async (event) => {
         setShowCurrentPhoto(false);
-        console.log(event);
         const userFile = event.target.files[0];
         const copyFile = new Blob([userFile], { type: userFile.type });
         const resizedFile = await readAndCompressImage(copyFile, imageConfig);
@@ -102,8 +101,8 @@ function ProfilePage() {
                                 <img src={profile.profile_picture_medium} onClick={(event => setChangePicture(!changePicture))}></img>
                             )}
                             {!profile.profile_picture_medium && (
-                                <AddAPhotoOutlinedIcon onClick={(event => setChangePicture(!changePicture))}/>
-                               
+                                <AddAPhotoOutlinedIcon onClick={(event => setChangePicture(!changePicture))} />
+
                             )}
                             <p>Username: {profile.username}</p>
                             <p>Member since: {moment(userInfo.date_created).format('LL')}</p>

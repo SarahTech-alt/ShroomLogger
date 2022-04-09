@@ -11,15 +11,13 @@ function* uploadPhoto(action) {
         const fileName = encodeURIComponent(selectedFile.name);
         const fileType = encodeURIComponent(resizedFile.type);
         const fileSize = encodeURIComponent(resizedFile.size);
-        console.log('fileName', fileName);
         const formData = new FormData();
         formData.append('image', resizedFile);
         yield axios.post(`api/profile/s3?name=${fileName}&type=${fileType}&size=${fileSize}`, formData);
-        yield put({type: 'POST_PHOTO', payload: fileName})
+        yield put({ type: 'POST_PHOTO', payload: fileName })
         // yield put({type:'FETCH_PROFILE_INFO'})
     } catch (error) {
         alert('Something went wrong when uploading a photo');
-        console.log('Photo Upload - post request failed', error);
     }
 }
 
@@ -27,13 +25,11 @@ function* postPhoto(action) {
     // updates the profile picture url in the database
     // then calls the get saga function to get
     // the most up to date profile information
-    try{
-        console.log('filename in put', action.payload);
-        let fileName = {selectedFile: action.payload};
+    try {
+        let fileName = { selectedFile: action.payload };
         const postedPhoto = yield axios.put('api/profile', fileName);
-        yield put({type:'FETCH_PROFILE_INFO'})
+        yield put({ type: 'FETCH_PROFILE_INFO' })
     } catch (error) {
-        console.log('something went wrong sending photo to db', error);  
     }
 }
 
@@ -43,10 +39,9 @@ function* fetchProfile() {
     // and sends to profile info reducer
     try {
         const response = yield axios.get('api/profile');
-        yield put({type: 'SET_PROFILE_INFO', payload: response.data})
+        yield put({ type: 'SET_PROFILE_INFO', payload: response.data })
     } catch (error) {
         alert('Something went wrong getting profile information');
-        console.log('Profile information - get request failed', error);
     }
 }
 

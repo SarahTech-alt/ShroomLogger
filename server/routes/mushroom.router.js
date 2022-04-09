@@ -52,9 +52,7 @@ aws.config.region = AWS_S3_REGION;
 
 router.get('/detail/:id', rejectUnauthenticated, (req, res) => {
     const selectedId = Number(req.params.id);
-    console.log('selected log id in router', selectedId);
     const userId = req.user.id;
-    console.log('user id in router', req.user.id)
     queryText = `SELECT "log_entry"."id","user_id","date","latitude","longitude","details","common_name","scientific_name", "mushroom_picture_thumb", "mushroom_picture_medium" FROM "log_entry" LEFT JOIN
     "mushroom_junction" ON "mushroom_junction"."log_id" = "log_entry"."id"
      JOIN "mushroom_pictures" ON "mushroom_junction"."mushroom_picture_id" = "mushroom_pictures"."id"
@@ -62,11 +60,9 @@ router.get('/detail/:id', rejectUnauthenticated, (req, res) => {
     ."id"=$1 AND "user_id" =$2;`
     pool.query(queryText, [selectedId, userId])
         .then(results => {
-            console.log('sending back id details', results.rows);
             res.send(results.rows)
         })
         .catch(error => {
-            console.log('there was an error getting details', error);
             res.sendStatus(500);
         })
 })
@@ -98,7 +94,6 @@ router.delete('/delete/:id', rejectUnauthenticated, async (req, res) => {
         const deleteFromPictures = `DELETE FROM mushroom_pictures WHERE "id" = $1;`
         await pool.query(deleteFromPictures, [mushroomPictureId])
     } catch (error) {
-        console.log('ROLLBACK', error);
         await pool.query('ROLLBACK');
         throw error;
     }
@@ -106,7 +101,6 @@ router.delete('/delete/:id', rejectUnauthenticated, async (req, res) => {
 
 router.post('/', rejectUnauthenticated, async (req, res) => {
     try {
-        console.log('req.body in post', req.body);
         const mushroomData = req.body;
         const fileName = req.body.selectedFile;
         // RETURNING "id" will give us back the id of the created log
@@ -140,7 +134,6 @@ router.post('/', rejectUnauthenticated, async (req, res) => {
          VALUES ($1,$2,$3,$4);`;
         await pool.query(insertIntoJunction, [createdLogId, createMushroomNameId, req.user.id, createPhotoId])
     } catch (error) {
-        console.log('ROLLBACK', error);
         await pool.query('ROLLBACK');
         throw error;
     }
@@ -158,20 +151,16 @@ router.get('/', rejectUnauthenticated, (req, res) => {
     pool.query(queryText, [userId])
         .then(results => {
             // SEND RESULTS BACK TO CLIENT
-            console.log('results.rows in get router', results.rows)
             res.send(results.rows)
         })
         .catch(error => {
             // IF FAILED LOG ERROR AND SEND ERROR STATUS CODE
-            console.log('there was an error getting the logs', error);
             res.sendStatus(500);
         })
 })
 
 
 router.put('/editInfo/:id', rejectUnauthenticated, async (req, res) => {
-    console.log('req.params in update log', req.params);
-    console.log('req.body in update router', req.body);
     let mushroomInfo = req.body;
     const userId = req.user.id;
     // GETS THE LOG ID OF SELECTED ENTRY
@@ -182,7 +171,6 @@ router.put('/editInfo/:id', rejectUnauthenticated, async (req, res) => {
         const getIdsQuery = 'SELECT * FROM "mushroom_junction" where "log_id"=$1'
         const idResults = await pool.query(getIdsQuery, [logId])
         const fetchedIds = idResults.rows[0];
-        console.log('all the ids from query', fetchedIds);
         // SET ALL FETCHED IDs TO CONSTs FOR READABILITY
         const mushroomNamesId = fetchedIds.mushroom_names_id;
         const mushroomPictureId = fetchedIds.mushroom_picture_id;
@@ -197,7 +185,6 @@ router.put('/editInfo/:id', rejectUnauthenticated, async (req, res) => {
         await pool.query(updatePicture, [mushroomInfo.mushroom_picture_thumb, mushroomInfo.mushroom_picture_medium, mushroomPictureId])
     } catch
     (error) {
-        console.log('ROLLBACK', error);
         await pool.query('ROLLBACK');
         throw error;
     }

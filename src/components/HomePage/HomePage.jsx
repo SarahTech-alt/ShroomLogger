@@ -27,7 +27,6 @@ function HomePage() {
     dispatch({ type: 'FETCH_LOGS' });
     dispatch({ type: 'FETCH_PROFILE_INFO' });
     window.scrollTo(0, 0)
-    console.log('log id on page load', profile);
   }, [dispatch]);
 
 

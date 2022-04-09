@@ -34,7 +34,6 @@ function Summary() {
     };
     // Google Maps data about each marker
     const onLoad = marker => {
-        console.log('marker: ', marker)
     }
 
 

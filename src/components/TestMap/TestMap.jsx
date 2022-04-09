@@ -35,7 +35,6 @@ const averageLat = () => {
     for (let i = 0; i < logHistory.length; i++) {
         latSum += parseFloat(logHistory[i].latitude);
         latCount++;
-        console.log("average latitude sum", latSum);
     }
     return latSum / latCount;
 }
@@ -70,13 +69,11 @@ for (let i = 0; i < logHistory.length; i++) {
     useEffect(() => {
         axios.post(`api/map`)
             .then(res => {
-                console.log(res);
                 setCurrentLocation(res.data.location)
                 setLocationToSend(res.data.location)
             })
             .catch(
                 error => {
-                    console.log('there was an error posting');
                 }
             )
         dispatch({type:'FETCH_LOGS'});

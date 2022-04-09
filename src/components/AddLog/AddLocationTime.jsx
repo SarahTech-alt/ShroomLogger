@@ -56,13 +56,11 @@ function AddLocationTime() {
     useEffect(() => {
         axios.post(`api/map`)
             .then(res => {
-                console.log(res);
                 setCurrentLocation(res.data.location)
                 setLocationToSend(res.data.location)
             })
             .catch(
                 error => {
-                    console.log('there was an error posting');
                 }
             )
         // dispatch({type:'fetchLocation'})
@@ -78,7 +76,6 @@ function AddLocationTime() {
     const sendLocationData = () => {
         newMushroom.latitude = locationToSend.lat;
         newMushroom.longitude = locationToSend.lng;
-        console.log(newMushroom);
         history.push('/description')
     }
 
@@ -87,8 +84,6 @@ function AddLocationTime() {
     // set the location to send variable
     // to the new coordinates
     const getClickData = (value) => {
-        console.log(value.lat());
-        console.log(value.lng());
         setLocationToSend({
             lat: value.lat(),
             lng: value.lng()
@@ -156,7 +151,7 @@ function AddLocationTime() {
                                 autoOk={true}
                                 showTodayButton={true}
                                 value={selectedDate}
-                                format="YYYY-MM-DD"bo
+                                format="YYYY-MM-DD" bo
                                 inputValue={inputValue}
                                 onChange={onDateChange}
                                 rifmFormatter={dateFormatter}

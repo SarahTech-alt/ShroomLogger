@@ -39,13 +39,11 @@ function LogDetails() {
     };
     // Google Maps data about each marker
     const onLoad = marker => {
-        console.log('marker: ', marker)
     }
 
     // dispatch selected id to sagas and
     // direct user to edit page
     const editLog = (logId) => {
-        console.log('id from details to send to edit', logId);
         history.push(`/edit/${logId}`);
     }
 
@@ -53,52 +51,51 @@ function LogDetails() {
     // send logId that was retried with useParams
     useEffect(() => {
         dispatch({ type: 'SET_SELECTED_LOG', payload: logId });
-        console.log('id to send to photo router in component', logId)
         dispatch({ type: 'SET_SELECTED_MUSHROOM_PHOTO', payload: logId })
         window.scrollTo(0, 0)
     }, [logId]);
 
     return (
-            <div className="container">
+        <div className="container">
 
-             <Box sx={{ mx: "auto", width: 300 }}>
-                
-                <ModeEditOutlineOutlinedIcon sx={{ml: 8, height: 35, width: 37, position:'absolute', top:160, right:50}} onClick={event => editLog(selectedLog.id)} />
-                
+            <Box sx={{ mx: "auto", width: 300 }}>
+
+                <ModeEditOutlineOutlinedIcon sx={{ ml: 8, height: 35, width: 37, position: 'absolute', top: 160, right: 50 }} onClick={event => editLog(selectedLog.id)} />
+
                 <p> Common Name: {selectedLog.common_name}</p>
                 <p> Scientific Name: {selectedLog.scientific_name}</p>
                 <p> Date of Entry: {moment(selectedLog.date).format('LL')} </p>
                 <p> Description: {selectedLog.details} </p>
-                <img src={selectedLog.mushroom_picture_medium} alt={selectedLog.mushroom_picture_medium}/><br /><br />
+                <img src={selectedLog.mushroom_picture_medium} alt={selectedLog.mushroom_picture_medium} /><br /><br />
                 <div className='map-display'>
-            {/* {JSON.stringify(logDetails)} */}
-            {/* Initialize API */}
-                <LoadScript
-                googleMapsApiKey='AIzaSyA5kx2R22QebhjWgNDJLG5_xuFJAg-gcrM'
-                >
-            {/* Map that will display markers */}
-                <GoogleMap
-                mapContainerStyle={containerStyle}
-                center={center}
-                zoom={10}
-                >
-                <Marker
-                position={center}
-                onLoad={onLoad}
-                >
-                </Marker>
-                </GoogleMap>
-                </LoadScript>
+                    {/* {JSON.stringify(logDetails)} */}
+                    {/* Initialize API */}
+                    <LoadScript
+                        googleMapsApiKey='AIzaSyA5kx2R22QebhjWgNDJLG5_xuFJAg-gcrM'
+                    >
+                        {/* Map that will display markers */}
+                        <GoogleMap
+                            mapContainerStyle={containerStyle}
+                            center={center}
+                            zoom={10}
+                        >
+                            <Marker
+                                position={center}
+                                onLoad={onLoad}
+                            >
+                            </Marker>
+                        </GoogleMap>
+                    </LoadScript>
                 </div><br />
                 <Stack spacing={1} direction="row">
-                        <Button variant="outlined"
-                        style={{color: '#615246', borderColor: '#080706'}}
-                            onClick={event => history.goBack()}>
-                            Go Back
-                        </Button>
-                    </Stack>
-                </Box>
-            </div>
+                    <Button variant="outlined"
+                        style={{ color: '#615246', borderColor: '#080706' }}
+                        onClick={event => history.goBack()}>
+                        Go Back
+                    </Button>
+                </Stack>
+            </Box>
+        </div>
     );
 }
 

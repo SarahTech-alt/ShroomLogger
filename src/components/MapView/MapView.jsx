@@ -25,18 +25,15 @@ function MapView() {
 
   // On page load get the logs from the database
   useEffect(() => {
-    console.log('component did mount');
     dispatch({ type: 'FETCH_LOGS' })
     // on page load get current location from GoogleMaps
     // and set response to current location
     axios.post(`api/map`)
       .then(res => {
-        console.log(res);
         setCurrentLocation(res.data.location)
       })
       .catch(
         error => {
-          console.log('there was an error posting');
         }
       )
     // dispatch({type:'fetchLocation'})
@@ -52,7 +49,6 @@ function MapView() {
     for (let i = 0; i < logHistory.length; i++) {
       latSum += parseFloat(logHistory[i].latitude);
       latCount++;
-      console.log("average latitude sum", latSum);
     }
     return latSum / latCount;
   }
@@ -87,44 +83,45 @@ function MapView() {
 
   return (
     <>
+      <div className="container">
 
-      <Box sx={{ mx: "auto", height: 350, width: 350 }}>
-        <div className='map-display'>
-          {/* Initialize API */}
-          <LoadScript
-            googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
-          >
+        <Box sx={{ mx: "auto", height: 350, width: 350 }}>
+          <div className='map-display'>
+            {/* Initialize API */}
+            <LoadScript
+              googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
+            >
 
-            {!logHistory.length && (
-              <GoogleMap
-                mapContainerStyle={containerStyle}
-                center={center}
-                zoom={8}
-              ></GoogleMap>
-            )}
-            {/* Map that will display markers */}
-            {logHistory.length && (
-              <GoogleMap
-                mapContainerStyle={containerStyle}
-                center={historicalCenter}
-                zoom={8}
-              >
-                <>
-                  {/* Map all the log details into MapDetails component */}
-                  {logHistory.map((coord, index) => (
-                    <MapDetails coord={coord}
-                      key={index}
-                      averageCenter={true}
-                      center={historicalCenter} />
-                  ))}
+              {!logHistory.length && (
+                <GoogleMap
+                  mapContainerStyle={containerStyle}
+                  center={center}
+                  zoom={8}
+                ></GoogleMap>
+              )}
+              {/* Map that will display markers */}
+              {logHistory.length && (
+                <GoogleMap
+                  mapContainerStyle={containerStyle}
+                  center={historicalCenter}
+                  zoom={8}
+                >
+                  <>
+                    {/* Map all the log details into MapDetails component */}
+                    {logHistory.map((coord, index) => (
+                      <MapDetails coord={coord}
+                        key={index}
+                        averageCenter={true}
+                        center={historicalCenter} />
+                    ))}
 
-                </>
-              </GoogleMap>
-            )}
-          </LoadScript>
-        </div>
-      </Box>
-
+                  </>
+                </GoogleMap>
+              )}
+            </LoadScript>
+          </div>
+        </Box>
+      </div>
     </>
   )
 }

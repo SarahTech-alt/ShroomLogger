@@ -36,7 +36,6 @@ function AddPhotos() {
     // asynchronous function that
     // updates hooks from user inputted information
     const onFileChange = async (event) => {
-        console.log(event);
         const userFile = event.target.files[0];
         const copyFile = new Blob([userFile], { type: userFile.type });
         const resizedFile = await readAndCompressImage(copyFile, imageConfig);
@@ -87,13 +86,13 @@ function AddPhotos() {
                     )} <br />
                     <Stack spacing={2} direction="row">
                         <Button variant="outlined"
-                        style={{color: '#615246', borderColor: '#080706'}}
+                            style={{ color: '#615246', borderColor: '#080706' }}
                             onClick={event => history.goBack()}>
                             Go Back
                         </Button>
                         <Button
                             variant="outlined"
-                            style={{color: '#615246', borderColor:'#080706'}}
+                            style={{ color: '#615246', borderColor: '#080706' }}
                             onClick={event => { addNewMushroomPhoto() }}>
                             Next: Add Name
                         </Button>
