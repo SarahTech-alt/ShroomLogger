@@ -11,7 +11,7 @@ const {
 
 router.post('/', rejectUnauthenticated, (req, res) => {
     const apiKey = process.env.GOOGLE__MAPS_API_KEY
-    axios.post(`https://www.googleapis.com/geolocation/v1/geolocate?key={GOOGLE__MAPS_API_KEY}`)
+    axios.post(`https://www.googleapis.com/geolocation/v1/geolocate?key=${apiKey}`)
         .then(results => {
             res.send(results.data);
         }).catch(error => {
