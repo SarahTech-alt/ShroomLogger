@@ -41,28 +41,22 @@ function HomePage() {
     <>
       {/* {JSON.stringify(profile)} */}
       {/* {JSON.stringify(logHistory)} */}
-      <div className="container">
-        <ImageList sx={{ mx: "auto", width: 250 }} cols={1} gap={6}>
-          {logHistory.map((logs) => (
-            <div>
-              <ImageListItem key={logs.log_id} >
-                <img
-                  src={logs.mushroom_picture_medium}
-                  alt={logs.common_name}
-                  onClick={(event => viewLogDetail(logs.log_id))}
-                  loading="lazy" />
-                <ImageListItemBar position="below" title={logs.common_name} />
-              </ImageListItem>
-            </div>
-          ))}
-          {!logHistory.length && <div
-            onClick={event => history.push('/addPhotos')}>
-            <img src="/images/mushroom.jpg"></img><br/>
-            <p>Add a log to get started!</p>
-          </div>}
-        </ImageList>
-        <hr />
-
+      <div className="container log-summary">
+        {logHistory.map((logs) => (
+          <div className="log-picture">
+            <img
+              src={logs.mushroom_picture_medium}
+              alt={logs.common_name}
+              onClick={(event => viewLogDetail(logs.log_id))}
+              loading="lazy" />
+            <div className="log-name">{logs.common_name}</div>
+          </div>
+        ))}
+        {!logHistory.length && <div
+          onClick={event => history.push('/addPhotos')}>
+          <img src="/images/mushroom.jpg"></img><br />
+          <p>Add a log to get started!</p>
+        </div>}
       </div>
     </>
   );

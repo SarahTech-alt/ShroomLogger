@@ -50,7 +50,7 @@ function Summary() {
                 <div className='map-display'>
                     {/* Initialize API */}
                     <LoadScript
-                        googleMapsApiKey='AIzaSyA5kx2R22QebhjWgNDJLG5_xuFJAg-gcrM'
+                        googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
                     >
                         {/* Map that will display markers */}
                         <GoogleMap
@@ -66,22 +66,22 @@ function Summary() {
                         </GoogleMap>
                     </LoadScript>
                 </div>
-                <br/>
+                <br />
                 <Stack spacing={5} direction="row">
-                <Button
-                            variant="outlined"
-                            style={{color: '#615246', borderColor:'#080706'}}
-                            onClick={event => history.push('/home')}
-                            sx={{position:'flex-start'}}>
-                            Cancel
-                        </Button>
-                        <Button
-                            variant="outlined"
-                            style={{color: '#615246', borderColor:'#080706'}}
-                            onClick={event => addNewMushroom()}>
-                            Submit
-                        </Button>
-                    </Stack>
+                    <Button
+                        variant="outlined"
+                        style={{ color: '#615246', borderColor: '#080706' }}
+                        onClick={event => history.push('/home')}
+                        sx={{ position: 'flex-start' }}>
+                        Cancel
+                    </Button>
+                    <Button
+                        variant="outlined"
+                        style={{ color: '#615246', borderColor: '#080706' }}
+                        onClick={event => addNewMushroom()}>
+                        Submit
+                    </Button>
+                </Stack>
             </Box>
         </div>
     );

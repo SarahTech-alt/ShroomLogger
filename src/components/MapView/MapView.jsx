@@ -13,14 +13,14 @@ function MapView() {
   const logHistory = logInfo.logHistory.logHistory;
   const dispatch = useDispatch();
   const history = useHistory();
-    // hook for accessing current location
-    const [currentLocation, setCurrentLocation] = useState({});
-    // Coordinates to use to establish map center on load
-    const center = {
-      lat: currentLocation.lat,
-      lng: currentLocation.lng
+  // hook for accessing current location
+  const [currentLocation, setCurrentLocation] = useState({});
+  // Coordinates to use to establish map center on load
+  const center = {
+    lat: currentLocation.lat,
+    lng: currentLocation.lng
   }
-  
+
 
 
   // On page load get the logs from the database
@@ -85,15 +85,14 @@ function MapView() {
   };
 
 
-return (
-  <>
-    <div className="container">
+  return (
+    <>
 
       <Box sx={{ mx: "auto", height: 350, width: 350 }}>
         <div className='map-display'>
           {/* Initialize API */}
           <LoadScript
-            googleMapsApiKey='AIzaSyA5kx2R22QebhjWgNDJLG5_xuFJAg-gcrM'
+            googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
           >
 
             {!logHistory.length && (
@@ -125,9 +124,9 @@ return (
           </LoadScript>
         </div>
       </Box>
-    </div>
-  </>
-)
+
+    </>
+  )
 }
 
 export default React.memo(MapView)
