@@ -40,8 +40,8 @@ function App() {
 
   return (
     <Router>
-      <div>
-        <Header />
+      <Header />
+      <div className='wrapper'>
         <Switch>
           {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
           <Redirect exact from="/" to="/home" />
@@ -146,9 +146,9 @@ function App() {
           >
             <AddDescription />
 
-            </ProtectedRoute>
+          </ProtectedRoute>
 
-            <ProtectedRoute
+          <ProtectedRoute
             // logged in shows AddDescription else shows LoginPage
             exact
             path="/summary"
@@ -191,8 +191,10 @@ function App() {
           </Route>
         </Switch>
         {/* <Nav /> */}
-        <Footer />
       </div>
+      <div className="push"></div>
+      <Footer className="footer" />
+
     </Router>
   );
 }

@@ -2,19 +2,61 @@ html,
 body,
 #react-root {
   height: 100%;
-
+  margin: 0;
 }
 
 body {
   font-family: 'Mali', cursive;
-  margin: 0px;
+
   background-color: #C8BA89;
-  width: 100%;
+  justify-content: center;
 }
 
-img {
-  display: inline-block;
-  max-width: 100%;
+@media screen and (min-width: 480px) {
+  img {
+    display: inline-block;
+    max-width: 100%;
+  }
+
+  body {
+    width: auto;
+  }
+
+  .log-picture {
+    margin: 5%;
+  }
+
+  .footer,
+  .push {
+    height: 50px;
+  }
+
+  .log-summary {
+    width: 100%;
+    display: flex;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  img {
+    max-width: 100%;
+  }
+
+  .wrapper {
+    min-height: 100%;
+    margin-bottom: -50px;
+  }
+
+  .footer,
+  .push {
+    height: 50px;
+  }
+
+  .log-picture {
+    margin: 5%;
+  }
+
+
 }
 
 h1 {
@@ -62,15 +104,9 @@ hr {
   margin-bottom: .5em;
 }
 
-.log-picture {
-  margin: 5%;
-}
 
-.log-summary {
-  width: 75%;
-  display: flex;
 
-}
+
 
 /* --------------------------------------------------------------------------------
 Container
