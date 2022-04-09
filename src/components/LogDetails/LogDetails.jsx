@@ -71,7 +71,7 @@ function LogDetails() {
                     {/* {JSON.stringify(logDetails)} */}
                     {/* Initialize API */}
                     <LoadScript
-                        googleMapsApiKey='AIzaSyA5kx2R22QebhjWgNDJLG5_xuFJAg-gcrM'
+                        googleMapsApiKey={process.env.React_APP_GOOGLE_MAPS_API_KEY}
                     >
                         {/* Map that will display markers */}
                         <GoogleMap
