@@ -190,10 +190,13 @@ function App() {
             <h1>404</h1>
           </Route>
         </Switch>
+
         {/* <Nav /> */}
       </div>
-      <div className="push"></div>
-      <Footer className="footer" />
+      {user.id ?
+        <>
+          <div className="push"></div>
+          <Footer className="footer" /></> : null}
 
     </Router>
   );

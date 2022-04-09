@@ -12,6 +12,7 @@ body {
   justify-content: center;
 }
 
+
 @media screen and (min-width: 480px) {
   img {
     display: inline-block;
@@ -26,11 +27,6 @@ body {
     margin: 5%;
   }
 
-  .footer,
-  .push {
-    height: 50px;
-  }
-
   .log-summary {
     width: 100%;
     display: flex;
@@ -42,21 +38,24 @@ body {
     max-width: 100%;
   }
 
-  .wrapper {
-    min-height: 100%;
-    margin-bottom: -50px;
-  }
-
-  .footer,
-  .push {
-    height: 50px;
-  }
-
   .log-picture {
     margin: 5%;
   }
+}
 
+.wrapper {
+  min-height: 100%;
+  margin-bottom: -50px;
+}
 
+.footer,
+.push {
+  height: 50px;
+}
+
+.logout-icon {
+  display: flex;
+  align-items: flex-end;
 }
 
 h1 {
@@ -91,9 +90,10 @@ h1 {
   height: 10%;
   border-bottom: 1px solid black;
   margin-bottom: 10px;
-  justify-content: center;
+  justify-content: space-around;
   display: flex;
   align-items: center;
+
 }
 
 hr {
