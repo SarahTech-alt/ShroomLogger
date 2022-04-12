@@ -6,7 +6,7 @@ import useReduxStore from '../../hooks/useReduxStore';
 import MapDetails from './MapDetails.jsx';
 import Box from '@mui/material/Box';
 import axios from "axios";
-
+import MyMapWrapper from '../TestMap/TestMap'
 
 function MapView() {
   const logInfo = useReduxStore(store => store.logInfo);
@@ -84,43 +84,7 @@ function MapView() {
   return (
     <>
       <div className="container">
-
-        <Box sx={{ mx: "auto", height: 350, width: 350 }}>
-          <div className='map-display'>
-            {/* Initialize API */}
-            <LoadScript
-              googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
-            >
-
-              {!logHistory.length && (
-                <GoogleMap
-                  mapContainerStyle={containerStyle}
-                  center={center}
-                  zoom={8}
-                ></GoogleMap>
-              )}
-              {/* Map that will display markers */}
-              {logHistory.length && (
-                <GoogleMap
-                  mapContainerStyle={containerStyle}
-                  center={historicalCenter}
-                  zoom={8}
-                >
-                  <>
-                    {/* Map all the log details into MapDetails component */}
-                    {logHistory.map((coord, index) => (
-                      <MapDetails coord={coord}
-                        key={index}
-                        averageCenter={true}
-                        center={historicalCenter} />
-                    ))}
-
-                  </>
-                </GoogleMap>
-              )}
-            </LoadScript>
-          </div>
-        </Box>
+        <MyMapWrapper center={center} />
       </div>
     </>
   )

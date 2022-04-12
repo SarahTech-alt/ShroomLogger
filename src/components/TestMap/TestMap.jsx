@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from "react";
 import { Wrapper } from '@googlemaps/react-wrapper';
 
-function MyMapWrapper() {
+function MyMapWrapper({ center }) {
     const zoom = 8;
-    const center = { lat: 44.96967, lng: -93.04448 };
+
     return (
         <>
             This is a map
