@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { Wrapper } from '@googlemaps/react-wrapper';
 
 function MyMapWrapper({ center }) {
-    const zoom = 8;
+    const zoom = 15;
 
     return (
         <>
@@ -25,6 +25,7 @@ function MyMapComponent({
             center,
             zoom,
         });
+
     });
 
     return (
