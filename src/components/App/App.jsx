@@ -106,98 +106,95 @@ function App() {
             <MapView />
           </ProtectedRoute>
 
-          <ProtectedRoute
-            // logged in shows MapView else shows LoginPage
-            exact
-            path="/testmap"
-          >
-            <TestMap />
-          </ProtectedRoute>
 
-          <ProtectedRoute
-            // logged in shows AddPhotos else shows LoginPage
-            exact
-            path="/addPhotos"
-          >
-            <AddPhotos />
-          </ProtectedRoute>
+        </ProtectedRoute>
 
-          <ProtectedRoute
-            // logged in shows AddType else shows LoginPage
-            exact
-            path="/addType"
-          >
-            <AddType />
-          </ProtectedRoute>
+        <ProtectedRoute
+          // logged in shows AddPhotos else shows LoginPage
+          exact
+          path="/addPhotos"
+        >
+          <AddPhotos />
+        </ProtectedRoute>
 
-          <ProtectedRoute
-            // logged in shows AddLocationTime else shows LoginPage
-            exact
-            path="/locationtime"
-          >
-            <AddLocationTime />
-          </ProtectedRoute>
+        <ProtectedRoute
+          // logged in shows AddType else shows LoginPage
+          exact
+          path="/addType"
+        >
+          <AddType />
+        </ProtectedRoute>
 
-          <ProtectedRoute
-            // logged in shows AddDescription else shows LoginPage
-            exact
-            path="/description"
-          >
-            <AddDescription />
+        <ProtectedRoute
+          // logged in shows AddLocationTime else shows LoginPage
+          exact
+          path="/locationtime"
+        >
+          <AddLocationTime />
+        </ProtectedRoute>
 
-          </ProtectedRoute>
+        <ProtectedRoute
+          // logged in shows AddDescription else shows LoginPage
+          exact
+          path="/description"
+        >
+          <AddDescription />
 
-          <ProtectedRoute
-            // logged in shows AddDescription else shows LoginPage
-            exact
-            path="/summary"
-          >
-            <Summary />
+        </ProtectedRoute>
 
-          </ProtectedRoute>
+        <ProtectedRoute
+          // logged in shows AddDescription else shows LoginPage
+          exact
+          path="/summary"
+        >
+          <Summary />
 
-          <Route
-            exact
-            path="/login"
-          >
-            {user.id ?
-              // If the user is already logged in, 
-              // redirect to the /user page
-              <Redirect to="/home" />
-              :
-              // Otherwise, show the login page
-              <LoginPage />
-            }
-          </Route>
+        </ProtectedRoute>
 
-          <Route
-            exact
-            path="/registration"
-          >
-            {user.id ?
-              // If the user is already logged in, 
-              // redirect them to the /user page
-              <Redirect to="/home" />
-              :
-              // Otherwise, show the registration page
-              <RegisterPage />
-            }
-          </Route>
+        <Route
+          exact
+          path="/login"
+        >
+          {user.id ?
+            // If the user is already logged in, 
+            // redirect to the /user page
+            <Redirect to="/home" />
+            :
+            // Otherwise, show the login page
+            <LoginPage />
+          }
+        </Route>
 
-          {/* If none of the other routes matched, we will show a 404. */}
-          <Route>
-            <h1>404</h1>
-          </Route>
-        </Switch>
+        <Route
+          exact
+          path="/registration"
+        >
+          {user.id ?
+            // If the user is already logged in, 
+            // redirect them to the /user page
+            <Redirect to="/home" />
+            :
+            // Otherwise, show the registration page
+            <RegisterPage />
+          }
+        </Route>
 
-        {/* <Nav /> */}
-      </div>
-      {user.id ?
-        <>
-          <div className="push"></div>
-          <Footer className="footer" id="footer" /></> : null}
+        {/* If none of the other routes matched, we will show a 404. */}
+        <Route>
+          <h1>404</h1>
+        </Route>
+      </Switch>
 
-    </Router>
+      {/* <Nav /> */}
+    </div>
+      {
+    user.id ?
+    <>
+      <div className="push"></div>
+      <Footer className="footer" id="footer" /></> : null
+  }
+
+    </Router >
   );
 }
 

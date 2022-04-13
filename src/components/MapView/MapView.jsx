@@ -6,7 +6,6 @@ import useReduxStore from '../../hooks/useReduxStore';
 import MapDetails from './MapDetails.jsx';
 import Box from '@mui/material/Box';
 import axios from "axios";
-import MyMapWrapper from '../TestMap/TestMap';
 import RenderMap from '../Maps/RenderMap.jsx';
 
 function MapView() {
