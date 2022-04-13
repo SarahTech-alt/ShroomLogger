@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Wrapper } from '@googlemaps/react-wrapper';
 
 function MyMapWrapper({ center }) {
@@ -14,22 +14,40 @@ function MyMapWrapper({ center }) {
         </>
     )
 }
-function MyMapComponent({
-    center,
-    zoom,
-}) {
-    const ref = useRef();
+function MyMapComponent({ center, zoom }) {
+    const ref = useRef(null);
+    const [map, setMap] = useState(null)
+    const [markers, setMarkers] = useState(null)
 
     useEffect(() => {
-        new window.google.maps.Map(ref.current, {
-            center,
-            zoom,
-        });
+        // we need to save google-map object for adding markers and routes in future
+        if (ref.current) {
+            // here will connect map frame to div element in DOM by using ref hook
+            let createdMap = new window.google.maps.Map(
+                ref.current,
+                {
+                    center,
+                    zoom
+                }
+            );
+            setMap(createdMap)
+        }
+    }, [center, zoom]);
 
-    });
+    useEffect(() => {
+        // we need to save google-map object for adding markers and routes in future
+        if (map) {
+            // here will connect map frame to div element in DOM by using ref hook
+            let createdMarkers = new window.google.maps.Marker({
+                position: center,
+                map: map
+            });
+            setMarkers(createdMarkers)
+        }
+    }, [map, center]);
 
-    return (
-        <div ref={ref} id="map">Really, a map</div>);
+    // map will be connect to this div block
+    return <div ref={ref} id="map" />;
 }
 
 export default MyMapWrapper;
