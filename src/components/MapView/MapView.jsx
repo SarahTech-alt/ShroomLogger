@@ -6,7 +6,8 @@ import useReduxStore from '../../hooks/useReduxStore';
 import MapDetails from './MapDetails.jsx';
 import Box from '@mui/material/Box';
 import axios from "axios";
-import MyMapWrapper from '../TestMap/TestMap'
+import MyMapWrapper from '../TestMap/TestMap';
+import RenderMap from '../Maps/RenderMap.jsx';
 
 function MapView() {
   const logInfo = useReduxStore(store => store.logInfo);
@@ -84,10 +85,10 @@ function MapView() {
   return (
     <>
       <div className="container">
-        <MyMapWrapper center={center} />
+        <RenderMap center={historicalCenter ? historicalCenter : currentLocation} logHistory={logHistory} zoom={8} />
       </div>
     </>
   )
 }
 
-export default React.memo(MapView)
+export default MapView;
