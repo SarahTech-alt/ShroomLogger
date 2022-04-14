@@ -12,6 +12,7 @@ import {
     KeyboardDatePicker
 } from "@material-ui/pickers";
 import MomentUtils from "@date-io/moment";
+import RenderMap from '../Maps/RenderMap';
 
 
 function AddLocationTime() {
@@ -99,51 +100,17 @@ function AddLocationTime() {
             <Box sx={{ mx: "auto", height: 'auto', width: 350 }}>
                 {/* {JSON.stringify(newMushroom)}<br /> */}
                 <h1>Where And When</h1>
-                <LoadScript
-                    googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
-                >
-                    {/* Map with event listener */}
-                    {showCurrentLocation && (
-                        <GoogleMap
-                            mapContainerStyle={containerStyle}
-                            center={center}
-                            zoom={15}
-                            onClick={event => getClickData(event.latLng)}
-                        >
-                            {/* Marker shows current location  */}
-
-                            <Marker
-                                position={currentLocation}
-                                clickable={true}
-                                draggable={true}
-                            ></Marker>
-
-                            {/* On map click display marker at click location */}
-
-                        </GoogleMap>
-                    )}
-
-                    {displayNewMarker && (
-                        <GoogleMap
-                            mapContainerStyle={containerStyle}
-                            center={locationToSend}
-                            zoom={15}
-                            onClick={event => getClickData(event.latLng)}
-                        >
-                            {/* Marker shows current location  */}
-
-                            <Marker
-                                position={locationToSend}
-                                clickable={true}
-                                draggable={true}
-                            ></Marker>
-
-                            {/* On map click display marker at click location */}
-
-                        </GoogleMap>
-
-                    )}
-                </LoadScript><br />
+                {/* Map with event listener */}
+                {showCurrentLocation && (
+                    <RenderMap
+                        mapContainerStyle={containerStyle}
+                        center={center}
+                        zoom={15}
+                        marker={currentLocation}
+                    // onClick={event => getClickData(event.latLng)}
+                    />
+                )}
+                <br />
                 <div className="nav-buttons">
                     <Fragment>
                         <MuiPickersUtilsProvider libInstance={moment} utils={MomentUtils}>

@@ -4,6 +4,7 @@ import user from './user.reducer';
 import profile from './profile.reducer';
 import logHistory from './loghistory.reducer';
 import mushroomPictureReducer from './mushroom.picture.reducer';
+import userLocation from './map.reducer';
 
 
 // rootReducer is the primary reducer for our entire project
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   profile, // contains profilePictureReducer and profileInfoReducer
   logHistory, // contains logHistory, logDetail reducers, and logToAdd
   mushroomPictureReducer, // contains mushroomPictureReducer and selectedMushroomPicture reducers
+  userLocation,
 });
 
 export default rootReducer;

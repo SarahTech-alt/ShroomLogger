@@ -8,6 +8,7 @@ import Box from '@mui/material/Box';
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
+import RenderMap from '../Maps/RenderMap';
 
 
 function LogDetails() {
@@ -51,9 +52,12 @@ function LogDetails() {
     // send logId that was retried with useParams
     useEffect(() => {
         dispatch({ type: 'SET_SELECTED_LOG', payload: logId });
-        dispatch({ type: 'SET_SELECTED_MUSHROOM_PHOTO', payload: logId })
         window.scrollTo(0, 0)
-    }, [logId]);
+    }, []);
+
+    useEffect(() => {
+        dispatch({ type: 'SET_SELECTED_MUSHROOM_PHOTO', payload: logId })
+    }, []);
 
     return (
         <div className="container">
@@ -70,22 +74,7 @@ function LogDetails() {
                 <div className='map-display'>
                     {/* {JSON.stringify(logDetails)} */}
                     {/* Initialize API */}
-                    <LoadScript
-                        googleMapsApiKey={process.env.React_APP_GOOGLE_MAPS_API_KEY}
-                    >
-                        {/* Map that will display markers */}
-                        <GoogleMap
-                            mapContainerStyle={containerStyle}
-                            center={center}
-                            zoom={10}
-                        >
-                            <Marker
-                                position={center}
-                                onLoad={onLoad}
-                            >
-                            </Marker>
-                        </GoogleMap>
-                    </LoadScript>
+                    <RenderMap center={center} zoom={10} marker={center} />
                 </div><br />
                 <Stack spacing={1} direction="row">
                     <Button variant="outlined"

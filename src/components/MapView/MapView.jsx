@@ -12,32 +12,14 @@ function MapView() {
   const logInfo = useReduxStore(store => store.logInfo);
   const logHistory = logInfo.logHistory.logHistory;
   const dispatch = useDispatch();
-  const history = useHistory();
-  // hook for accessing current location
-  const [currentLocation, setCurrentLocation] = useState({});
-  // Coordinates to use to establish map center on load
-  const center = {
-    lat: currentLocation.lat,
-    lng: currentLocation.lng
-  }
-
-
+  const locationInfo = useReduxStore(store => store.userLocation)
+  const userLocation = locationInfo.userLocation.userLocation.location;
 
   // On page load get the logs from the database
   useEffect(() => {
     dispatch({ type: 'FETCH_LOGS' })
-    // on page load get current location from GoogleMaps
-    // and set response to current location
-    axios.post(`https://www.googleapis.com/geolocation/v1/geolocate?key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`)
-      .then(res => {
-        setCurrentLocation(res.data.location)
-      })
-      .catch(
-        error => {
-        }
-      )
-    // dispatch({type:'fetchLocation'})
-  }, [dispatch]);
+    dispatch({ type: 'GET_LOCATION' })
+  }, []);
 
   // Calculate the center the map 
   // from the average
@@ -75,16 +57,12 @@ function MapView() {
     lng: averageLng(allLongitudes)
   }
 
-  const containerStyle = {
-    width: '350px',
-    height: '400px'
-  };
-
 
   return (
     <>
       <div className="container">
-        <RenderMap center={historicalCenter ? historicalCenter : currentLocation} logHistory={logHistory} zoom={8} />
+        {JSON.stringify(historicalCenter)}
+        <RenderMap center={historicalCenter ? historicalCenter : userLocation} logHistory={logHistory} zoom={8} />
       </div>
     </>
   )

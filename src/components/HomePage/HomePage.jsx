@@ -25,9 +25,8 @@ function HomePage() {
 
   useEffect(() => {
     dispatch({ type: 'FETCH_LOGS' });
-    dispatch({ type: 'FETCH_PROFILE_INFO' });
     window.scrollTo(0, 0)
-  }, [dispatch]);
+  }, []);
 
 
   const viewLogDetail = (logId) => {

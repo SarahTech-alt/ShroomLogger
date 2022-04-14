@@ -1,5 +1,6 @@
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import React, { useState } from 'react';
+import RenderMap from '../Maps/RenderMap.jsx';
 
 function EditMap({ selectedLog }) {
 
@@ -32,6 +33,7 @@ function EditMap({ selectedLog }) {
     // set the location to send variable
     // to the new coordinates
     const getClickData = (value) => {
+        console.log(value)
         setLocationToSend({
             lat: value.lat(),
             lng: value.lng()
@@ -48,33 +50,19 @@ function EditMap({ selectedLog }) {
         <>
             <div>
                 {/* Load Google Maps Script */}
-                <LoadScript
-                    googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
-                >
-                    {/* {JSON.stringify(locationToSend)} */}
-                    {/* Map with event listener */}
-                    <GoogleMap
-                        mapContainerStyle={containerStyle}
-                        center={center}
-                        zoom={10}
-                        onClick={event => getClickData(event.latLng)}
-                    >
-                        {/* Marker shows current location  */}
-                        {showCurrentLocation && (
-                            <Marker
-                                position={currentLocation}
-                                clickable={true}
-                                draggable={true}
-                            ></Marker>
-                        )}
-                        {/* On map click display marker at click location */}
-                        {displayNewMarker && (
-                            <Marker
-                                position={locationToSend}
-                            ></Marker>
-                        )}
-                    </GoogleMap>
-                </LoadScript>
+                {/* {JSON.stringify(locationToSend)} */}
+                {/* Map with event listener */}
+                {/* Marker shows current location  */}
+                {showCurrentLocation && (
+                    <RenderMap marker={currentLocation} center={currentLocation} zoom={10} />
+                )}
+                {JSON.stringify(currentLocation)}
+                {/* On map click display marker at click location */}
+                {/* {displayNewMarker && (
+                    <Marker
+                        position={locationToSend}
+                    ></Marker>
+                )} */}
             </div>
         </>
     );
