@@ -45,6 +45,7 @@ function LogDetails() {
     // dispatch selected id to sagas and
     // direct user to edit page
     const editLog = (logId) => {
+        dispatch({ type: 'SET_LOCATION_TO_SEND', payload: { location: center } });
         history.push(`/edit/${logId}`);
     }
 
@@ -74,7 +75,7 @@ function LogDetails() {
                 <div className='map-display'>
                     {/* {JSON.stringify(logDetails)} */}
                     {/* Initialize API */}
-                    <RenderMap center={center} zoom={10} marker={center} />
+                    <RenderMap center={center} zoom={10} marker={center} logHistory={selectedLog} />
                 </div><br />
                 <Stack spacing={1} direction="row">
                     <Button variant="outlined"

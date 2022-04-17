@@ -12,6 +12,18 @@ const userLocation = (state = [], action) => {
     }
 };
 
+const locationToSend = (state = [], action) => {
+    switch (action.type) {
+        case 'SET_NEW_LOCATION_TO_SEND':
+            return action.payload;
+        case 'UNSET_NEW_LOCATION':
+            return [];
+        default:
+            return state;
+    }
+};
+
 export default combineReducers({
     userLocation,
+    locationToSend,
 });

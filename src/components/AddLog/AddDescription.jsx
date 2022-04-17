@@ -13,11 +13,6 @@ function AddDescription() {
 
     const newMushroom = useSelector(store => store.logHistory.logToAdd);
 
-    useEffect(() => {
-        let isMounted = true
-    }, [newMushroom])
-
-
     return (
         <div className="container">
 

@@ -57,12 +57,13 @@ function MapView() {
     lng: averageLng(allLongitudes)
   }
 
+  const showAllMarkers = true;
+
 
   return (
     <>
       <div className="container">
-        {JSON.stringify(historicalCenter)}
-        <RenderMap center={historicalCenter ? historicalCenter : userLocation} logHistory={logHistory} zoom={8} />
+        <RenderMap center={historicalCenter ? historicalCenter : userLocation} logHistory={logHistory} zoom={8} showAllMarkers={showAllMarkers} />
       </div>
     </>
   )

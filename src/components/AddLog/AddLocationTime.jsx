@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState, Fragment } from "react";
 import { useHistory } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import moment from 'moment';
 import Box from '@mui/material/Box';
@@ -13,31 +13,39 @@ import {
 } from "@material-ui/pickers";
 import MomentUtils from "@date-io/moment";
 import RenderMap from '../Maps/RenderMap';
+import useReduxStore from '../../hooks/useReduxStore';
+
 
 
 function AddLocationTime() {
-
+    const dispatch = useDispatch();
     // use history from react for page navigation
     const history = useHistory();
     // hook for accessing current location
-    const [currentLocation, setCurrentLocation] = useState({});
-    // toggle which marker to show on rendered map
-    const [displayNewMarker, setDisplayNewMarker] = useState(false);
-    const [showCurrentLocation, setShowCurrentLocation] = useState(true);
 
-    // use current location as map center
+
+    const userLocation = useSelector(store => store.userLocation);
+    const markLocation = userLocation.userLocation.location;
+    const markerLat = markLocation.lat;
+    const markerLng = markLocation.lng;
     const center = {
-        lat: currentLocation.lat,
-        lng: currentLocation.lng
-    }
-    // maps display configuration
-    const containerStyle = {
-        width: '350px',
-        height: '400px'
+        lat: markerLat,
+        lng: markerLng
     };
 
-    const [locationToSend, setLocationToSend] = useState({
-    })
+    // const markerLat = Number(selectedLog.latitude);
+    // const markerLng = Number(selectedLog.longitude);
+
+    // // hook for accessing current log location
+    // const currentLocation = {
+    //     lat: markerLat,
+    //     lng: markerLng
+    // };
+
+    useEffect(() => {
+        dispatch({ type: 'SET_NEW_LOCATION_TO_SEND', payload: { lat: center.lat, lng: center.lng } });
+    }, []);
+
 
     const [selectedDate, setDate] = useState(moment().format("YYYY-MM-DD"));
     const [inputValue, setInputValue] = useState(moment().format("YYYY-MM-DD"));
@@ -52,20 +60,7 @@ function AddLocationTime() {
         return str;
     };
 
-    // on page load get current location from GoogleMaps
-    // and set response to current location
-    useEffect(() => {
-        axios.post(`api/map`)
-            .then(res => {
-                setCurrentLocation(res.data.location)
-                setLocationToSend(res.data.location)
-            })
-            .catch(
-                error => {
-                }
-            )
-        // dispatch({type:'fetchLocation'})
-    }, []);
+
 
     // access information about new log
     // from redux store
@@ -75,25 +70,9 @@ function AddLocationTime() {
     // of newMushroom in redux store
     // and navigate user to description page
     const sendLocationData = () => {
-        newMushroom.latitude = locationToSend.lat;
-        newMushroom.longitude = locationToSend.lng;
         history.push('/description')
     }
 
-
-    // function to get coordinates of map click
-    // set the location to send variable
-    // to the new coordinates
-    const getClickData = (value) => {
-        setLocationToSend({
-            lat: value.lat(),
-            lng: value.lng()
-        })
-        // change to show new marker 
-        // and hide the current location marker
-        setShowCurrentLocation(false);
-        setDisplayNewMarker(true);
-    }
 
     return (
         <div className="container">
@@ -101,15 +80,14 @@ function AddLocationTime() {
                 {/* {JSON.stringify(newMushroom)}<br /> */}
                 <h1>Where And When</h1>
                 {/* Map with event listener */}
-                {showCurrentLocation && (
-                    <RenderMap
-                        mapContainerStyle={containerStyle}
-                        center={center}
-                        zoom={15}
-                        marker={currentLocation}
-                    // onClick={event => getClickData(event.latLng)}
-                    />
-                )}
+
+                <RenderMap
+                    center={center}
+                    zoom={15}
+                    marker={center}
+                    editable={true}
+                />
+
                 <br />
                 <div className="nav-buttons">
                     <Fragment>
