@@ -7,7 +7,6 @@ function MapComponent({ center, zoom, logHistory, marker, editable }) {
     const [clicks, setClicks] = useState([]);
     const [markerLocation, setMarkerLocation] = useState(marker);
     const [hidePreviousMarker, setHidePreviousMarker] = useState(false);
-    const [mapCenter, setMapCenter] = useState(center);
     const dispatch = useDispatch();
 
     const mapMarker = new window.google.maps.Marker({

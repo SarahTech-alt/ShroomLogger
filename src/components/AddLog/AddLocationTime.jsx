@@ -25,12 +25,12 @@ function AddLocationTime() {
 
     const userLocation = useSelector(store => store.userLocation);
     const markLocation = userLocation.userLocation.location;
-    const markerLat = markLocation.lat;
-    const markerLng = markLocation.lng;
+    const [location, setLocation] = useState('')
+    console.log(location);
     const center = {
-        lat: markerLat,
-        lng: markerLng
-    };
+        lat: Number(location.lat),
+        lng: Number(location.lng)
+    }
 
     // const markerLat = Number(selectedLog.latitude);
     // const markerLng = Number(selectedLog.longitude);
@@ -40,10 +40,6 @@ function AddLocationTime() {
     //     lat: markerLat,
     //     lng: markerLng
     // };
-
-    useEffect(() => {
-        dispatch({ type: 'SET_NEW_LOCATION_TO_SEND', payload: { lat: center.lat, lng: center.lng } });
-    }, []);
 
 
     const [selectedDate, setDate] = useState(moment().format("YYYY-MM-DD"));
@@ -59,6 +55,19 @@ function AddLocationTime() {
         return str;
     };
 
+    useEffect(() => {
+        axios.post(`api/map`)
+            .then(res => {
+                setLocation(res.data.location)
+                console.log('THIS IS THE NEW INFO', res.data.location)
+
+            })
+            .catch(
+                error => {
+                }
+            )
+        // dispatch({type:'fetchLocation'})
+    }, []);
 
 
     // access information about new log
