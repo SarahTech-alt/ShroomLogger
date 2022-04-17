@@ -1,5 +1,5 @@
 import { useHistory } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { readAndCompressImage } from 'browser-image-resizer';
 import Box from '@mui/material/Box';
@@ -69,6 +69,9 @@ function AddPhotos() {
         history.push('/addType')
     }
 
+    useEffect(() => {
+        dispatch({ type: 'GET_LOCATION' })
+    }, [])
 
     return (
         <>
