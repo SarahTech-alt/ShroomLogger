@@ -75,7 +75,7 @@ function MapComponent({ center, zoom, logHistory, marker, editable }) {
             let createdMap = new window.google.maps.Map(
                 ref.current,
                 {
-                    center: mapCenter,
+                    center,
                     zoom,
                 }
             );
