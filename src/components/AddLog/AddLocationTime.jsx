@@ -64,7 +64,7 @@ function AddLocationTime() {
     // access information about new log
     // from redux store
     const newMushroom = useSelector(store => store.logHistory.logToAdd);
-
+    const [selectedFile, setSelectedFile] = useState('');
     // on submit change latitude and longitude values
     // of newMushroom in redux store
     // and navigate user to description page
