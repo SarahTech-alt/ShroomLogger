@@ -1,4 +1,3 @@
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import React, { useEffect, useState } from 'react';
 import RenderMap from '../Maps/RenderMap.jsx';
 import { useDispatch } from 'react-redux';

@@ -2,7 +2,6 @@ import axios from "axios";
 import { useEffect, useState, Fragment } from "react";
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import moment from 'moment';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
