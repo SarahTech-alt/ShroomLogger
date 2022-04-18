@@ -1,17 +1,16 @@
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import moment from 'moment';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import RenderMap from '../Maps/RenderMap';
 
 
 function Summary() {
 
     const dispatch = useDispatch();
     const newMushroom = useSelector(store => store.logHistory.logToAdd);
-    const mushroomLocation = useSelector(store => store.locationToSend.locationToSend);
     const history = useHistory();
 
     const addNewMushroom = () => {
@@ -23,12 +22,19 @@ function Summary() {
         history.push('/home');
     };
 
-    const markerLat = Number(mushroomLocation.lat);
-    const markerLng = Number(mushroomLocation.lng)
+    const markerLat = Number(newMushroom.latitude);
+    const markerLng = Number(newMushroom.longitude)
     const center = {
         lat: markerLat,
         lng: markerLng
     };
+    const containerStyle = {
+        width: '300px',
+        height: '350px'
+    };
+    // Google Maps data about each marker
+    const onLoad = marker => {
+    }
 
 
     return (
@@ -41,7 +47,23 @@ function Summary() {
                 <p> Description: {newMushroom.details} </p>
                 <img src={`https://${process.env.REACT_APP_AWS_S3_BUCKET}.s3.${process.env.REACT_APP_AWS_S3_REGION}.amazonaws.com/photos/medium/${newMushroom.selectedFile}`} alt={newMushroom.common_name} /><br /><br />
                 <div className='map-display'>
-                    <RenderMap center={center} zoom={15} logHistory={newMushroom} marker={center} />
+                    {/* Initialize API */}
+                    <LoadScript
+                        googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
+                    >
+                        {/* Map that will display markers */}
+                        <GoogleMap
+                            mapContainerStyle={containerStyle}
+                            center={center}
+                            zoom={15}
+                        >
+                            <Marker
+                                position={center}
+                                onLoad={onLoad}
+                            >
+                            </Marker>
+                        </GoogleMap>
+                    </LoadScript>
                 </div>
                 <br />
                 <Stack spacing={5} direction="row">

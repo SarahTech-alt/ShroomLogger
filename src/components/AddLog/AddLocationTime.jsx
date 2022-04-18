@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useEffect, useState, Fragment } from "react";
 import { useHistory } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import moment from 'moment';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -11,36 +12,31 @@ import {
     KeyboardDatePicker
 } from "@material-ui/pickers";
 import MomentUtils from "@date-io/moment";
-import RenderMap from '../Maps/RenderMap';
-import useReduxStore from '../../hooks/useReduxStore';
-
 
 
 function AddLocationTime() {
-    const dispatch = useDispatch();
+
     // use history from react for page navigation
     const history = useHistory();
     // hook for accessing current location
+    const [currentLocation, setCurrentLocation] = useState({});
+    // toggle which marker to show on rendered map
+    const [displayNewMarker, setDisplayNewMarker] = useState(false);
+    const [showCurrentLocation, setShowCurrentLocation] = useState(true);
 
-
-    const userLocation = useSelector(store => store.userLocation);
-    const markLocation = userLocation.userLocation.location;
-    const [location, setLocation] = useState('')
-    console.log(location);
+    // use current location as map center
     const center = {
-        lat: Number(location.lat),
-        lng: Number(location.lng)
+        lat: currentLocation.lat,
+        lng: currentLocation.lng
     }
+    // maps display configuration
+    const containerStyle = {
+        width: '350px',
+        height: '400px'
+    };
 
-    // const markerLat = Number(selectedLog.latitude);
-    // const markerLng = Number(selectedLog.longitude);
-
-    // // hook for accessing current log location
-    // const currentLocation = {
-    //     lat: markerLat,
-    //     lng: markerLng
-    // };
-
+    const [locationToSend, setLocationToSend] = useState({
+    })
 
     const [selectedDate, setDate] = useState(moment().format("YYYY-MM-DD"));
     const [inputValue, setInputValue] = useState(moment().format("YYYY-MM-DD"));
@@ -55,12 +51,13 @@ function AddLocationTime() {
         return str;
     };
 
+    // on page load get current location from GoogleMaps
+    // and set response to current location
     useEffect(() => {
         axios.post(`api/map`)
             .then(res => {
-                setLocation(res.data.location)
-                console.log('THIS IS THE NEW INFO', res.data.location)
-
+                setCurrentLocation(res.data.location)
+                setLocationToSend(res.data.location)
             })
             .catch(
                 error => {
@@ -69,34 +66,84 @@ function AddLocationTime() {
         // dispatch({type:'fetchLocation'})
     }, []);
 
-
     // access information about new log
     // from redux store
     const newMushroom = useSelector(store => store.logHistory.logToAdd);
-    const [selectedFile, setSelectedFile] = useState('');
+
     // on submit change latitude and longitude values
     // of newMushroom in redux store
     // and navigate user to description page
     const sendLocationData = () => {
+        newMushroom.latitude = locationToSend.lat;
+        newMushroom.longitude = locationToSend.lng;
         history.push('/description')
     }
 
+
+    // function to get coordinates of map click
+    // set the location to send variable
+    // to the new coordinates
+    const getClickData = (value) => {
+        setLocationToSend({
+            lat: value.lat(),
+            lng: value.lng()
+        })
+        // change to show new marker 
+        // and hide the current location marker
+        setShowCurrentLocation(false);
+        setDisplayNewMarker(true);
+    }
 
     return (
         <div className="container">
             <Box sx={{ mx: "auto", height: 'auto', width: 350 }}>
                 {/* {JSON.stringify(newMushroom)}<br /> */}
                 <h1>Where And When</h1>
-                {/* Map with event listener */}
+                <LoadScript
+                    googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
+                >
+                    {/* Map with event listener */}
+                    {showCurrentLocation && (
+                        <GoogleMap
+                            mapContainerStyle={containerStyle}
+                            center={center}
+                            zoom={15}
+                            onClick={event => getClickData(event.latLng)}
+                        >
+                            {/* Marker shows current location  */}
 
-                <RenderMap
-                    center={center}
-                    zoom={15}
-                    marker={center}
-                    editable={true}
-                />
+                            <Marker
+                                position={currentLocation}
+                                clickable={true}
+                                draggable={true}
+                            ></Marker>
 
-                <br />
+                            {/* On map click display marker at click location */}
+
+                        </GoogleMap>
+                    )}
+
+                    {displayNewMarker && (
+                        <GoogleMap
+                            mapContainerStyle={containerStyle}
+                            center={locationToSend}
+                            zoom={15}
+                            onClick={event => getClickData(event.latLng)}
+                        >
+                            {/* Marker shows current location  */}
+
+                            <Marker
+                                position={locationToSend}
+                                clickable={true}
+                                draggable={true}
+                            ></Marker>
+
+                            {/* On map click display marker at click location */}
+
+                        </GoogleMap>
+
+                    )}
+                </LoadScript><br />
                 <div className="nav-buttons">
                     <Fragment>
                         <MuiPickersUtilsProvider libInstance={moment} utils={MomentUtils}>

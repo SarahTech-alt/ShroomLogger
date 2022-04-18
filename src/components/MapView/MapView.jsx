@@ -1,24 +1,43 @@
 import React, { useEffect, useState } from 'react'
+import { GoogleMap, InfoWindow, LoadScript, Marker } from '@react-google-maps/api';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import useReduxStore from '../../hooks/useReduxStore';
 import MapDetails from './MapDetails.jsx';
 import Box from '@mui/material/Box';
 import axios from "axios";
-import RenderMap from '../Maps/RenderMap.jsx';
+import MyMapWrapper from '../TestMap/TestMap'
 
 function MapView() {
   const logInfo = useReduxStore(store => store.logInfo);
   const logHistory = logInfo.logHistory.logHistory;
   const dispatch = useDispatch();
-  const locationInfo = useReduxStore(store => store.userLocation)
-  const userLocation = locationInfo.userLocation.userLocation.location;
+  const history = useHistory();
+  // hook for accessing current location
+  const [currentLocation, setCurrentLocation] = useState({});
+  // Coordinates to use to establish map center on load
+  const center = {
+    lat: currentLocation.lat,
+    lng: currentLocation.lng
+  }
+
+
 
   // On page load get the logs from the database
   useEffect(() => {
     dispatch({ type: 'FETCH_LOGS' })
-    dispatch({ type: 'GET_LOCATION' })
-  }, []);
+    // on page load get current location from GoogleMaps
+    // and set response to current location
+    axios.post(`https://www.googleapis.com/geolocation/v1/geolocate?key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`)
+      .then(res => {
+        setCurrentLocation(res.data.location)
+      })
+      .catch(
+        error => {
+        }
+      )
+    // dispatch({type:'fetchLocation'})
+  }, [dispatch]);
 
   // Calculate the center the map 
   // from the average
@@ -56,16 +75,19 @@ function MapView() {
     lng: averageLng(allLongitudes)
   }
 
-  const showAllMarkers = true;
+  const containerStyle = {
+    width: '350px',
+    height: '400px'
+  };
 
 
   return (
     <>
       <div className="container">
-        <RenderMap center={historicalCenter ? historicalCenter : userLocation} logHistory={logHistory} zoom={8} showAllMarkers={showAllMarkers} />
+        <MyMapWrapper center={center} />
       </div>
     </>
   )
 }
 
-export default MapView;
+export default React.memo(MapView)

@@ -17,7 +17,6 @@ import {
 import MomentUtils from "@date-io/moment";
 import EditMap from './EditMap.jsx';
 import EditPhoto from './EditPhoto.jsx';
-import RenderMap from '../Maps/RenderMap.jsx';
 
 function EditLog() {
 
@@ -26,7 +25,7 @@ function EditLog() {
     useEffect(() => {
         dispatch({ type: 'SET_SELECTED_LOG', payload: logId });
         dispatch({ type: 'SET_SELECTED_MUSHROOM_PHOTO', payload: logId })
-    }, []);
+    }, [logId]);
 
     // matches parameters of current route
     const allParams = useParams();
@@ -94,11 +93,6 @@ function EditLog() {
         return str;
     };
 
-    const center = {
-        lat: Number(selectedLog.latitude),
-        lng: Number(selectedLog.longitude)
-    }
-
     return (
         <>
             {/* {JSON.stringify(selectedLog)}<hr /> */}
@@ -152,8 +146,8 @@ function EditLog() {
                     send selectedLog and logId via props */}
                     <EditPhoto selectedLog={selectedLog}
                         logId={logId} />
-                    {/* <EditMap selectedLog={selectedLog} /> */}
-                    <RenderMap logHistory={selectedLog} center={center} zoom={10} marker={center} editable={true} />
+                    <EditMap selectedLog={selectedLog} />
+
                     <br />
                     {/* Back for user navigation */}
                     <Stack spacing={6} direction="row">

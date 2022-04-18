@@ -5,7 +5,6 @@ import userSaga from './user.saga';
 import profileSaga from './profile.saga';
 import logHistory from './loghistory.saga';
 import mushroomPhotos from './mushroom.picture.saga';
-import mapSaga from './maps.saga';
 
 
 // rootSaga is the primary saga.
@@ -23,6 +22,5 @@ export default function* rootSaga() {
     profileSaga(),
     logHistory(),
     mushroomPhotos(),
-    mapSaga(),
   ]);
 }
