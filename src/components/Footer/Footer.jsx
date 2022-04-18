@@ -22,22 +22,23 @@ function Footer() {
 
   return (
     <>
-      <div className="footer">
+      <Box sx={{ pb: 7 }} ref={ref} >
 
-        <BottomNavigation
-          showLabels
-          value={value}
-          onChange={(event, newValue) => {
-            setValue(newValue);
-          }}
-        >
-          <BottomNavigationAction onClick={event => history.push('/home')} label="Home" icon={<HomeOutlinedIcon />} />
-          <BottomNavigationAction onClick={event => history.push('/history')} label="History" icon={<FormatListBulletedOutlinedIcon />} />
-          <BottomNavigationAction onClick={event => history.push('/map')} label="Map" icon={<MapOutlinedIcon />} />
-          <BottomNavigationAction onClick={event => history.push('/addPhotos')} label="Add New" icon={<AddOutlinedIcon />} />
-        </BottomNavigation>
-      </div>
-
+        <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
+          <BottomNavigation
+            showLabels
+            value={value}
+            onChange={(event, newValue) => {
+              setValue(newValue);
+            }}
+          >
+            <BottomNavigationAction onClick={event => history.push('/home')} label="Home" icon={<HomeOutlinedIcon />} />
+            <BottomNavigationAction onClick={event => history.push('/history')} label="History" icon={<FormatListBulletedOutlinedIcon />} />
+            <BottomNavigationAction onClick={event => history.push('/map')} label="Map" icon={<MapOutlinedIcon />} />
+            <BottomNavigationAction onClick={event => history.push('/addPhotos')} label="Add New" icon={<AddOutlinedIcon />} />
+          </BottomNavigation>
+        </Paper>
+      </Box>
 
     </>
   )
