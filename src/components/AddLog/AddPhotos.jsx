@@ -1,12 +1,13 @@
 import { useHistory } from 'react-router-dom';
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { readAndCompressImage } from 'browser-image-resizer';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import { Wrapper } from '@googlemaps/react-wrapper';
-
+import MapComponent from '../TestMap/TestMap';
+import axios from 'axios';
 
 
 function AddPhotos() {
@@ -91,8 +92,8 @@ function AddPhotos() {
 
     // use current location as map center
     const center = {
-        lat: currentLocation.lat,
-        lng: currentLocation.lng
+        lat: Number(currentLocation.lat),
+        lng: Number(currentLocation.lng)
     }
 
     return (
