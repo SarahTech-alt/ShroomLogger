@@ -22,7 +22,6 @@ function Summary() {
         history.push('/home');
     };
 
-    console.log(newMushroom);
     const markerLat = Number(newMushroom.latitude);
     const markerLng = Number(newMushroom.longitude)
     const center = {

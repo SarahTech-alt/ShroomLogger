@@ -69,7 +69,7 @@ function AddPhotos() {
                             className="placeholder-photo-preview"
                             src={preview}
                             alt="Photo preview"
-                        /><br />
+                        />
                         <Button onClick={addNewMushroomPhoto}>Confirm Photo</Button>
                     </>
                 )} <br />

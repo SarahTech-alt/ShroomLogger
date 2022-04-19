@@ -51,44 +51,32 @@ function AddLocationTime({ center }) {
                 googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
             >
                 {/* Map with event listener */}
-                {showCurrentLocation && (
-                    <GoogleMap
-                        mapContainerStyle={containerStyle}
-                        center={center}
-                        zoom={15}
-                        onClick={event => getClickData(event.latLng)}
-                    >
-                        {/* Marker shows current location  */}
 
+                <GoogleMap
+                    mapContainerStyle={containerStyle}
+                    center={center}
+                    zoom={15}
+                    onClick={event => getClickData(event.latLng)}
+                >
+                    {/* Marker shows current location  */}
+                    {showCurrentLocation && (
                         <Marker
                             position={center}
                             clickable={true}
                             draggable={true}
                         ></Marker>
-
-                        {/* On map click display marker at click location */}
-
-                    </GoogleMap>
-                )}
-
-                {displayNewMarker && (
-                    <GoogleMap
-                        mapContainerStyle={containerStyle}
-                        center={locationToSend}
-                        zoom={15}
-                        onClick={event => getClickData(event.latLng)}
-                    >
-                        {/* Marker shows current location  */}
-
+                    )}
+                    {displayNewMarker && (
                         <Marker
                             position={locationToSend}
                             clickable={true}
                             draggable={true}
                         ></Marker>
-                    </GoogleMap>
-                )}
+
+                    )}
+                </GoogleMap>
             </LoadScript><br />
-        </div>
+        </div >
     );
 }
 
