@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 
 
 
-function AddLocationTime({ center }) {
+function AddLocation({ center }) {
 
     // use history from react for page navigation
     const history = useHistory();
@@ -23,12 +23,21 @@ function AddLocationTime({ center }) {
         height: '400px'
     };
 
-    const [locationToSend, setLocationToSend] = useState({
-    })
+
+    useEffect(() => {
+        // set marker to current location
+        {
+            center &&
+                ({ ...newMushroom.latitude = center.lat, ...newMushroom.longitude = center.lng })
+        }
+    }, [center])
+
 
     // access information about new log
     // from redux store
     const newMushroom = useSelector(store => store.logHistory.logToAdd);
+
+    const [locationToSend, setLocationToSend] = useState(currentLocation);
 
     // function to get coordinates of map click
     // set the location to send variable
@@ -79,4 +88,4 @@ function AddLocationTime({ center }) {
     );
 }
 
-export default AddLocationTime;
+export default AddLocation;

@@ -2,12 +2,8 @@ import { useHistory } from 'react-router-dom';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { readAndCompressImage } from 'browser-image-resizer';
-import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import { Wrapper } from '@googlemaps/react-wrapper';
-import MapComponent from '../TestMap/TestMap';
-import axios from 'axios';
+
 
 function AddPhotos() {
 
@@ -71,10 +67,10 @@ function AddPhotos() {
                             className="placeholder-photo-preview"
                             src={preview}
                             alt="Photo preview"
-                        />
-                        <Button onClick={addNewMushroomPhoto}>Confirm Photo</Button>
+                        /><br />
+                        <Button className="confirm" onClick={addNewMushroomPhoto}>Confirm Photo</Button>
                     </>
-                )} <br />
+                )} <br /><br />
             </div>
         </>
     );

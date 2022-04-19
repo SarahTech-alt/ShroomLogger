@@ -8,7 +8,7 @@ body,
 body {
   font-family: 'Mali', cursive;
 
-  background-color: #C8BA89;
+  background-color: ;
   justify-content: center;
 }
 
@@ -41,6 +41,14 @@ body {
   .log-picture {
     margin: 5%;
   }
+
+  .footer {
+    height: 50px;
+    background-color: #C8BA89;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+  }
 }
 
 .wrapper {
@@ -48,9 +56,12 @@ body {
   margin-bottom: -50px;
 }
 
-.footer,
-.push {
+.footer {
   height: 50px;
+  background-color: #C8BA89;
+  position: fixed;
+  left: 0;
+  bottom: 0;
 }
 
 .logout-icon {
@@ -105,7 +116,7 @@ h1 {
   justify-content: space-around;
   display: flex;
   align-items: center;
-
+  background-color: #C8BA89;
 }
 
 hr {

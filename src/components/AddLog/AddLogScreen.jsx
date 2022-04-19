@@ -7,7 +7,7 @@ import AddType from './AddType';
 import AddDescription from './AddDescription';
 import axios from 'axios';
 import { Button } from '@mui/material';
-import AddLocationTime from './AddLocationTime';
+import AddLocation from './AddLocation';
 import AddDate from './AddDate';
 
 
@@ -51,7 +51,7 @@ function AddLogScreen() {
         <div id="container" className="add-screen">
             <AddPhotos />
             {/* <MyMapWrapper className='map' center={center} /> */}
-            <AddLocationTime center={mapCenter} />
+            <AddLocation center={mapCenter} />
             <AddDate /><br />
             <AddType />
             <AddDescription /><br />
