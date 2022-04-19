@@ -1,12 +1,10 @@
 import { useHistory } from 'react-router-dom';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { readAndCompressImage } from 'browser-image-resizer';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import MyMapWrapper from '../TestMap/TestMap';
-import axios from 'axios';
 
 
 function AddPhotos() {
@@ -43,10 +41,6 @@ function AddPhotos() {
         setSelectedFile(userFile);
         setResizedFile(resizedFile);
         setPreview(URL.createObjectURL(resizedFile));
-        // } 
-        // else {
-        //     alert('Invalid image file type. Must be gif, jpeg or png.');
-        // }
     }
 
     const addNewMushroomPhoto = () => {
@@ -60,72 +54,25 @@ function AddPhotos() {
 
             }
         })
-        history.push('/addType')
         newMushroom.selectedFile = selectedFile.name;
-    }
-
-    const [locationToSend, setLocationToSend] = useState({
-    })
-
-    const [currentLocation, setCurrentLocation] = useState({});
-    // toggle which marker to show on rendered map
-    const [displayNewMarker, setDisplayNewMarker] = useState(false);
-    const [showCurrentLocation, setShowCurrentLocation] = useState(true);
-
-    const sendInfoToRedux = () => {
-        dispatch({ type: 'SET_LOG_TO_ADD', payload: newMushroom });
-        history.push('/addType')
-    }
-    useEffect(() => {
-        axios.post(`https://www.googleapis.com/geolocation/v1/geolocate?key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`)
-            .then(res => {
-                setCurrentLocation(res.data.location)
-                setLocationToSend(res.data.location)
-            })
-            .catch(
-                error => {
-                }
-            )
-        // dispatch({type:'fetchLocation'})
-    }, []);
-
-    // use current location as map center
-    const center = {
-        lat: Number(currentLocation.lat),
-        lng: Number(currentLocation.lng)
     }
 
     return (
         <>
-            <div className="container">
+            <div>
                 {/* Show file upload when the user clicks their profile picture
             Allows user to select a file from their local files */}
-                <Box sx={{ mx: "auto", height: "auto", width: 350 }}>
-                    <input type="file" accept="image/*" onChange={onFileChange} /><br />
-                    {preview && (
+                <input type="file" accept="image/*" onChange={onFileChange} /><br />
+                {preview && (
+                    <>
                         <img
                             className="placeholder-photo-preview"
                             src={preview}
                             alt="Photo preview"
-                        />
-                    )} <br />
-                    <Stack spacing={2} direction="row">
-                        <Button variant="outlined"
-                            style={{ color: '#615246', borderColor: '#080706' }}
-                            onClick={event => history.goBack()}>
-                            Go Back
-                        </Button>
-                        <Button
-                            variant="outlined"
-                            style={{ color: '#615246', borderColor: '#080706' }}
-                            onClick={event => { addNewMushroomPhoto() }}>
-                            Next: Add Name
-                        </Button>
-                    </Stack>
-
-
-                </Box>
-                <MyMapWrapper className='map' center={center} />
+                        /><br />
+                        <Button onClick={addNewMushroomPhoto}>Confirm Photo</Button>
+                    </>
+                )} <br />
             </div>
         </>
     );

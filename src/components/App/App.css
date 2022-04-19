@@ -61,13 +61,20 @@ body {
 #map {
   height: 350px;
   width: 350px;
+  display: flex;
+  align-items: center;
 }
 
 h1 {
-
   font-family: 'Kalam', cursive;
   font-size: 40px;
   font-weight: bold;
+}
+
+.add-screen {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
 .profile-picture {

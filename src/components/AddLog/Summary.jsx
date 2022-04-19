@@ -22,6 +22,7 @@ function Summary() {
         history.push('/home');
     };
 
+    console.log(newMushroom);
     const markerLat = Number(newMushroom.latitude);
     const markerLng = Number(newMushroom.longitude)
     const center = {
@@ -32,9 +33,7 @@ function Summary() {
         width: '300px',
         height: '350px'
     };
-    // Google Maps data about each marker
-    const onLoad = marker => {
-    }
+
 
 
     return (
@@ -59,7 +58,6 @@ function Summary() {
                         >
                             <Marker
                                 position={center}
-                                onLoad={onLoad}
                             >
                             </Marker>
                         </GoogleMap>

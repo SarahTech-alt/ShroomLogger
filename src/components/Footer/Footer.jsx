@@ -35,7 +35,7 @@ function Footer() {
             <BottomNavigationAction onClick={event => history.push('/home')} label="Home" icon={<HomeOutlinedIcon />} />
             <BottomNavigationAction onClick={event => history.push('/history')} label="History" icon={<FormatListBulletedOutlinedIcon />} />
             <BottomNavigationAction onClick={event => history.push('/map')} label="Map" icon={<MapOutlinedIcon />} />
-            <BottomNavigationAction onClick={event => history.push('/addPhotos')} label="Add New" icon={<AddOutlinedIcon />} />
+            <BottomNavigationAction onClick={event => history.push('/addNew')} label="Add New" icon={<AddOutlinedIcon />} />
           </BottomNavigation>
         </Paper>
       </Box>

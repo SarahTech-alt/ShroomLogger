@@ -19,10 +19,7 @@ import LogHistory from '../LogHistory/LogHistory';
 import LogDetails from '../LogDetails/LogDetails';
 import EditLog from '../EditLog/EditLog';
 import MapView from '../MapView/MapView';
-import AddPhotos from '../AddLog/AddPhotos';
-import AddType from '../AddLog/AddType';
-import AddLocationTime from '../AddLog/AddLocationTime';
-import AddDescription from '../AddLog/AddDescription';
+import AddLogScreen from '../AddLog/AddLogScreen';
 import Summary from '../AddLog/Summary';
 import './App.css';
 import Header from '../Header/Header';
@@ -118,34 +115,9 @@ function App() {
           <ProtectedRoute
             // logged in shows AddPhotos else shows LoginPage
             exact
-            path="/addPhotos"
+            path="/addNew"
           >
-            <AddPhotos />
-          </ProtectedRoute>
-
-          <ProtectedRoute
-            // logged in shows AddType else shows LoginPage
-            exact
-            path="/addType"
-          >
-            <AddType />
-          </ProtectedRoute>
-
-          <ProtectedRoute
-            // logged in shows AddLocationTime else shows LoginPage
-            exact
-            path="/locationtime"
-          >
-            <AddLocationTime />
-          </ProtectedRoute>
-
-          <ProtectedRoute
-            // logged in shows AddDescription else shows LoginPage
-            exact
-            path="/description"
-          >
-            <AddDescription />
-
+            <AddLogScreen />
           </ProtectedRoute>
 
           <ProtectedRoute
