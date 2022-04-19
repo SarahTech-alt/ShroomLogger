@@ -5,7 +5,9 @@ import { readAndCompressImage } from 'browser-image-resizer';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-
+import { Wrapper } from '@googlemaps/react-wrapper';
+import MapComponent from '../TestMap/TestMap';
+import axios from 'axios';
 
 function AddPhotos() {
 

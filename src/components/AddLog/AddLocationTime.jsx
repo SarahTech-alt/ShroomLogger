@@ -38,7 +38,6 @@ function AddLocationTime({ center }) {
         setLocationToSend(
             { lat: value.lat(), lng: value.lng() }
         )
-        console.log(newMushroom)
         // change to show new marker 
         // and hide the current location marker
         setShowCurrentLocation(false);
