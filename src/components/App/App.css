@@ -8,7 +8,7 @@ body,
 body {
   font-family: 'Mali', cursive;
 
-  background-color: #ffff;
+  background-color: #C8BA89;
   justify-content: center;
 }
 
@@ -45,17 +45,12 @@ body {
 
 .wrapper {
   min-height: 100%;
-  margin-bottom: -75px;
+  margin-bottom: -50px;
 }
 
-.footer {
-  background-color: #C8BA89;
-  height: 75px;
-}
-
+.footer,
 .push {
-  background-color: #C8BA89;
-  height: 75px;
+  height: 50px;
 }
 
 .logout-icon {
@@ -91,7 +86,6 @@ h1 {
 }
 
 .header {
-  background-color: #C8BA89;
   width: 100%;
   height: 10%;
   border-bottom: 1px solid black;
@@ -111,10 +105,7 @@ hr {
 }
 
 
-#map {
-  height: 500px;
-  width: 250px;
-}
+
 
 
 /* --------------------------------------------------------------------------------

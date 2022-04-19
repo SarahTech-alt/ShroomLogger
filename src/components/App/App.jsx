@@ -196,7 +196,7 @@ function App() {
       {user.id ?
         <>
           <div className="push"></div>
-          <Footer className="footer" id="footer" /></> : null}
+          <Footer className="footer" /></> : null}
 
     </Router>
   );
