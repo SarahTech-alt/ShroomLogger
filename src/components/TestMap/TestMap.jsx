@@ -1,5 +1,6 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { Wrapper } from '@googlemaps/react-wrapper';
+import MyMapComponent from "../TestMap/MyMapComponent";
 
 function MyMapWrapper({ center }) {
     const zoom = 15;
@@ -14,22 +15,6 @@ function MyMapWrapper({ center }) {
         </>
     )
 }
-function MyMapComponent({
-    center,
-    zoom,
-}) {
-    const ref = useRef();
 
-    useEffect(() => {
-        new window.google.maps.Map(ref.current, {
-            center,
-            zoom,
-        });
-
-    });
-
-    return (
-        <div ref={ref} id="map">Really, a map</div>);
-}
 
 export default MyMapWrapper;
