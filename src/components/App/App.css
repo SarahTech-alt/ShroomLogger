@@ -58,6 +58,11 @@ body {
   align-items: flex-end;
 }
 
+#map {
+  height: 350px;
+  width: 350px;
+}
+
 h1 {
 
   font-family: 'Kalam', cursive;

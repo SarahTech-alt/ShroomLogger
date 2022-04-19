@@ -1,11 +1,12 @@
 import { useHistory } from 'react-router-dom';
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { readAndCompressImage } from 'browser-image-resizer';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-
+import MyMapWrapper from '../TestMap/TestMap';
+import axios from 'axios';
 
 
 function AddPhotos() {
@@ -63,12 +64,36 @@ function AddPhotos() {
         newMushroom.selectedFile = selectedFile.name;
     }
 
+    const [locationToSend, setLocationToSend] = useState({
+    })
+
+    const [currentLocation, setCurrentLocation] = useState({});
+    // toggle which marker to show on rendered map
+    const [displayNewMarker, setDisplayNewMarker] = useState(false);
+    const [showCurrentLocation, setShowCurrentLocation] = useState(true);
 
     const sendInfoToRedux = () => {
         dispatch({ type: 'SET_LOG_TO_ADD', payload: newMushroom });
         history.push('/addType')
     }
+    useEffect(() => {
+        axios.post(`https://www.googleapis.com/geolocation/v1/geolocate?key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`)
+            .then(res => {
+                setCurrentLocation(res.data.location)
+                setLocationToSend(res.data.location)
+            })
+            .catch(
+                error => {
+                }
+            )
+        // dispatch({type:'fetchLocation'})
+    }, []);
 
+    // use current location as map center
+    const center = {
+        lat: Number(currentLocation.lat),
+        lng: Number(currentLocation.lng)
+    }
 
     return (
         <>
@@ -97,7 +122,10 @@ function AddPhotos() {
                             Next: Add Name
                         </Button>
                     </Stack>
+
+
                 </Box>
+                <MyMapWrapper className='map' center={center} />
             </div>
         </>
     );
