@@ -168,8 +168,7 @@ function App() {
       {/* <Nav /> */}
       {user.id ?
         <>
-          <div className="push"></div>
-          <Footer className="footer" /></> : null}
+          <Footer /></> : null}
 
     </Router>
   );

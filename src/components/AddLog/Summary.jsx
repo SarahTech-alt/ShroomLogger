@@ -36,7 +36,7 @@ function Summary() {
 
 
     return (
-        <div className="container">
+        <div className="log-summary">
             <Box sx={{ mx: "auto", height: 'auto', width: 350 }}>
                 {/* {JSON.stringify(newMushroom)} */}
                 <p> Common Name: {newMushroom.common_name}</p>
