@@ -25,21 +25,19 @@ function AddDate() {
     };
 
     return (
-        <div className="nav-buttons">
-            <Fragment>
-                <MuiPickersUtilsProvider libInstance={moment} utils={MomentUtils}>
-                    <KeyboardDatePicker
-                        autoOk={true}
-                        showTodayButton={true}
-                        value={selectedDate}
-                        format="YYYY-MM-DD" bo
-                        inputValue={inputValue}
-                        onChange={onDateChange}
-                        rifmFormatter={dateFormatter}
-                    />
-                </MuiPickersUtilsProvider>
-            </Fragment>
-        </div>
+        <Fragment>
+            <MuiPickersUtilsProvider libInstance={moment} utils={MomentUtils}>
+                <KeyboardDatePicker
+                    autoOk={true}
+                    showTodayButton={true}
+                    value={selectedDate}
+                    format="YYYY-MM-DD" bo
+                    inputValue={inputValue}
+                    onChange={onDateChange}
+                    rifmFormatter={dateFormatter}
+                />
+            </MuiPickersUtilsProvider>
+        </Fragment>
     )
 }
 
