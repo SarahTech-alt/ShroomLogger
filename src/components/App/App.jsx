@@ -6,6 +6,7 @@ import {
   Switch,
 } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import Nav from '../Nav/Nav';
 import Footer from '../Footer/Footer';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
@@ -28,12 +29,14 @@ import TestMap from '../TestMap/TestMap';
 
 function App() {
   const dispatch = useDispatch();
-
+  const history = useHistory();
   const user = useSelector(store => store.user);
 
   useEffect(() => {
     dispatch({ type: 'FETCH_USER' });
-  }, [dispatch]);
+    console.log(window.location.pathname)
+    // history.replaceState("", "", window.location.pathname)
+  }, []);
 
   return (
     <Router>
@@ -41,7 +44,7 @@ function App() {
       <div className='wrapper'>
         <Switch>
           {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
-          <Redirect exact from="/" to="/home" />
+          <Redirect exact from="/" to="/Home" />
 
           {/* Visiting localhost:3000/about will show the about page. */}
           <Route
@@ -59,7 +62,7 @@ function App() {
           <ProtectedRoute
             // logged in shows HomePage else shows LoginPage
             exact
-            path="/home"
+            path="/Home"
           >
             <HomePage />
           </ProtectedRoute>
@@ -75,7 +78,7 @@ function App() {
           <ProtectedRoute
             // logged in shows LogHistory else shows LoginPage
             exact
-            path='/history'
+            path='/History'
           >
             <LogHistory />
           </ProtectedRoute>
@@ -99,7 +102,7 @@ function App() {
           <ProtectedRoute
             // logged in shows MapView else shows LoginPage
             exact
-            path="/map"
+            path="/Map"
           >
             <MapView />
           </ProtectedRoute>
@@ -115,7 +118,7 @@ function App() {
           <ProtectedRoute
             // logged in shows AddPhotos else shows LoginPage
             exact
-            path="/addNew"
+            path="/AddNew"
           >
             <AddLogScreen />
           </ProtectedRoute>

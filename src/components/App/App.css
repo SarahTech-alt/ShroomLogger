@@ -41,14 +41,33 @@ body {
   .log-picture {
     margin: 5%;
   }
+}
 
-  .footer {
-    height: 50px;
-    background-color: #C8BA89;
-    position: fixed;
-    left: 0;
-    bottom: 0;
-  }
+.bottom-nav {
+  background-color: #C8BA89;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  width: 100%;
+}
+
+.nav-item-default {
+  background-color: #C8BA89;
+  color: #615246;
+  margin: auto;
+  margin-top: .2%;
+  align-content: space-evenly;
+  margin-bottom: .2%;
+}
+
+.nav-item-default-selected {
+  color: #080706;
+  margin: auto;
+  margin-top: .2%;
+  align-content: space-evenly;
+  margin-bottom: .2%;
+
 }
 
 .wrapper {

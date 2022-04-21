@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './Footer.css';
 import Box from '@mui/material/Box';
 import BottomNavigation from '@mui/material/BottomNavigation';
@@ -9,37 +9,48 @@ import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import MapOutlinedIcon from '@mui/icons-material/MapOutlined';
 import FormatListBulletedOutlinedIcon from '@mui/icons-material/FormatListBulletedOutlined';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
+import classNames from 'classnames';
 
 
 function Footer() {
   // access use history component for user navigation
   const history = useHistory();
+  var classNames = require('classnames');
   // hooks for rendering the highlighting of 
   // current footer element
   const [value, setValue] = React.useState(0);
   const ref = React.useRef(null);
+  console.log(document.location.href.split('/')[4])
 
+  const [selectedIcon, setSelectedIcon] = useState(selectedIcon);
+
+  const navItems = [
+    { label: 'Home', icon: <HomeOutlinedIcon /> },
+    { label: 'History', icon: <FormatListBulletedOutlinedIcon /> },
+    { label: 'Map', icon: <MapOutlinedIcon /> },
+    { label: 'AddNew', icon: <AddOutlinedIcon /> }
+  ];
 
   return (
     <>
-      <Box sx={{ pb: 7 }} ref={ref} >
-
-        <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
-          <BottomNavigation
-            showLabels
-            value={value}
-            onChange={(event, newValue) => {
-              setValue(newValue);
-            }}
-          >
-            <BottomNavigationAction onClick={event => history.push('/home')} label="Home" icon={<HomeOutlinedIcon />} />
-            <BottomNavigationAction onClick={event => history.push('/history')} label="History" icon={<FormatListBulletedOutlinedIcon />} />
-            <BottomNavigationAction onClick={event => history.push('/map')} label="Map" icon={<MapOutlinedIcon />} />
-            <BottomNavigationAction onClick={event => history.push('/addNew')} label="Add New" icon={<AddOutlinedIcon />} />
-          </BottomNavigation>
-        </Paper>
-      </Box>
-
+      <div className="bottom-nav">
+        {navItems.map((navItem) => {
+          const { label, icon } = navItem;
+          return (
+            <div
+              key={label}
+              label={label}
+              selected={selectedIcon === label ? true : false}
+              onClick={() => {
+                setSelectedIcon(label || '');
+                history.push(`/${label}`);
+              }}
+              className={selectedIcon === label ? "nav-item-default-selected" : "nav-item-default"}>
+              {navItem.icon}<br />{label}
+            </div>
+          )
+        })}
+      </div>
     </>
   )
 }
