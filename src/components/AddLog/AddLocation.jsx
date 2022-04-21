@@ -54,7 +54,7 @@ function AddLocation({ center }) {
     }
 
     return (
-        <div>
+        <div className="map">
             <LoadScript
                 googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
             >
