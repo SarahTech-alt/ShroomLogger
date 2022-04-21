@@ -37,6 +37,14 @@ body {
     justify-content: center;
     flex-wrap: wrap;
   }
+
+  .add-screen {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    min-height: 100%;
+    padding-bottom: 30%
+  }
 }
 
 @media screen and (max-width: 480px) {
@@ -55,6 +63,14 @@ body {
     border-bottom: 1.2px solid #5E743C;
     padding-top: 1%;
     padding-bottom: 5%;
+  }
+
+  .add-screen {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    min-height: 100%;
+    padding-bottom: 30%;
   }
 }
 
@@ -109,13 +125,6 @@ h1 {
   font-family: 'Kalam', cursive;
   font-size: 40px;
   font-weight: bold;
-}
-
-.add-screen {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  min-height: 100%;
 }
 
 .profile-picture {
