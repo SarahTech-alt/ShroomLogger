@@ -26,6 +26,22 @@ function LogHistory() {
         history.push(`/details/${logId}`);
     }
 
+    const [selected, setSelected] = useState('');
+    const [viewSorted, setViewSorted] = useState(false);
+
+    const filterBy = (e) => {
+        const sortedLogs = [];
+        for (let i = 0; i < logHistory.length; i++) {
+            if (logHistory[i].common_name === e.target.value) {
+                sortedLogs.push(logHistory[i]);
+            }
+            setViewSorted(true);
+            setSelected(sortedLogs)
+            console.log(sortedLogs);
+        }
+        console.log(sortedLogs)
+    }
+
     // calling saga function on page load
     // to get the log history from the server
     useEffect(() => {
@@ -33,30 +49,63 @@ function LogHistory() {
     }, [dispatch]);
 
     return (
-        
-        <div className="container">
-            {/* {JSON.stringify(logHistory)} */}
-            <Box sx={{ mx: "auto", height: 'auto', width: 350, pt:3 }}>
-                <table>
-                    <tbody>
-                        <tr>
-                            <th>Common Name</th>
-                            <th>Scientific Name</th>
-                            <th>Date of Entry</th>
-                            <th>Description</th>
-                        </tr>
 
-                        {logHistory.map((logs) => (
-                            <tr key={logs.log_id}>
-                                <td onClick={event => viewLog(logs.log_id)} style={{textDecoration:'underline', color:'blue'}}> {logs.common_name}</td>
-                                <td>{logs.scientific_name}</td>
-                                <td>{moment(logs.date).format('LL')}</td>
-                                <td>{logs.details}</td>
-                                
+        <div className="log-summary">
+            {/* {JSON.stringify(logHistory)} */}
+            <Box sx={{ mx: "auto", height: 'auto', width: 350, pt: 3 }}>
+                <>
+                    {logHistory.length ?
+                        <div><br />
+                            View History For: &nbsp;
+                            <select onChange={filterBy}>
+                                {logHistory.map(log => (
+                                    <option key={log.id} value={log.common_name} >{log.common_name}</option>
+                                ))}
+                            </select>
+                        </div> : ''}<br />
+                </>
+                {viewSorted ?
+                    <>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <th>Common Name</th>
+                                    <th>Scientific Name</th>
+                                    <th>Date of Entry</th>
+                                    <th>Description</th>
+                                </tr>
+                                {selected.map((logs) => (
+                                    <tr key={logs.log_id}>
+                                        <td onClick={event => viewLog(logs.log_id)} style={{ textDecoration: 'underline', color: 'blue' }}> {logs.common_name}</td>
+                                        <td>{logs.scientific_name}</td>
+                                        <td>{moment(logs.date).format('LL')}</td>
+                                        <td>{logs.details}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </>
+                    :
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th>Common Name</th>
+                                <th>Scientific Name</th>
+                                <th>Date of Entry</th>
+                                <th>Description</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+
+                            {logHistory.map((logs) => (
+                                <tr key={logs.log_id}>
+                                    <td onClick={event => viewLog(logs.log_id)} style={{ textDecoration: 'underline', color: 'blue' }}> {logs.common_name}</td>
+                                    <td>{logs.scientific_name}</td>
+                                    <td>{moment(logs.date).format('LL')}</td>
+                                    <td>{logs.details}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                }
             </Box>
         </div>
 
