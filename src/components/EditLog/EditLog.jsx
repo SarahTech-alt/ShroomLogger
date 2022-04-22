@@ -99,7 +99,7 @@ function EditLog() {
             {/* Access information from the logDetail
             reducer and display on DOM with buttons to edit logs
             and a back button to navigate to previous page */}
-            <div className="container">
+            <div className="log-summary">
                 <Box sx={{ mx: "auto", width: 300 }}>
                     <FormControl sx={{ width: 300 }}>
                         <TextField

@@ -46,11 +46,25 @@ body {
     min-height: 100%;
     padding-bottom: 30%
   }
+
+  .edit-button {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 8%;
+    padding-top: 1%;
+  }
 }
 
 @media screen and (max-width: 480px) {
   img {
     max-width: 100%;
+  }
+
+  .edit-button {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 8%;
+    padding-top: 1%;
   }
 
   .log-picture {

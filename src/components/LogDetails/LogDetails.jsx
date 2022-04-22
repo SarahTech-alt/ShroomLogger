@@ -56,11 +56,11 @@ function LogDetails() {
     }, [logId]);
 
     return (
-        <div className="container">
-
-            <Box sx={{ mx: "auto", width: 300 }}>
-
-                <ModeEditOutlineOutlinedIcon sx={{ ml: 8, height: 35, width: 37, position: 'absolute', top: 160, right: 50 }} onClick={event => editLog(selectedLog.id)} />
+        <>
+            <div className='edit-button'>
+                <ModeEditOutlineOutlinedIcon onClick={event => editLog(selectedLog.id)} />
+            </div>
+            <div className="log-summary">
 
                 <p> Common Name: {selectedLog.common_name}</p>
                 <p> Scientific Name: {selectedLog.scientific_name}</p>
@@ -94,8 +94,8 @@ function LogDetails() {
                         Go Back
                     </Button>
                 </Stack>
-            </Box>
-        </div>
+            </div>
+        </>
     );
 }
 
