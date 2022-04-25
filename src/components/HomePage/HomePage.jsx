@@ -10,6 +10,7 @@ import { positions } from '@mui/system';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
+import TestMap from '../TestMap/TestMap';
 
 
 
@@ -27,7 +28,7 @@ function HomePage() {
     dispatch({ type: 'FETCH_LOGS' });
     dispatch({ type: 'FETCH_PROFILE_INFO' });
     window.scrollTo(0, 0)
-  }, [dispatch]);
+  }, []);
 
 
   const viewLogDetail = (logId) => {
@@ -56,6 +57,7 @@ function HomePage() {
           <img src="/images/mushroom.jpg"></img><br />
           <p>Add a log to get started!</p>
         </div>}
+        <TestMap />
       </div>
     </>
   );

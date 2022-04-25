@@ -16,7 +16,7 @@
     "@material-ui/pickers": "^3.3.10",
     "@mui/icons-material": "^5.0.4",
     "@mui/material": "^5.2.6",
-    "@react-google-maps/api": "^2.5.0",
+    "@react-google-maps/api": "^2.8.1",
     "aws-sdk": "^2.1006.0",
     "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
