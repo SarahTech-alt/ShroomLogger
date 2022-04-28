@@ -1,9 +1,9 @@
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import moment from 'moment';
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
 import Box from '@mui/material/Box';
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
 import Stack from '@mui/material/Stack';
@@ -11,6 +11,19 @@ import Button from '@mui/material/Button';
 
 
 function LogDetails() {
+    const [map, setMap] = useState(null);
+    const { isLoaded } = useJsApiLoader({
+        googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY
+    });
+    const onLoad = React.useCallback(function callback(map) {
+        const bounds = new window.google.maps.LatLngBounds();
+        map.fitBounds(bounds);
+        setMap(map)
+    }, [])
+
+    const onUnmount = React.useCallback(function callback(map) {
+        setMap(null)
+    }, [])
     const profile = useSelector(store => store.user);
     // matches parameters of current route
     const allParams = useParams();
@@ -37,9 +50,7 @@ function LogDetails() {
         width: '300px',
         height: '300px'
     };
-    // Google Maps data about each marker
-    const onLoad = marker => {
-    }
+
 
     // dispatch selected id to sagas and
     // direct user to edit page
@@ -69,23 +80,21 @@ function LogDetails() {
                 <img src={selectedLog.mushroom_picture_medium} alt={selectedLog.mushroom_picture_medium} /><br /><br />
                 <div className='map-display'>
                     {/* {JSON.stringify(logDetails)} */}
-                    {/* Initialize API */}
-                    <LoadScript
-                        googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
-                    >
-                        {/* Map that will display markers */}
+                    {/* Map that will display markers */}
+                    {isLoaded &&
                         <GoogleMap
                             mapContainerStyle={containerStyle}
                             center={center}
                             zoom={10}
+                            onLoad={onLoad}
+                            onUnmount={onUnmount}
                         >
                             <Marker
                                 position={center}
-                                onLoad={onLoad}
                             >
                             </Marker>
                         </GoogleMap>
-                    </LoadScript>
+                    }
                 </div><br />
                 <Stack spacing={1} direction="row">
                     <Button variant="outlined"

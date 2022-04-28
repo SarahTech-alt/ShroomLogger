@@ -1,11 +1,46 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
 
 
 
-function AddLocation({ center }) {
+function AddLocation() {
+    const [map, setMap] = useState(null);
+    const { isLoaded } = useJsApiLoader({
+        googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY
+    });
+    const onLoad = React.useCallback(function callback(map) {
+        const bounds = new window.google.maps.LatLngBounds();
+        map.fitBounds(bounds);
+        setMap(map)
+    }, [])
+
+    const onUnmount = React.useCallback(function callback(map) {
+        setMap(null)
+    }, [])
+
+    const [center, setCenter] = useState(null);
+    const [locationToSend, setLocationToSend] = useState(center);
+
+    useEffect(() => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    console.log(position)
+                    setCenter({
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude,
+                    })
+                }
+            )
+        }
+
+        if (!navigator.geolocation) {
+            alert("Geolocation is not supported by this browser.");
+        }
+    }, []);
+
 
     // use history from react for page navigation
     const history = useHistory();
@@ -13,7 +48,6 @@ function AddLocation({ center }) {
     // toggle which marker to show on rendered map
     const [displayNewMarker, setDisplayNewMarker] = useState(false);
     const [showCurrentLocation, setShowCurrentLocation] = useState(true);
-    const [currentLocation, setCurrentLocation] = useState(center)
 
     // maps display configuration
     const containerStyle = {
@@ -28,14 +62,13 @@ function AddLocation({ center }) {
             center &&
                 ({ ...newMushroom.latitude = center.lat, ...newMushroom.longitude = center.lng })
         }
-    }, [center])
+    }, [])
 
 
     // access information about new log
     // from redux store
     const newMushroom = useSelector(store => store.logHistory.logToAdd);
 
-    const [locationToSend, setLocationToSend] = useState(currentLocation);
 
     // function to get coordinates of map click
     // set the location to send variable
@@ -51,39 +84,38 @@ function AddLocation({ center }) {
         setDisplayNewMarker(true);
     }
 
-    return (
+    return isLoaded ? (
         <div className="map">
-            <LoadScript
-                googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
+
+            {/* Map with event listener */}
+
+            <GoogleMap
+                mapContainerStyle={containerStyle}
+                center={center}
+                zoom={15}
+                onClick={event => getClickData(event.latLng)}
+                onLoad={onLoad}
+                onUnmount={onUnmount}
             >
-                {/* Map with event listener */}
+                {/* Marker shows current location  */}
+                {showCurrentLocation && (
+                    <Marker
+                        position={center}
+                        clickable={true}
+                        draggable={true}
+                    ></Marker>
+                )}
+                {displayNewMarker && (
+                    <Marker
+                        position={locationToSend}
+                        clickable={true}
+                        draggable={true}
+                    ></Marker>
 
-                <GoogleMap
-                    mapContainerStyle={containerStyle}
-                    center={center}
-                    zoom={15}
-                    onClick={event => getClickData(event.latLng)}
-                >
-                    {/* Marker shows current location  */}
-                    {showCurrentLocation && (
-                        <Marker
-                            position={center}
-                            clickable={true}
-                            draggable={true}
-                        ></Marker>
-                    )}
-                    {displayNewMarker && (
-                        <Marker
-                            position={locationToSend}
-                            clickable={true}
-                            draggable={true}
-                        ></Marker>
-
-                    )}
-                </GoogleMap>
-            </LoadScript><br />
+                )}
+            </GoogleMap>
         </div >
-    );
+    ) : <div>Loading...</div>;
 }
 
 export default AddLocation;

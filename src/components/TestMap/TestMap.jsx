@@ -18,13 +18,9 @@ function TestMap() {
 function MapComponent() {
     const ref = useRef(null);
     const [map, setMap] = useState()
-    const [clicks, setClicks] = useState([]);
     const [center, setCenter] = useState({ lat: 0, lng: 0 });
-    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
-        // we need to save google-map object for adding markers and routes in future
-        setLoading(true)
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 (position) => {
@@ -35,24 +31,21 @@ function MapComponent() {
                 }
             )
         }
-        return () => { (setLoading(false)) }
     }, []);
 
     useEffect(() => {
         // here will connect map frame to div element in DOM by using ref hook
-        let createdMap = new window.google.maps.Map(
-            ref.current,
-            {
+        if (ref.current) {
+            const map = new window.google.maps.Map(ref.current, {
                 center: center,
-                zoom: 6,
-            }
-        );
-        setMap(createdMap)
+                zoom: 15,
+            });
+            setMap(map);
+        }
     }, [center]);
 
     return (
         <>
-            Map
             <div ref={ref} id="map" />
         </>
     )

@@ -1,7 +1,21 @@
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
 import React, { useState } from 'react';
 
 function EditMap({ selectedLog }) {
+
+    const [map, setMap] = useState(null);
+    const { isLoaded } = useJsApiLoader({
+        googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY
+    });
+    const onLoad = React.useCallback(function callback(map) {
+        const bounds = new window.google.maps.LatLngBounds();
+        map.fitBounds(bounds);
+        setMap(map)
+    }, [])
+
+    const onUnmount = React.useCallback(function callback(map) {
+        setMap(null)
+    }, [])
 
     const containerStyle = {
         width: '300px',
@@ -48,33 +62,35 @@ function EditMap({ selectedLog }) {
         <>
             <div>
                 {/* Load Google Maps Script */}
-                <LoadScript
-                    googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
-                >
-                    {/* {JSON.stringify(locationToSend)} */}
-                    {/* Map with event listener */}
-                    <GoogleMap
-                        mapContainerStyle={containerStyle}
-                        center={center}
-                        zoom={10}
-                        onClick={event => getClickData(event.latLng)}
-                    >
-                        {/* Marker shows current location  */}
-                        {showCurrentLocation && (
-                            <Marker
-                                position={currentLocation}
-                                clickable={true}
-                                draggable={true}
-                            ></Marker>
-                        )}
-                        {/* On map click display marker at click location */}
-                        {displayNewMarker && (
-                            <Marker
-                                position={locationToSend}
-                            ></Marker>
-                        )}
-                    </GoogleMap>
-                </LoadScript>
+                {isLoaded && (
+                    <>
+                        {/* {JSON.stringify(locationToSend)} */}
+                        {/* Map with event listener */}
+                        <GoogleMap
+                            mapContainerStyle={containerStyle}
+                            center={center}
+                            zoom={10}
+                            onClick={event => getClickData(event.latLng)}
+                            onLoad={onLoad}
+                            onUnmount={onUnmount}
+                        >
+                            {/* Marker shows current location  */}
+                            {showCurrentLocation && (
+                                <Marker
+                                    position={currentLocation}
+                                    clickable={true}
+                                    draggable={true}
+                                ></Marker>
+                            )}
+                            {/* On map click display marker at click location */}
+                            {displayNewMarker && (
+                                <Marker
+                                    position={locationToSend}
+                                ></Marker>
+                            )}
+                        </GoogleMap>
+                    </>
+                )}
             </div>
         </>
     );

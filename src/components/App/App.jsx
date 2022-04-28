@@ -24,7 +24,6 @@ import AddLogScreen from '../AddLog/AddLogScreen';
 import Summary from '../AddLog/Summary';
 import './App.css';
 import Header from '../Header/Header';
-import TestMap from '../TestMap/TestMap';
 
 
 function App() {
@@ -104,14 +103,6 @@ function App() {
           path="/Map"
         >
           <MapView />
-        </ProtectedRoute>
-
-        <ProtectedRoute
-          // logged in shows MapView else shows LoginPage
-          exact
-          path="/testmap"
-        >
-          <TestMap />
         </ProtectedRoute>
 
         <ProtectedRoute
