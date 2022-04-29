@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { GoogleMap, InfoWindow, LoadScript, Marker, useJsApiLoader } from '@react-google-maps/api';
+import { GoogleMap, InfoWindow, LoadScript, Marker } from '@react-google-maps/api';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import useReduxStore from '../../hooks/useReduxStore';
@@ -9,46 +9,18 @@ import axios from "axios";
 
 
 function MapView() {
-  const [map, setMap] = useState(null);
-  const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY
-  });
-  const onLoad = React.useCallback(function callback(map) {
-    const bounds = new window.google.maps.LatLngBounds();
-    map.fitBounds(bounds);
-    setMap(map)
-  }, [])
-
-  const onUnmount = React.useCallback(function callback(map) {
-    setMap(null)
-  }, [])
-
   const logInfo = useReduxStore(store => store.logInfo);
   const logHistory = logInfo.logHistory.logHistory;
   const dispatch = useDispatch();
   const history = useHistory();
   // hook for accessing current location
-  const [currentLocation, setCurrentLocation] = useState(null);
+  const [currentLocation, setCurrentLocation] = useState({});
   // Coordinates to use to establish map center on load
+  const center = {
+    lat: currentLocation.lat,
+    lng: currentLocation.lng
+  }
 
-  useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          console.log(position)
-
-          setCurrentLocation({
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          })
-        }
-      )
-    }
-
-    if (!navigator.geolocation) {
-      alert("Geolocation is not supported by this browser.");
-    }
-  }, []);
 
 
   // On page load get the logs from the database
@@ -56,8 +28,16 @@ function MapView() {
     dispatch({ type: 'FETCH_LOGS' })
     // on page load get current location from GoogleMaps
     // and set response to current location
+    axios.post(`api/map`)
+      .then(res => {
+        setCurrentLocation(res.data.location)
+      })
+      .catch(
+        error => {
+        }
+      )
     // dispatch({type:'fetchLocation'})
-  }, []);
+  }, [dispatch]);
 
   // Calculate the center the map 
   // from the average
@@ -107,39 +87,38 @@ function MapView() {
 
         <Box sx={{ mx: "auto", height: 350, width: 350 }}>
           <div className='map-display'>
-            {isLoaded ? (
-              <>
-                {!logHistory.length && (
-                  <GoogleMap
-                    mapContainerStyle={containerStyle}
-                    center={currentLocation}
-                    zoom={10}
-                    onLoad={onLoad}
-                    onUnmount={onUnmount}
-                  ></GoogleMap>
-                )}
-                {/* Map that will display markers */}
-                {logHistory.length && (
-                  <GoogleMap
-                    mapContainerStyle={containerStyle}
-                    center={historicalCenter}
-                    zoom={8}
-                  >
-                    <>
-                      {/* Map all the log details into MapDetails component */}
-                      {logHistory.map((coord, index) => (
-                        <MapDetails coord={coord}
-                          key={index}
-                          averageCenter={true}
-                          center={historicalCenter} />
-                      ))}
+            {/* Initialize API */}
+            <LoadScript
+              googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
+            >
 
-                    </>
-                  </GoogleMap>
-                )}
-              </>
-            ) : (
-              <div>Loading...</div>)}
+              {!logHistory.length && (
+                <GoogleMap
+                  mapContainerStyle={containerStyle}
+                  center={center}
+                  zoom={8}
+                ></GoogleMap>
+              )}
+              {/* Map that will display markers */}
+              {logHistory.length && (
+                <GoogleMap
+                  mapContainerStyle={containerStyle}
+                  center={historicalCenter}
+                  zoom={8}
+                >
+                  <>
+                    {/* Map all the log details into MapDetails component */}
+                    {logHistory.map((coord, index) => (
+                      <MapDetails coord={coord}
+                        key={index}
+                        averageCenter={true}
+                        center={historicalCenter} />
+                    ))}
+
+                  </>
+                </GoogleMap>
+              )}
+            </LoadScript>
           </div>
         </Box>
       </div>
@@ -147,4 +126,4 @@ function MapView() {
   )
 }
 
-export default MapView
+export default React.memo(MapView)
