@@ -28,7 +28,7 @@ function MapView() {
     dispatch({ type: 'FETCH_LOGS' })
     // on page load get current location from GoogleMaps
     // and set response to current location
-    axios.post(`api/map`)
+    axios.post(`https://www.googleapis.com/geolocation/v1/geolocate?key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`)
       .then(res => {
         setCurrentLocation(res.data.location)
       })
@@ -37,7 +37,7 @@ function MapView() {
         }
       )
     // dispatch({type:'fetchLocation'})
-  }, [dispatch]);
+  }, []);
 
   // Calculate the center the map 
   // from the average
