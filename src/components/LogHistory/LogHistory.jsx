@@ -37,9 +37,7 @@ function LogHistory() {
             }
             setViewSorted(true);
             setSelected(sortedLogs)
-            console.log(sortedLogs);
         }
-        console.log(sortedLogs)
     }
 
     // calling saga function on page load

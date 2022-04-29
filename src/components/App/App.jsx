@@ -33,7 +33,6 @@ function App() {
 
   useEffect(() => {
     dispatch({ type: 'FETCH_USER' });
-    console.log(window.location.pathname)
     // history.replaceState("", "", window.location.pathname)
   }, []);
 

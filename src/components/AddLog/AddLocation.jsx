@@ -27,7 +27,6 @@ function AddLocation() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 (position) => {
-                    console.log(position)
                     setCenter({
                         lat: position.coords.latitude,
                         lng: position.coords.longitude,

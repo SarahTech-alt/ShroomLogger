@@ -20,7 +20,6 @@ function Footer() {
   // current footer element
   const [value, setValue] = React.useState(0);
   const ref = React.useRef(null);
-  console.log(document.location.href.split('/')[4])
 
   const [selectedIcon, setSelectedIcon] = useState(selectedIcon);
 
