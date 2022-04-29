@@ -14,7 +14,6 @@ import ImageListItemBar from '@mui/material/ImageListItemBar';
 
 
 function HomePage() {
-
   // get profile info from the reducer store
   const profile = useSelector(store => store.user);
   const logHistory = useSelector(store => store.logHistory.logHistory)

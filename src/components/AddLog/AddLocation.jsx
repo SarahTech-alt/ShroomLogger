@@ -37,6 +37,10 @@ function AddLocation() {
 
         if (!navigator.geolocation) {
             alert("Geolocation is not supported by this browser.");
+            setCenter({
+                lat: 46.7296,
+                lng: 94.6859,
+            })
         }
     }, []);
 
@@ -57,11 +61,10 @@ function AddLocation() {
 
     useEffect(() => {
         // set marker to current location
-        {
-            center &&
-                ({ ...newMushroom.latitude = center.lat, ...newMushroom.longitude = center.lng })
+        if (center) {
+            ({ ...newMushroom.latitude = center.lat, ...newMushroom.longitude = center.lng })
         }
-    }, [])
+    }, [center])
 
 
     // access information about new log

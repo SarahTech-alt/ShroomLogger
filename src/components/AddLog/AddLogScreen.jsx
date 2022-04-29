@@ -7,6 +7,7 @@ import AddDescription from './AddDescription';
 import { Button } from '@mui/material';
 import AddLocation from './AddLocation';
 import AddDate from './AddDate';
+import mushroomPictureSaga from '../../redux/sagas/mushroom.picture.saga';
 
 
 function AddLogScreen() {
@@ -32,16 +33,19 @@ function AddLogScreen() {
     //     lng: Number(mapCenter.lng)
     // }
 
+    const newMushroom = useSelector(store => store.logHistory.logToAdd);
     const validateForm = () => {
         if (newMushroom.common_name === '') {
             alert('Please enter a type');
         }
-        else {
-            history.push('/summary')
+        if (newMushroom.selectedFile === '') {
+            // newMushroom.mushroom_picture_medium = "https://solospikebucket.s3.us-east-2.amazonaws.com/photos/medium/default-photo.jpg"
+            // newMushroom.mushroom_picture_thumb = "https://solospikebucket.s3.us-east-2.amazonaws.com/photos/thumb/default-photo.jpg"
+            newMushroom.selectedFile = 'default-photo.jpg'
         }
+        history.push('/summary')
     }
 
-    const newMushroom = useSelector(store => store.logHistory.logToAdd);
 
 
 

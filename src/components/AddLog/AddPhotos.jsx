@@ -42,17 +42,18 @@ function AddPhotos() {
     }
 
     const addNewMushroomPhoto = () => {
+        if (selectedFile) {
+            dispatch({
+                type: 'ADD_MUSHROOM_PHOTO',
+                payload: {
+                    // any other form data...
+                    selectedFile,
+                    resizedFile,
 
-        dispatch({
-            type: 'ADD_MUSHROOM_PHOTO',
-            payload: {
-                // any other form data...
-                selectedFile,
-                resizedFile,
-
-            }
-        })
-        newMushroom.selectedFile = selectedFile.name;
+                }
+            })
+            newMushroom.selectedFile = selectedFile.name;
+        }
     }
 
     return (
