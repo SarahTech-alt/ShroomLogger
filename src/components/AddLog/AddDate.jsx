@@ -1,4 +1,6 @@
 import { useEffect, useState, Fragment } from "react";
+import { useSelector } from 'react-redux';
+
 import moment from 'moment';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -13,6 +15,7 @@ function AddDate() {
 
     const [selectedDate, setDate] = useState(moment().format("YYYY-MM-DD"));
     const [inputValue, setInputValue] = useState(moment().format("YYYY-MM-DD"));
+    const newMushroom = useSelector(store => store.logHistory.logToAdd);
 
     const onDateChange = (date, value) => {
         newMushroom.date = date;
