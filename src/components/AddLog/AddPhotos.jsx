@@ -15,6 +15,7 @@ function AddPhotos() {
     const [preview, setPreview] = useState('');
     const [selectedFile, setSelectedFile] = useState('');
     const [resizedFile, setResizedFile] = useState('');
+    const [confirm, setConfirm] = useState(false);
     // access the logHistory reducer from the store
     const userInfo = useSelector(store => store.user);
 
@@ -38,6 +39,7 @@ function AddPhotos() {
         const resizedFile = await readAndCompressImage(copyFile, imageConfig);
         setSelectedFile(userFile);
         setResizedFile(resizedFile);
+        setConfirm(true);
         setPreview(URL.createObjectURL(resizedFile));
     }
 
@@ -53,6 +55,7 @@ function AddPhotos() {
                 }
             })
             newMushroom.selectedFile = selectedFile.name;
+            setConfirm(false);
         }
     }
 
@@ -68,8 +71,13 @@ function AddPhotos() {
                             className="placeholder-photo-preview"
                             src={preview}
                             alt="Photo preview"
-                        /><br />
-                        <Button className="confirm" onClick={addNewMushroomPhoto}>Confirm Photo</Button>
+                        /><br /><br />
+                        {confirm &&
+                            <div id="confirm-photo">
+
+                                <Button className="confirm" onClick={addNewMushroomPhoto}>Click to confirm Photo</Button>
+                            </div>
+                        }
                     </>
                 )} <br /><br />
             </div>

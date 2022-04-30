@@ -13,6 +13,12 @@ body {
   justify-content: center;
 }
 
+#confirm-photo {
+  border: 2px solid red;
+  padding: 2px;
+  display: flex;
+  justify-content: center;
+}
 
 @media screen and (min-width: 480px) {
   img {

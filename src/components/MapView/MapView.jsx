@@ -61,6 +61,20 @@ function MapView() {
     dispatch({ type: 'FETCH_LOGS' })
   }, []);
 
+  const [selected, setSelected] = useState('');
+  const [viewSorted, setViewSorted] = useState(false);
+
+  const filterBy = (e) => {
+    const sortedLogs = [];
+    for (let i = 0; i < logHistory.length; i++) {
+      if (logHistory[i].common_name === e.target.value) {
+        sortedLogs.push(logHistory[i]);
+      }
+      setViewSorted(true);
+      setSelected(sortedLogs)
+    }
+  }
+
   // Calculate the center the map 
   // from the average
   // of historical latitudes and longitudes
@@ -84,17 +98,52 @@ function MapView() {
     }
     return lngSum / lngCount;
   }
+
+  const averageSelectedLat = () => {
+    let latSum = 0;
+    let latCount = 0;
+    for (let i = 0; i < selected.length; i++) {
+      latSum += parseFloat(selected[i].latitude);
+      latCount++;
+    }
+    return latSum / latCount;
+  }
+
+  const averageSelectedLng = () => {
+    let lngSum = 0;
+    let lngCount = 0;
+    for (let i = 0; i < selected.length; i++) {
+      lngSum += parseFloat(selected[i].longitude);
+      lngCount++;
+    }
+    return lngSum / lngCount;
+  }
+
   const [allLatitudes, setAllLatitudes] = useState([]);
   const [allLongitudes, setAllLongitudes] = useState([]);
+  const [allSelectedLatitudes, setAllSelectedLatitudes] = useState([]);
+  const [allSelectedLongitudes, setAllSelectedLongitudes] = useState([]);
 
   for (let i = 0; i < logHistory.length; i++) {
     allLatitudes.push(parseInt(logHistory[i].latitude));
     allLongitudes.push(parseInt(logHistory[i].longitude));
   };
 
+  if (viewSorted) {
+    for (let i = 0; i < selected.length; i++) {
+      allSelectedLatitudes.push(parseInt(selected[i].latitude));
+      allSelectedLongitudes.push(parseInt(selected[i].longitude));
+    };
+  }
+
   const historicalCenter = {
     lat: averageLat(allLatitudes),
     lng: averageLng(allLongitudes)
+  }
+
+  const selectedCenter = {
+    lat: averageSelectedLat(selected),
+    lng: averageSelectedLng(selected)
   }
 
   const containerStyle = {
@@ -103,11 +152,23 @@ function MapView() {
   };
 
 
+
   return isLoaded ? (
     <>
       <div className="container">
 
         <Box sx={{ mx: "auto", height: 350, width: 350 }}>
+          <>
+            {logHistory.length ?
+              <div><br />
+                View History For: &nbsp;
+                <select onChange={filterBy}>
+                  {logHistory.map(log => (
+                    <option key={log.id} value={log.common_name} >{log.common_name}</option>
+                  ))}
+                </select>
+              </div> : ''}<br />
+          </>
           <div className='map-display'>
             {/* Initialize API */}
 
@@ -119,7 +180,7 @@ function MapView() {
               ></GoogleMap>
             )}
             {/* Map that will display markers */}
-            {logHistory.length && (
+            {logHistory.length && !viewSorted && (
               <GoogleMap
                 mapContainerStyle={containerStyle}
                 center={historicalCenter}
@@ -132,6 +193,24 @@ function MapView() {
                       key={index}
                       averageCenter={true}
                       center={historicalCenter} />
+                  ))}
+
+                </>
+              </GoogleMap>
+            )}
+            {selected.length && viewSorted && (
+              <GoogleMap
+                mapContainerStyle={containerStyle}
+                center={selectedCenter}
+                zoom={8}
+              >
+                <>
+                  {/* Map all the log details into MapDetails component */}
+                  {selected.map((coord, index) => (
+                    <MapDetails coord={coord}
+                      key={index}
+                      averageCenter={true}
+                      center={selectedCenter} />
                   ))}
 
                 </>
