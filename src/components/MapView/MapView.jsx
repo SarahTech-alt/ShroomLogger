@@ -151,6 +151,12 @@ function MapView() {
     height: '400px'
   };
 
+  const mushroomNames = [];
+  for (let i = 0; i < logHistory.length; i++) {
+    mushroomNames.push(logHistory[i].common_name);
+  }
+
+  const uniqueNames = Array.from(new Set(mushroomNames))
 
 
   return isLoaded ? (
@@ -159,12 +165,12 @@ function MapView() {
 
         <Box sx={{ mx: "auto", height: 350, width: 350 }}>
           <>
-            {logHistory.length ?
+            {mushroomNames.length ?
               <div><br />
                 View History For: &nbsp;
                 <select onChange={filterBy}>
-                  {logHistory.map(log => (
-                    <option key={log.id} value={log.common_name} >{log.common_name}</option>
+                  {uniqueNames.map(log => (
+                    <option key={log.id} value={log} >{log}</option>
                   ))}
                 </select>
               </div> : ''}<br />

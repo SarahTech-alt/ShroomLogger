@@ -39,6 +39,12 @@ function LogHistory() {
             setSelected(sortedLogs)
         }
     }
+    const mushroomNames = [];
+    for (let i = 0; i < logHistory.length; i++) {
+        mushroomNames.push(logHistory[i].common_name);
+    }
+
+    const uniqueNames = Array.from(new Set(mushroomNames))
 
     // calling saga function on page load
     // to get the log history from the server
@@ -52,12 +58,12 @@ function LogHistory() {
             {/* {JSON.stringify(logHistory)} */}
             <Box sx={{ mx: "auto", height: 'auto', width: 350, pt: 3 }}>
                 <>
-                    {logHistory.length ?
+                    {mushroomNames.length ?
                         <div><br />
                             View History For: &nbsp;
                             <select onChange={filterBy}>
-                                {logHistory.map(log => (
-                                    <option key={log.id} value={log.common_name} >{log.common_name}</option>
+                                {uniqueNames.map(log => (
+                                    <option key={log.id} value={log} >{log}</option>
                                 ))}
                             </select>
                         </div> : ''}<br />
