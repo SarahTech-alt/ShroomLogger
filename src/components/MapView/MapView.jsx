@@ -6,6 +6,7 @@ import useReduxStore from '../../hooks/useReduxStore';
 import MapDetails from './MapDetails.jsx';
 import Box from '@mui/material/Box';
 import axios from "axios";
+import { Wrapper, Status, render } from "@googlemaps/react-wrapper";
 
 
 function MapView() {
@@ -160,7 +161,7 @@ function MapView() {
 
 
   return isLoaded ? (
-    <>
+    <Wrapper apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY} render={render}>
       <div className="container">
 
         <Box sx={{ mx: "auto", height: 350, width: 350 }}>
@@ -225,7 +226,7 @@ function MapView() {
           </div>
         </Box>
       </div>
-    </>
+    </Wrapper>
   ) : (<>Loading...</>)
 }
 
